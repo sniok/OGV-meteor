@@ -55,10 +55,7 @@ Template.modelViewer.events({
 
     'click #sm-item-owner':function() 
     {
-    var parts = location.href.split('/');
-    //id of user whose page is being visited
-    var ownerId = parts.pop();         
-    goToOwner(ownerId);
+	ownerId();
     }
 
 });
