@@ -1,4 +1,7 @@
 <template name="layout">
+	{{#if embeddedView}}
+	{{>yield}}
+	{{else}}
 	<div class ="zameen">
 		{{> menu}}
 		<div id="main" class="page-container row-fluid">
@@ -7,5 +10,6 @@
 			{{> yield}}
 		</div>
 	</div>
+	{{/if}}
 </template>
 

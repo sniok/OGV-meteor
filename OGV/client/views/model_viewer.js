@@ -251,7 +251,6 @@ function init()
     });
     }
    
-
    /**
     * datGUI variable initializations
     */
@@ -341,8 +340,11 @@ function init()
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x555555, 1);
     
+   shared = UI._globalHelpers['embeddedView']();
+   if(!shared){
     controller.appendChild(datGUI.domElement);
-    container.appendChild(renderer.domElement);
+   }
+    container.appendChild(renderer.domElement); 
     
     /**
      * orbitControls for zoom in/ zoom out and other basic controls
@@ -408,7 +410,7 @@ function animate()
  */
 function generateEmbedCode()
 {
-    var thisURL = Meteor.absoluteUrl() + "/models/" + model._id;
+    var thisURL = Meteor.absoluteUrl() + "models/" + model._id +"/shared=true";
     embedCode = "<iframe width=\"500\" height=\"250\" src=\"" + thisURL + "\" frameborder=\"0\"></iframe>";
     sAlert.success(embedCode, {effect: 'flip', onRouteClose: false, stack: false, timeout: 10000, position: 'top'});
     return embedCode;

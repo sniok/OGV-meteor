@@ -1,5 +1,10 @@
 <template name = "modelViewer">
-
+   {{#if embeddedView}}
+	<div id="model-container">
+		<div id="modelController">
+		</div>
+	</div>
+   {{else}}
 	<div id="overlay-comments">
 	<div id ="comments-close-button"> X </div>
 	<div class="comments">
@@ -57,5 +62,6 @@
 	</div>
 	
 	</div>
+	{{/if}}
 
 </template>
