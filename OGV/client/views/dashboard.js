@@ -162,11 +162,8 @@ Template.dashboard.helpers({
 	var currentUser = Meteor.user();
 	var picId = currentUser.profile.pic;
 	console.log(picId);	
-	if( currentUser.services.google ){
-		return currentUser.services.google.picture;
-	} else {
+
 		return ProfilePictures.findOne(picId).url();
-	}
     },
 
     thisUser: function()
