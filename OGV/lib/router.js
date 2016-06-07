@@ -61,7 +61,7 @@ Router.map(function() {
     });
     
     this.route('modelViewer', {
-    path: '/models/:_id',
+	    path: '/models/:_id/:_share?',
     waitOn: function() {
         return Meteor.subscribe('modelFiles');
     },
