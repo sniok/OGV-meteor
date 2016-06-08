@@ -19,11 +19,34 @@ Template.registerHelper('loggedInUser', function(){
 		} else {
 			var picUrl = " ";
 		}
-		return {
+ 		var followings = user.profile.following;
+ 		var followers = user.profile.follower;
+ 		var modelsCount = user.profile.countModels;
+	
+ 		if(!followings){
+ 		    followingsCount = 0
+ 		} else {
+ 		    followingsCount = followings.length - 1;
+ 		}
+ 		
+ 		if ( !followers ){
+ 		    followersCount = 0;
+ 		} else {
+ 		    followersCount = followers.length;  
+ 		}
+		
+		if (!modelsCount){
+			modelsCount = 0;
+		}
+
+ 		return {
 		   obj : user,
 		   profilePic: picUrl,
 		   username: name,
-		   _id: user._id
+		   _id: user._id,
+		   followingCount: followingsCount,
+		   followerCount: followersCount,
+		   modelsCount: modelsCount
 		};
 	}
 );

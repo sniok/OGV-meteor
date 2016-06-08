@@ -31,7 +31,7 @@
                 <strong>Here Since:</strong> <em>{{ person.createdAt }}</em> <br>
             </div>
         </div>
-    </div>    
+    </div>
     </div>
 
         {{> profileModelFeed}}
@@ -54,6 +54,7 @@
 
 <template name="profileModelFeed">
     <div class="profile-feed-wrapper">
+    <hr>
     {{#if models}}
     {{#each models}}
         {{#if converted }}
