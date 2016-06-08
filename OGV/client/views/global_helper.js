@@ -14,7 +14,11 @@ Template.registerHelper('loggedInUser', function(){
 		var user = Meteor.user();
 		var picId = user.profile.pic;
 		var name = user.profile.name;
-		var picUrl = ProfilePictures.findOne(picId).url();
+		if(picId){
+			var picUrl = ProfilePictures.findOne(picId).url();
+		} else {
+			var picUrl = " ";
+		}
 		return {
 		   obj : user,
 		   profilePic: picUrl,
