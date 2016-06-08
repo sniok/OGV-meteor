@@ -16,7 +16,6 @@ Template.newsfeedSidebar.events({
             } else {
             //updates "follower" array of other user
             Meteor.users.update(otherId, {$addToSet: {"profile.follower": currentUser._id}}, function(error, res) {
-            /*Meteor.users.update(otherId, {$addToSet: {"profile.follower": currentUser._id}}, function(error, res) {*/
                 if (error) {
                     sAlert.error(error.reason);
                 } else {
@@ -73,10 +72,11 @@ Meteor.subscribe('popular_Models');
 /**
 * returns details about the current user to be displayed on the newsfeed
 */
-Template.newsfeedSidebar.myInfo = function()
+/*Template.newsfeedSidebar.myInfo = function()
 {
     var currentUser =  Meteor.user();
     picId = currentUser.profile.pic;
+    var picURL = ProfilePictures.findOne(picId).url();
     var followings = currentUser.profile.following;
     var followers = currentUser.profile.follower;
     var numberfollowings, numberfollowers;
@@ -95,9 +95,9 @@ Template.newsfeedSidebar.myInfo = function()
 
     return {
         myUser: currentUser,
-        userImg: ProfilePictures.findOne(picId),
+        userImg: picURL,
         followerCount: numberfollowers,
         followingCount: numberfollowings
     };
 
-}
+}*/

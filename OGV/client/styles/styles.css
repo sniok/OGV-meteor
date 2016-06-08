@@ -204,6 +204,14 @@ h2 {
     margin-top:10%;
 }
 
+.right-container{
+    float:right;
+}
+
+.left-container{
+    float:left;
+}
+
 .primary-form input, .primary-form button, .secondary-form input, .secondary-form button, textarea {
     display:block;
     width:100%;
@@ -449,10 +457,21 @@ input:focus {
 .feed-wrapper{
     font-size: 14px;
     color: #555;
-    margin-left: 5px;
     line-height: 1.5;   
-    max-width: 700px;
     margin:30px auto 30px auto;
+    max-width:960px;
+}
+
+.greeting-text{
+    text-align: center;
+    color: #ccc;
+    padding: 20px;
+}
+
+.feed-wrapper:after{
+    content: "";
+    display: block;
+    clear: both;
 }
 
 .modelHeading {
@@ -460,8 +479,7 @@ input:focus {
 }
 
 .feed-item {
-    margin:10px 0px 10px 0px;
-    overflow:hidden;
+    margin:20px 0px 20px 0px;
 }
 
 .post-section{
@@ -1668,7 +1686,6 @@ textarea {
     color: #555;
     margin-left: 5px;
     line-height: 1.5;   
-    max-width: 700px;
     margin:50px auto 50px auto;
 }
 
@@ -1696,7 +1713,6 @@ hr {
 }
 
 .newsfeed-info-section{
-    float:right;
     margin-left:20px;
     margin-top:48px;
 }
