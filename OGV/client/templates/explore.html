@@ -19,8 +19,13 @@
 	<script>
 		$(document).ready(function() {
 		    $('#search-box').focusin(function() {
+			$('#cbp-spmenu-s4').hide();
 	        	$('#cbp-spmenu-s3').show();
-    		});
+    		    });
+		    $('#search-user-box').focusin(function() {
+			$('#cbp-spmenu-s3').hide();
+			$('#cbp-spmenu-s4').show();
+		    });
 		});
 	</script>
 </template>
