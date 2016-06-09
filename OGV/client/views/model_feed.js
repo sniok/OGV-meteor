@@ -60,12 +60,12 @@ Template.modelPost.helpers({
     {
 	modelOwner = Meteor.users.findOne(this.owner);
 	picId = modelOwner.profile.pic;
-	pic = ProfilePictures.findOne(picId);
-	picUrl = pic.url();
-	if (pic) {
+	if (picId) {
+	    pic = ProfilePictures.findOne(picId);
+	    picUrl = pic.url();
 	    return picUrl;
         } else {
-	    return '/public/icons/User.png';
+	    return '/icons/User.png';
 	}
     },
     

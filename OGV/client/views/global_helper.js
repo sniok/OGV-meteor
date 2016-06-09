@@ -17,7 +17,7 @@ Template.registerHelper('loggedInUser', function(){
 		if(picId){
 			var picUrl = ProfilePictures.findOne(picId).url();
 		} else {
-			var picUrl = " ";
+			var picUrl = "/icons/User.png";
 		}
  		var followings = user.profile.following;
  		var followers = user.profile.follower;
