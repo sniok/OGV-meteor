@@ -26,7 +26,7 @@ Template.registerHelper('loggedInUser', function(){
  		if(!followings){
  		    followingsCount = 0
  		} else {
- 		    followingsCount = followings.length - 1;
+ 		    followingsCount = followings.length;
  		}
  		
  		if ( !followers ){

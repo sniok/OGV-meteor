@@ -145,7 +145,7 @@ Template.dashboard.events({
       }
   }, function(error, res) {
       if (error) {
-    sAlert.error(error.reason, {effect: 'flip', onRouteClose: false, stack: false, timeout: 3000, position: 'top'});
+    sAlert.error("There was an error, Please fill all the fields correctly", {effect: 'flip', onRouteClose: false, stack: false, timeout: 3000, position: 'top'});
       } else {
     sAlert.success("Admin Settings saved", {effect: 'flip', onRouteClose: false, stack: false, timeout: 3000, position: 'top'});
       }
@@ -154,9 +154,6 @@ Template.dashboard.events({
 });
 
 Template.dashboard.helpers({
-	/**
- 	* profilePic returns the url of profile picture of the user
- 	*/
     settings: function() 
     {
   return OgvSettings.findOne();

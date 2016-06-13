@@ -23,6 +23,88 @@
  *
  */
 
+userProfileSchema = new SimpleSchema({
+	name: {
+		type: String
+	},
+	bio: {
+		type: String,
+		optional: true
+	},
+	pic: {
+		type:String,
+		optional: true
+	},
+	countModels: {
+		type: Number,
+		defaultValue: 0
+	},
+	follower: {
+		type: Array,
+		optional:true
+	},
+	"follower.$": {
+		type: String
+	},
+	following: {
+		type: Array,
+		optional: true
+	},
+	"following.$": {
+		type: String
+	}
+});
+
+userSchema = new SimpleSchema({
+	username: {
+		type:String,
+		optional: true
+	},
+	emails:{
+		type:Array,
+		optional: true
+	},
+	"emails.$": {
+		type: Object
+	},
+	"emails.$.address": {
+		type: String,
+		regEx: SimpleSchema.RegEx.Email
+	},
+	"emails.$.verified": {
+		type: Boolean
+	},
+	createdAt: {
+		type: Date
+	},
+	profile: {
+		type: userProfileSchema,
+		optional: true
+	},
+	services: {
+		type: Object,
+		optional: true,
+		blackbox: true
+	},
+	roles: {
+		type:Array,
+		optional: true
+	},
+	"roles.$":{
+		type: String
+	},
+	heartbeat: {
+		type: Date,
+		optional: true
+	},
+	status: {
+		type: Object,
+		optional: true,
+		blackbox: true
+	}
+});
+
+Meteor.users.attachSchema(userSchema);
 
 ProfilePictures = new FS.Collection('profilePictures',  {
     stores: [
