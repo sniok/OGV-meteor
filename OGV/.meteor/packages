@@ -12,7 +12,6 @@ cfs:ui
 alanning:roles
 cfs:filesystem
 bootstrap
-ishwerdas:ogv-threejs
 dbarrett:dropzonejs
 raix:ui-dropped-event
 twbs:bootstrap
@@ -32,3 +31,4 @@ meteorhacks:search-source
 juliancwirko:s-alert
 juliancwirko:s-alert-flip
 fortawesome:fontawesome
+ishwerdas:ogv-threejs

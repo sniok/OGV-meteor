@@ -61,12 +61,10 @@ Template.profilePage.helpers({
 	var otherId = parts.pop(); //id of user whose page is being visited
 	var currentProfile = Meteor.users.findOne(otherId);
 	var picId = currentProfile.profile.pic;
-	if( currentProfile.services.google ){
-		return currentProfile.services.google.picture;
-	} else if ( currentProfile.services.facebook ){
-		return currentProfile.services.facebook.picture;
-	} else 	{
-		return ProfilePictures.findOne(picId).url();
+	if(picId){
+	   return ProfilePictures.findOne(picId).url();
+	} else{
+	   return "/icons/User.png";
 	}
     },
 

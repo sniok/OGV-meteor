@@ -1,19 +1,20 @@
 <template name = "modelFeed">
+    <div class="feed-wrapper">
+    <h2 class="greeting-text">Hello, {{loggedInUser.username}}!</h2> 
+    <div class="right-container">
     {{> newsfeedSidebar}}
-    <!--<div class="feed-wrapper"> -->
-    <br><br><br>
-    <h1 style="margin: 10px auto 20px 13px">Hi, {{currentUser.profile.name}}!</h1> 
-    <div class="container feed-wrapper">
+    </div>
+    <div class="left-container">
     {{#if models}}
 	{{#each models}}
 	    {{#if converted }}
 			{{> modelPost }}
 	    {{/if}}
 	{{/each}}
-	<button class="btn primary-btn btn-default" id="loadMoreButton" style="margin: 10px auto auto 250px"> Load more . . . </button>
     {{else}}
 	<h3>You seem to be new here, your newsfeed looks empty</h3>
     {{/if}}
+    </div>
     </div>
 </template>
 
@@ -22,7 +23,7 @@
     <div class="feed-item model-post">
       <div class="post-section post-sidebar user-info">
 		<a href="/profile/{{ owner._id }}">
-			<div class="post-item user-image" style="background:url('{{userImg}}');height:100px;width:100px;border-radius:10%"></div>
+			<div class="post-item user-image" style="background-image:url('{{userImg}}');"></div>
 		</a>
 		<div class="post-item post-meta user-meta"></div>
       </div>

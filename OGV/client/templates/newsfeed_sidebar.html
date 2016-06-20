@@ -1,15 +1,17 @@
 <template name="newsfeedSidebar">
     <div class="newsfeed-info-section">
-    
+ 
         <!-- About the current User -->
         <div class="newsfeed-info-content">
-            <p class="newsfeed-userInfo"> {{myInfo.myUser.profile.name}}, that's you! </p>
-            <a href="/profile/{{ currentUser._id }}">
-                <div class="post-item user-image" style="background-image:url(&quot;{{myInfo.userImg.url}}&quot;); width:100px; height:100px;"></div>
+            <p class="newsfeed-userInfo"> {{loggedInUser.username}}, that's you! </p>
+            <a href="/profile/{{ loggedInUser._id }}">
+                <div class="post-item user-image" 
+		style="background-image:url(&quot;{{ loggedInUser.profilePic }}&quot;); width:100px; height:100px;">
+		</div>
             </a>
-            Followers: {{myInfo.followerCount}}<br>
-            Following: {{myInfo.followingCount}}<br>
-            Models: {{myInfo.myUser.profile.countModels}}<br>
+            <p>Followers: {{loggedInUser.followerCount}}</p>
+            <p>Following: {{loggedInUser.followingCount}}</p>
+            <p>Models: {{loggedInUser.modelsCount}}</p>
         </div>
         
         <!-- About whom to follow -->

@@ -234,22 +234,6 @@ function init()
 	});
     }
     
-    for (i in objList) {
-    loader.load( objList[i], function(object) {
-        object.traverse(function(child) {
-        if (child instanceof THREE.Mesh) {
-            child.material = OBJMaterialOver;
-        }
-        });
-
-        object.position.y = 0.1;
-        object.rotation.z =  90 * Math.PI/180;
-        object.rotation.x = -90 * Math.PI/180;
-
-        group.add(object);
-        scene.add(group);
-    });
-    }
    
    /**
     * datGUI variable initializations
