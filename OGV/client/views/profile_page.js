@@ -12,11 +12,10 @@ Template.profilePage.events({
 		    } else {
 		    //updates "follower" array of other user
 		    Meteor.users.update(otherId, {$addToSet: {"profile.follower": currentUser._id}}, function(error, res) {
-		    /*Meteor.users.update(otherId, {$addToSet: {"profile.follower": currentUser._id}}, function(error, res) {*/
 		    	if (error) {
 		    		sAlert.error(error.reason);
 		    	} else {
-		    		sAlert.success("You are now following this user", {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});
+		    		sAlert.success("You are now following this user");
 			    }
 			});
 		    }
@@ -41,7 +40,7 @@ Template.profilePage.events({
 		    	if (error) {
 					sAlert.error(error.reason);
 		    	} else {
-					sAlert.success("You are no longer following this user", {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});
+					sAlert.success("You are no longer following this user");
 			    }
 			});
 		    }
@@ -186,7 +185,7 @@ Template.profileModelFeed.events({
 					    
 		    ModelFiles.remove(model._id);
 		    Meteor.users.update({_id: model.owner}, {$inc: {"profile.countModels": -1}});
-		    sAlert.info("Model permanently deleted", {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});
+		    sAlert.info("Model permanently deleted");
 		}
   	}
 });

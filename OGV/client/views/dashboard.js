@@ -53,9 +53,9 @@ Template.dashboard.events({
 
 	    Meteor.users.update( currentUser._id,{ $set: {'profile.bio' : userBio, 'profile.name': userName, 'profile.pic': picId}}, function(error, res) {
 		if (error) {
-        sAlert.error(error.reason);
+    	sAlert.error("There was an error, Please fill all the fields correctly");
 	    	} else {
-        sAlert.success("Settings saved", {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});
+        sAlert.success("Settings saved");
 		}
 	    });
 	}
@@ -74,7 +74,7 @@ Template.dashboard.events({
 		if (err) {
 		    sAlert.error(err.reason);
 	    } else {
-            sAlert.success("Profile pic uploaded", {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});
+            sAlert.success("Profile pic uploaded");
 	    	saveSettings(dpFile._id);
 		} 
 	    });
@@ -82,43 +82,8 @@ Template.dashboard.events({
 	    saveSettings();
 	}
   
-	/*
-  var saveSettings = function(picId)
-  {   
-      /**
-       * If user has not changed the profile picture then use
-       * existing profile pic.
-       
-      if (!picId) {
-    picId = currentUser.profile.pic;
-      } 
-  
-      Meteor.users.update( currentUser._id,{ $set: {profile: {bio : userBio, name : userName, pic: picId} }}, function(error, res) {
-    if (error) {
-        sAlert.error(error.reason);
-        } else {
-        sAlert.success("Settings saved", {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});  
-    }
-      });
-  }
-  
-  if (e.target[2].files[0]) {
-      var fsFile = new FS.File(e.target[2].files[0]);
-      console.log(fsFile);
-      fsFile.user = currentUser._id;
-  
-      ProfilePictures.insert(fsFile, function(err, dpFile) {
-    if (err) {
-        sAlert.error("Error: Invalid file format", {effect: 'flip', onRouteClose: false, stack: false, timeout: 8000, position: 'top'});
-        } else {
-        sAlert.success("Profile pic uploaded", {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});        
-          saveSettings(dpFile._id);
-    } 
-      });
-  } else {
-      saveSettings();
-  }
-    */},
+
+    },
 
     /**
      * When admin form is submitted, get the values form the form
@@ -145,9 +110,9 @@ Template.dashboard.events({
       }
   }, function(error, res) {
       if (error) {
-    sAlert.error("There was an error, Please fill all the fields correctly", {effect: 'flip', onRouteClose: false, stack: false, timeout: 3000, position: 'top'});
+    sAlert.error("There was an error, Please fill all the fields correctly");
       } else {
-    sAlert.success("Admin Settings saved", {effect: 'flip', onRouteClose: false, stack: false, timeout: 3000, position: 'top'});
+    sAlert.success("Admin Settings saved");
       }
   }); 
     }

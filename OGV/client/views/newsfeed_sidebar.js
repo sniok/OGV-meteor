@@ -4,9 +4,13 @@ Template.newsfeedSidebar.events({
     */
     'click #followButton': function(e, t)
     {
-        var parts = location.href.split('/');
-        var otherId = parts.pop(); //id of user whose page is being visited
-    
+	button = $('#followButton')[0];
+	if(button.dataset.src){
+		var otherId = button.dataset.src;
+	} else{
+        	var parts = location.href.split('/');
+	        var otherId = parts.pop(); //id of user whose page is being visited
+    	}
         var currentUser = Meteor.user(); //user who is using OGV at that moment     
         
         //updates "following" array of currentUser
@@ -19,7 +23,7 @@ Template.newsfeedSidebar.events({
                 if (error) {
                     sAlert.error(error.reason);
                 } else {
-                    sAlert.success("You are now following this user", {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});
+                    sAlert.success("You are now following this user");
                 }
             });
             }
@@ -72,32 +76,4 @@ Meteor.subscribe('popular_Models');
 /**
 * returns details about the current user to be displayed on the newsfeed
 */
-/*Template.newsfeedSidebar.myInfo = function()
-{
-    var currentUser =  Meteor.user();
-    picId = currentUser.profile.pic;
-    var picURL = ProfilePictures.findOne(picId).url();
-    var followings = currentUser.profile.following;
-    var followers = currentUser.profile.follower;
-    var numberfollowings, numberfollowers;
 
-    if(followings.length == 0){
-        numberfollowings = 0
-    } else {
-        numberfollowings = followings.length - 1;
-    }
-
-    if ( !followers ){
-        numberfollowers = 0;
-    } else {
-        numberfollowers = followers.length;  
-    }
-
-    return {
-        myUser: currentUser,
-        userImg: picURL,
-        followerCount: numberfollowers,
-        followingCount: numberfollowings
-    };
-
-}*/

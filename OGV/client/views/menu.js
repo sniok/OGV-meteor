@@ -24,10 +24,15 @@
  */
 
 Template.menu.events({
+    'click #notification-icon': function(e,t)
+    {
+	$('.notifications').slideToggle("fast");
+    },
+
     'click #log-out':function(e,t)
     {
 	Meteor.logout(function() {
-	    sAlert.info('Bye!, See you back soon', {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});     
+	    sAlert.info('Bye!, See you back soon'); 
 		Router.go("/");
 	});
 	

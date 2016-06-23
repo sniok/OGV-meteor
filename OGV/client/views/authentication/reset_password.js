@@ -42,9 +42,9 @@ Template.resetPassword.events({
 	    Accounts.resetPassword(Session.get('resetPasswordToken'),password,function(err)
 	    {
 		if (err) {
-			sAlert.error('We\'re sorry but something went wrong', {effect: 'flip', onRouteClose: false, stack: false, timeout: 3000, position: 'top'});
+			sAlert.error('We\'re sorry but something went wrong');
 		} else {
-		    sAlert.success('Your password has been changed. Welcome back!', {effect: 'flip', onRouteClose: false, stack: false, timeout: 3000, position: 'top'});
+		    sAlert.success('Your password has been changed. Welcome back!');
 		    Session.set('resetPassword',null);
 		}
 	    });

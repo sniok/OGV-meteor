@@ -70,7 +70,7 @@ Template.lovemeter.events({
 		if (error){
 		    sAlert.error(error.reason);
 		}
-	   	});
+	});
     }
 });
 

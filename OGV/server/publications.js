@@ -51,6 +51,14 @@ Meteor.publish('ogvSettings', function(){
     return OgvSettings.find();
 });
 
+Meteor.publish('sharedModels', function(){
+   return SharedModels.find();
+});
+
+Meteor.publish('notifications', function(){
+  return Notifications.find();
+});
+
 /**
  * Not every detail about user is published to client
  * for security reasons

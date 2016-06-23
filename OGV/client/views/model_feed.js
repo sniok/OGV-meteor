@@ -42,14 +42,37 @@ Template.modelFeed.helpers({
     var popularLoveIds = _.pluck(popularLove, "postId");*/
     var currentUser = Meteor.user();
     model = ModelFiles.find( {owner: {$in: currentUser.profile.following}}, {sort: {timeUploaded: -1}});
+
     if (model.count()) {
 	    return model;
 	} else {
 	    return false;
 	} 
+    },
+
+    sharedModels: function()
+    {
+	var currentUser = Meteor.user();
+	sharedModelsId= SharedModels.find( { sharedby: {$in: currentUser.profile.following}}).fetch();
+
     }
 }); 
 
+Template.modelPost.events({
+    'click .shareButton': function(){
+		sharedBy = Meteor.userId();
+		sharedModel = $('.shareButton')[0].dataset.src;
+		modelOwner = ModelFiles.findOne(sharedModel).owner;
+		sharedObject = { owner: modelOwner, sharedBy: sharedBy, model: sharedModel };
+		Meteor.call('share', sharedObject, function(error, result){
+					if(error){
+						sAlert.error(error.reason);
+					} else{
+						sAlert.success("You shared model");
+					}
+		});
+	}
+});
 
 Template.modelPost.helpers({
     /**

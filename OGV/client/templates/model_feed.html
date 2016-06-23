@@ -5,6 +5,11 @@
     {{> newsfeedSidebar}}
     </div>
     <div class="left-container">
+    {{#if sharedModels}}
+	{{#each sharedModels}}
+		{{> sharedModelPost }}
+	{{/each}}
+    {{/if}}
     {{#if models}}
 	{{#each models}}
 	    {{#if converted }}
@@ -18,6 +23,9 @@
     </div>
 </template>
 
+<template name="sharedModelPost">
+	<p>{{sharedby}} shared {{owner}}'s model</p>
+</template>
 
 <template name ="modelPost">
     <div class="feed-item model-post">
@@ -45,6 +53,7 @@
         </div>
         <img src="/icons/views.png" style="height:45px;width:35px">
 		    {{this.viewsCount}}
+	<button class="shareButton" data-src={{_id}}>Share</button>
         <div class="post-item comments-wrapper">
         	{{> comments }}    
         </div>

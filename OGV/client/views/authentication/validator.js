@@ -40,7 +40,7 @@ isNotEmpty = function(value)
     if (value && value !== '') {
 	return true;
     }
-    sAlert.error('Please fill in all the fields', {effect: 'flip', onRouteClose: false, stack: false, timeout: 8000, position: 'top'});    
+    sAlert.error('Please fill in all the fields');    
     return false;
 };
 
@@ -54,7 +54,7 @@ isEmail = function(value)
     if (filter.test(value)) {
 	return true;
     }
-    sAlert.error('Your email address is not valid', {effect: 'flip', onRouteClose: false, stack: false, timeout: 8000, position: 'top'});
+    sAlert.error('Your email address is not valid');
     return false;
 };
 
@@ -65,7 +65,7 @@ isEmail = function(value)
 isValidPassword = function(password)
 {
     if (password.length < 6) {
-    sAlert.error('Password should be at-least 6 characters long', {effect: 'flip', onRouteClose: false, stack: false, timeout: 8000, position: 'top'});    
+    sAlert.error('Password should be at-least 6 characters long');    
 	return false;
     }
     return true;
@@ -81,7 +81,7 @@ areValidPasswords = function(password,confirmPassword)
 	return false;
     }
     if (password !== confirmPassword) {
-    sAlert.error("Password and confirm-password fields don't match", {effect: 'flip', onRouteClose: false, stack: false, timeout: 8000, position: 'top'});    
+    sAlert.error("Password and confirm-password fields don't match");    
 	return false;
     }
     return true;

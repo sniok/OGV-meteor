@@ -55,16 +55,57 @@ loverSchema = new SimpleSchema({
 	}
 });
 
+shareSchema = new SimpleSchema({
+	ownerId: {
+		type:String
+	},
+	model: {
+		type:String
+	},
+	sharedby: {
+		type:String
+	}
+});
+
 Comments = new Meteor.Collection('comments');
 Lovers = new Meteor.Collection('lovers');
+SharedModels = new Meteor.Collection('sharedModels');
 
 Comments.attachSchema(commentSchema);
 Lovers.attachSchema(loverSchema);
+SharedModels.attachSchema(shareSchema);
 
 Meteor.methods({
     /**
      * Adds new comment to post 
      */
+    share: function(shareAttributes){
+	var user = Meteor.user();
+	
+	if(!user) { 
+		throw new Meteor.Error(401, "You need to login to make comments");
+	}
+	var owner = shareAttributes.owner;
+	var post = shareAttributes.model;
+	var sharedBy = shareAttributes.sharedBy;
+	
+	SharedModels.insert({owner: owner, sharedby: sharedBy, model: post});
+
+    
+	if(user._id != owner){
+		Notifications.insert({
+		    user: sharedBy,
+		    ownerId: owner,
+		    modelId: post,
+		    type: "share",
+		    seen: false,
+		    timeNotified: new Date()
+		});
+	}
+	
+
+    },
+
     comment: function(commentAttributes) {
 	var user = Meteor.user();
 	var post = ModelFiles.findOne(commentAttributes.postId);
@@ -84,6 +125,18 @@ Meteor.methods({
 	    throw new Meteor.Error(422, 'You must comment on a post');
 	}
 	
+	modelId = commentAttributes.postId;
+        ownerId = post.owner;
+	if(user._id != ownerId){
+		Notifications.insert({
+		    user: user._id,
+		    ownerId: ownerId,
+		    modelId: modelId,
+		    type: "comment",
+		    seen: false,
+		    timeNotified: new Date()
+		});
+	}
 	comment = _.extend(_.pick(commentAttributes, 'postId', 'body'), {
 	    userId: user._id,
 	    author: user.profile.name,
@@ -139,6 +192,19 @@ Meteor.methods({
             }
 
         } else {
+	    modelId = loveAttributes.postId;
+            ownerId = post.owner;
+	    if(user._id != ownerId){
+		    Notifications.insert({
+			user: user._id,
+			ownerId: ownerId,
+			modelId: modelId,
+			type: "love",
+			seen: false,
+			timeNotified: new Date()
+		    });
+	    }
+		
 	    love = _.extend(_.pick(loveAttributes, 'postId'), {
 		lovers: lovers,
 		submitted: new Date().getTime()

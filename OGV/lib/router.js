@@ -182,7 +182,7 @@ var loggingIn = function(pause) {
  * Remove notifactions and error messages that have been seen
  * everytime a route is changed 
 */
-Router.onBeforeAction(function() { clearNotifications(); this.next(); });
+
 Router.onBeforeAction(validateUser,{only:['cfsUploader','filemanager','dashboard','modelMeta', 'newsfeedSidebar', 'models', 'modelFeed', 'explore', 'profilePage', 'index']});
 Router.onBeforeAction(actionReady, {only:['index', 'modelViewer', 'profilePage', 'explore', 'models', 'modelFeed']});
 Router.onBeforeAction(loggingIn);

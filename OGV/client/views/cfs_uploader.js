@@ -28,14 +28,14 @@ function uploadFile(event, temp)
 		if (error) {
 			sAlert.error(error.reason);
 		} else {
-			sAlert.success("Updated number of models for user", {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});			
+			sAlert.success("Updated number of models for user");			
 		}
 	});
 	ModelFiles.insert(fsFile,function(err) {
 	    if (err) {
 	    	sAlert.error("There was some error in uploading your file, please try again/later");
 	    } else {
-	    	sAlert.success("File Uploaded, and will appear in file manager after it's converted", {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});
+	    	sAlert.success("File Uploaded, and will appear in file manager after it's converted");
 		}	   
 	});
 	Router.go("/description/" + fsFile._id);
