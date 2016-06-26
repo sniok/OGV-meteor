@@ -64,6 +64,9 @@ shareSchema = new SimpleSchema({
 	},
 	sharedby: {
 		type:String
+	},
+	timeShared: {
+		type:String
 	}
 });
 
@@ -89,7 +92,7 @@ Meteor.methods({
 	var post = shareAttributes.model;
 	var sharedBy = shareAttributes.sharedBy;
 	
-	SharedModels.insert({owner: owner, sharedby: sharedBy, model: post});
+	SharedModels.insert({ownerId: owner, sharedby: sharedBy, model: post, timeShared: new Date()});
 
     
 	if(user._id != owner){

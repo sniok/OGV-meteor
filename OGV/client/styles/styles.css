@@ -1751,6 +1751,24 @@ hr {
     left: 213px;
 }
 
+
+.shared-list{
+    list-style-type:none;
+    font-size:16px;
+    margin:0px;
+    padding:0px;
+}
+
+.shared-list a{
+    display:block;
+    color:#333;
+    margin-top:10px;
+}
+
+.shared-list a:hover{
+    background-color:#f9f9f9;
+}
+
 .newsfeed-info-section{
     margin-left:20px;
     margin-top:48px;
@@ -1764,4 +1782,10 @@ hr {
     border-radius:5px;
     margin-top:20px;
     border: 1px solid #dadada;
+}
+
+.share-tickr{
+    max-height:280px;
+    overflow-y:auto;
+    margin-top:-30px;
 }

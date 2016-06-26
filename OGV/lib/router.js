@@ -123,7 +123,7 @@ Router.map(function() {
     });
 
     this.route('models', {
-        path : '/newsfeed',
+        path : '/newsfeed/:modelId?',
         waitOn: function() {
             Meteor.subscribe('modelFiles');
         }

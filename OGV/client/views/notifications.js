@@ -25,7 +25,7 @@
 Template.notifications.helpers({
     notifications : function()
     {
-	allNotifications = Notifications.find({ownerId: Meteor.userId()}, {sort: {timeNotified: -1}});
+	allNotifications = Notifications.find({ownerId: Meteor.userId(), seen: false}, {sort: {timeNotified: -1}});
 	count = allNotifications.count();
 	if (count == 0) {
 		return false;
@@ -58,4 +58,13 @@ Template.notification.helpers({
 	}
 	return icon;
    }
+});
+
+Template.notification.events({
+   'click .notification-anchor': function(){
+		$('.notifications').slideUp();
+		Notifications.update(this._id, {
+			$set: { seen: true },
+		});
+	}
 });

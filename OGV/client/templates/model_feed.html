@@ -5,11 +5,6 @@
     {{> newsfeedSidebar}}
     </div>
     <div class="left-container">
-    {{#if sharedModels}}
-	{{#each sharedModels}}
-		{{> sharedModelPost }}
-	{{/each}}
-    {{/if}}
     {{#if models}}
 	{{#each models}}
 	    {{#if converted }}
@@ -21,10 +16,6 @@
     {{/if}}
     </div>
     </div>
-</template>
-
-<template name="sharedModelPost">
-	<p>{{sharedby}} shared {{owner}}'s model</p>
 </template>
 
 <template name ="modelPost">

@@ -68,8 +68,29 @@ Template.newsfeedSidebar.helpers({
         return ModelFiles.find({owner: {$not: currentUser._id}});
     },
 
+    sharedModel: function() {
+    	var currentUser = Meteor.user();
+	model = SharedModels.find( {sharedby: {$in: currentUser.profile.following}}, {sort: {timeShared: -1}});
+	
+	if (model.count()) {
+	    return model;
+	} else {
+	    return false;
+	} 
+    }
+
     
 }); 
+
+Template.shareTickr.helpers({
+	'shareMessage': function(){
+	    var userName = Meteor.users.findOne(this.sharedby).profile.name;
+	    var ownerName = Meteor.users.findOne(this.ownerId).profile.name;
+	    var modelName = ModelFiles.findOne(this.model).name();
+	    var message = userName + " shared " + ownerName + "'s model " + modelName;
+	    return message;
+	}
+});
 
 Meteor.subscribe('popular_Models');
 

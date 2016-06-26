@@ -37,24 +37,22 @@ Template.modelFeed.helpers({
      */
     models: function() 
     {
-    /*var popularityIndex = 2;
-    var popularLove = Lovers.find({countLovers: {$gte: popularityIndex}}).fetch();
-    var popularLoveIds = _.pluck(popularLove, "postId");*/
-    var currentUser = Meteor.user();
-    model = ModelFiles.find( {owner: {$in: currentUser.profile.following}}, {sort: {timeUploaded: -1}});
+    url = Router.current().url;
+    url = url.split('/');
+    modelId = url.pop();
+    var model = ModelFiles.find(modelId);
+    if(model.count()) { 
+	return model; 
+    } else {
+    	var currentUser = Meteor.user();
+	model = ModelFiles.find( {owner: {$in: currentUser.profile.following}}, {sort: {timeUploaded: -1}});
 
-    if (model.count()) {
+	if (model.count()) {
 	    return model;
 	} else {
 	    return false;
 	} 
-    },
-
-    sharedModels: function()
-    {
-	var currentUser = Meteor.user();
-	sharedModelsId= SharedModels.find( { sharedby: {$in: currentUser.profile.following}}).fetch();
-
+    }
     }
 }); 
 

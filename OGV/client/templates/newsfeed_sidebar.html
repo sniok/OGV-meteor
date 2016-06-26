@@ -1,6 +1,15 @@
+<template name="shareTickr">
+    <a href="/newsfeed/{{model}}"><li>{{shareMessage}}</li></a>
+</template>
 <template name="newsfeedSidebar">
     <div class="newsfeed-info-section">
- 
+        <div class="newsfeed-info-content share-tickr">
+	    <ul class="shared-list">
+		{{#each sharedModel}}
+		   {{>shareTickr}}
+		{{/each}}
+	    </ul>
+	</div>
         <!-- About the current User -->
         <div class="newsfeed-info-content">
             <p class="newsfeed-userInfo"> {{loggedInUser.username}}, that's you! </p>
