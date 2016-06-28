@@ -1,33 +1,19 @@
 <template name="explore">
-    <div class="col-lg-12 col-md-12 col-sm-12 ">
-        <div class="explore-heading">Explore models and users</div>
+    <div class="search-wrapper">
+	<div class="search-container">
+	    <input class="search-textbox" type="text" placeholder="Type to search">
+	</div>
     </div>
-	<div class="search-input container">
-		<input type="text" id="search-box" placeholder="search models here" />
-		<input type="text" id="search-user-box" placeholder="search users here" />
+
+    <div class="container result-container">
+	<div id="user-results">
+		{{> searchUserResult}}
 	</div>
-	
-	<div class="container">
-		<nav id="cbp-spmenu-s3" style="display:none;">
-			{{> searchResult}}
-		</nav>
-		<nav id="cbp-spmenu-s4" style="display:none;">
-			{{> searchUserResult}}
-		</nav>
+	<div id="model-results">
+		{{> searchResult}}
 	</div>
+    </div>
 	
-	<script>
-		$(document).ready(function() {
-		    $('#search-box').focusin(function() {
-			$('#cbp-spmenu-s4').hide();
-	        	$('#cbp-spmenu-s3').show();
-    		    });
-		    $('#search-user-box').focusin(function() {
-			$('#cbp-spmenu-s3').hide();
-			$('#cbp-spmenu-s4').show();
-		    });
-		});
-	</script>
 </template>
 
 <template name="exploreResult">
@@ -48,6 +34,7 @@
       {{/if}}
     </div>
 
+   <h3>Models</h3>
     {{#each getModels}}
     <a href="models/{{_id}}">
     <div class="searchModels" id="view-model-options" style="padding:2px">
@@ -69,13 +56,15 @@
       {{/if}}
     </div>
 
+    <h3 class="user-result-heading">Users</h3>
     {{#each getUsers}}
     <a href="profile/{{_id}}">
     <div class="searchUsers" id="view-model-options" style="padding:2px">
-      <h4 class="name">
-        {{profile.name}}
-      </h4>
+      <div class="user-profile-pic" style="background-image:url('/cfs/files/profilePictures/{{profile.pic}}'); width:100px; height:100px;"></div>
+      <div class="user-info">
+      <h4 class="name">{{profile.name}}</h4>
       <h5 style="color:black;">{{profile.bio}}</h5>
+      </div>
     </div>
 	</a>
     {{/each}}
