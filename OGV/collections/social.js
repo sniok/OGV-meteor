@@ -22,9 +22,44 @@
  *  @brief Collections required for the social functionality of OGV
  */
 
+commentSchema = new SimpleSchema({
+	author: {
+		type:String
+	},
+	body: {
+		type: String
+	},
+	postId: {
+		type: String
+	},
+	submitted: {
+		type: Number
+	},
+	userId: {
+		type: String
+	}
+});
+
+loverSchema = new SimpleSchema({
+	lovers: {
+		type: Array
+	},
+	"lovers.$": {
+		type: String
+	},
+	postId: {
+		type: String
+	},
+	submitted: {
+		type: Number
+	}
+});
+
 Comments = new Meteor.Collection('comments');
 Lovers = new Meteor.Collection('lovers');
 
+Comments.attachSchema(commentSchema);
+Lovers.attachSchema(loverSchema);
 
 Meteor.methods({
     /**

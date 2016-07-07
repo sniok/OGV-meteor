@@ -23,8 +23,26 @@
  *
  */
 
-OgvSettings = new Meteor.Collection('OgvSettings');
+OgvSchema = new SimpleSchema({
+	gobjPath: { 
+		type: String
+	},
+	mailUrl: {
+		type: String
+	},
+	mgedPath: {
+		type: String
+	},
+	siteName: {
+		type: String
+	},
+	settingSwitch: {
+		type: Boolean
+	}
+});
 
+OgvSettings = new Meteor.Collection('OgvSettings');
+OgvSettings.attachSchema(OgvSchema);
 /**
  * No one is allowed to insert and only admin can update the settings
  */

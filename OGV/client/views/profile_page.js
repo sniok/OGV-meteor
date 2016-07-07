@@ -51,6 +51,32 @@ Template.profilePage.events({
 
 
 Template.profilePage.helpers({
+    currentFollowsThis: function() {
+	var parts = location.href.split('/');
+	var otherId = parts.pop(); //id of user whose page is being visited	
+	var currentUser = Meteor.user();
+	var currentFollowsThis = Meteor.users.findOne({_id: currentUser._id, "profile.following": otherId});
+
+	if( currentFollowsThis ){
+        	return currentFollowsThis;
+	}
+	else{
+       		return null;
+	}
+    },
+    urlUser: function() {	
+	var parts = location.href.split('/');
+	var otherId = parts.pop(); //id of user whose page is being visited	
+	var currentUser = Meteor.user();
+
+	if( currentUser._id != otherId ){
+        	return otherId;
+    	}
+	else{
+       		return null;
+	}
+    },
+
     /**
      * returns image of the user from database, if there's no image a default
      * image is shown.
@@ -165,31 +191,6 @@ Template.profileModelFeed.events({
   	}
 });
 
-Template.profilePage.currentFollowsThis = function()
-{
-	var parts = location.href.split('/');
-	var otherId = parts.pop(); //id of user whose page is being visited	
-	var currentUser = Meteor.user();
-    var currentFollowsThis = Meteor.users.findOne({_id: currentUser._id, "profile.following": otherId});
-
-    if( currentFollowsThis ){
-        return currentFollowsThis;
-    }
-    else{
-       	return null;
-    }
-}
-
 Template.profilePage.urlUser = function()
 {
-	var parts = location.href.split('/');
-	var otherId = parts.pop(); //id of user whose page is being visited	
-	var currentUser = Meteor.user();
-
-    if( currentUser._id != otherId ){
-        return otherId;
-    }
-    else{
-       	return null;
-    }
 }
