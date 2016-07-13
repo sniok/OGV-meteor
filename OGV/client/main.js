@@ -73,6 +73,7 @@ if (Accounts._verifyEmailToken) {
  * Subscribe to various collections
  *
  */
+Meteor.subscribe('sharedModels');
 Meteor.subscribe('objFiles');
 Meteor.subscribe('thumbFiles');
 Meteor.subscribe('comments');
@@ -80,6 +81,7 @@ Meteor.subscribe('lovers');
 Meteor.subscribe('profilePictures');
 Meteor.subscribe('ogvSettings');
 Meteor.subscribe('profiles');
+Meteor.subscribe('notifications');
 
 /*                                                                    
  * Local Variables:                                                   
