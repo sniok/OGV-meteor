@@ -806,7 +806,7 @@ input:focus {
  */
 
 #slide-1 {
-    background: url(tasveer/slide-1-background.gif) no-repeat center fixed;
+    background: url(/tasveer/slide-1-background.gif) no-repeat center fixed;
     margin-top: -100px;
     padding-top: 195px;
     text-align: center;
