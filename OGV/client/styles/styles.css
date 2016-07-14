@@ -1211,6 +1211,10 @@ hr {
     z-index:1;
 }
 
+#search-model-result{
+   background-color:#faf9f9;
+}
+
 #user-results{
     max-width:350px;
     margin:auto;
@@ -1820,4 +1824,33 @@ input[type="text"].search-textbox {
 
     text-align: center;
     font-size:24px;
+}
+
+.explore-user-info{
+    float:right;
+}
+
+.dp-explore{
+    width:100px;
+    height:100px;
+    margin-top:5px;
+    float:left;
+}
+
+.user-result-a-tag{
+    display:block;
+    margin-top:20px;
+}
+
+.searchUsers:after{
+   clear:both;
+   display:block;
+   content: "";
+}
+
+.searchUsers .primary-btn{
+   width:60%;
+   font-size:16px;
+   height:30px;
+   background-color:#016e97;
 }

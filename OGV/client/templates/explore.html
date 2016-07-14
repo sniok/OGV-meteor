@@ -27,23 +27,15 @@
 </template>
 
 <template name="searchResult">
-  <div id='search-result' class="search-result">
+  <div id='search-model-result' class="search-result">
     <div id="search-meta">
       {{#if isLoading}}
         searching ...
       {{/if}}
     </div>
 
-   <h3>Models</h3>
     {{#each getModels}}
-    <a href="models/{{_id}}">
-    <div class="searchModels" id="view-model-options" style="padding:2px">
-      <h4 class="name">
-        {{name}}
-      </h4>
-      <h5 style="color:black;">{{about}}</h5>
-    </div>
-	</a>
+    {{>modelPost}}
     {{/each}}
   </div>
 </template>
@@ -56,14 +48,17 @@
       {{/if}}
     </div>
 
+    {{#if getUsers}}
     <h3 class="user-result-heading">Users</h3>
+    {{/if}}
     {{#each getUsers}}
-    <a href="profile/{{_id}}">
+    <a class="user-result-a-tag" href="profile/{{_id}}" style="display:block;">
     <div class="searchUsers" id="view-model-options" style="padding:2px">
-      <div class="user-profile-pic" style="background-image:url('/cfs/files/profilePictures/{{profile.pic}}'); width:100px; height:100px;"></div>
-      <div class="user-info">
+      <div class="user-profile-pic dp-explore" style="background-image:url('/cfs/files/profilePictures/{{profile.pic}}');"></div>
+      <div class="explore-user-info">
       <h4 class="name">{{profile.name}}</h4>
       <h5 style="color:black;">{{profile.bio}}</h5>
+      <button class="btn primary-btn btn-default" id="followButton" data-src="{{this._id}}" > + Follow </button>
       </div>
     </div>
 	</a>
