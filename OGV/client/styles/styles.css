@@ -1209,7 +1209,24 @@ hr {
     border-radius:2%;
     padding:5px;
     z-index:1;
-    position:absolute;
+}
+
+#search-model-result{
+   background-color:#faf9f9;
+}
+
+#user-results{
+    max-width:350px;
+    margin:auto;
+}
+
+.user-result-heading{
+    text-align:center;
+    color:#f03b5b;
+}
+
+.result-container{
+    display:none;
 }
 
 /*
@@ -1788,4 +1805,52 @@ hr {
     max-height:280px;
     overflow-y:auto;
     margin-top:-30px;
+}
+
+input[type="text"].search-textbox {
+    box-shadow: none;
+    outline: none;
+    border: none;
+
+    display: block;
+    width: 400px;
+    height: 50px;
+    background-color:#FAF9F9;
+
+    margin: auto;
+    margin-top: 80px;
+    border-bottom:2px solid #f03b5b;
+    border-radius:0%;
+
+    text-align: center;
+    font-size:24px;
+}
+
+.explore-user-info{
+    float:right;
+}
+
+.dp-explore{
+    width:100px;
+    height:100px;
+    margin-top:5px;
+    float:left;
+}
+
+.user-result-a-tag{
+    display:block;
+    margin-top:20px;
+}
+
+.searchUsers:after{
+   clear:both;
+   display:block;
+   content: "";
+}
+
+.searchUsers .primary-btn{
+   width:60%;
+   font-size:16px;
+   height:30px;
+   background-color:#016e97;
 }

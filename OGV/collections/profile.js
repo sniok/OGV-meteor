@@ -33,7 +33,7 @@ userProfileSchema = new SimpleSchema({
 	},
 	pic: {
 		type:String,
-		optional: true
+		optional:true
 	},
 	countModels: {
 		type: Number,

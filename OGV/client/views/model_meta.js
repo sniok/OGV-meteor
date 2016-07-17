@@ -36,11 +36,10 @@ Template.modelMeta.events({
     'submit #uploader-form': function(e, t)
     {
 	e.preventDefault();
-	
+	 a = e;
 	var modelMetaForm = $(e.currentTarget),
 	    filename = modelMetaForm.find('#desc-filename').val().toLowerCase(),
 	    description = modelMetaForm.find('#desc-about').val(),
-	    thumbnail,
 	    modelId = modelMetaForm.find('#model-id').val(),
 	    currentUser = Meteor.user();
 	    
@@ -50,128 +49,42 @@ Template.modelMeta.events({
 	var category = Array();
 	$("input:checkbox[name=category]:checked").each(function(){
     	category.push($(this).val());
-	})
+	});
 
-	file = $('#desc-model-thumb')
 	var currentModel = ModelFiles.findOne(modelId);		
 
-	var fsFile = new FS.File(e.target[2].files[0]);
-	fsFile.gFile = modelId;      
-
-	if(document.getElementById("desc-model-thumb").files.length == 0){
-		/**
-		* The part to be implemented when the user has left the thumbnail input field
-		* empty knowingly/unknowingly.
-		*/
-		var x = confirm("Are you sure you don't want to add/change thumbnail of your model?");
-		if(x){
-			/**
-			* If the user left the thumbnail input field empty knowingly
-			*/
-			ModelFiles.update(modelId, {$set: {name: filename, about: description}}, function(error, res) {
-			    if (error) {
-					sAlert.error(error.reason);
-			    } else {
-					sAlert.success("Data about model has been saved");
-			    }
-			});
-			if(category.length > 0){
-				ModelFiles.update(modelId, {$set: {categories: category}}, function(error, res) {
-			    if (error) {
-			    	sAlert.error(error.reason);
-			    } else {
-					sAlert.success("Data about model has been saved");					
-			    }
-			});
-			}
-
-			var uploadedModel = ModelFiles.findOne(modelId);
-			if( uploadedModel.converted ){
-				Router.go('/newsfeed');
-				sAlert.success("Data about model has been saved");
-			} else {
-				ModelFiles.remove(uploadedModel._id);
-				ThumbFiles.remove(uploadedModel.thumbnail);
-				Router.go('/upload');
-				sAlert.success("There was some error in converting your uploaded file");
-			}
-		 
-		}
-	} else {
-		/** 
-		* Delete any thumbnail association with the model. Thumbnail will be deleted before updating. 
-		* No thumbnail deletion will happen if there is no thumbnail present yet.
-		*/
-    	var prevThumbnail = ThumbFiles.findOne(currentModel.thumbnail);
-    	if(typeof prevThumbnail != 'undefined'){
-			ThumbFiles.remove(currentModel.thumbnail);
-    	}
-	
-		ThumbFiles.insert(fsFile,function(err,thumbFile) {
-		    if (err) {
-				sAlert.error(err.reason);
-		    } else 
-				sAlert.success("Thumbnail Image has been Uploaded");	
-				ModelFiles.update(modelId, {$set: {name: filename, about: description, thumbnail:fsFile._id}}, function(error, res) {
-				    if (error) {
-				    	sAlert.error(error.reason);	
-				    } else {
-						sAlert.success("Data about model has been saved");
-				    }
-				});
-				if(category.length > 0){
-					ModelFiles.update(modelId, {$set: {categories: category}}, function(error, res) {
-			    	if (error) {
-						sAlert.error(error.reason);
-			    	} else {
-						sAlert.success("Data about model has been saved");
-			    	}
-					});
-				}
-
-				var uploadedModel = ModelFiles.findOne(modelId);
-				if( uploadedModel.converted ){
-					Router.go('/newsfeed');
-					sAlert.success("Data about model has been saved");
-				} else {
-					ModelFiles.remove(uploadedModel._id);
-					ThumbFiles.remove(uploadedModel.thumbnail);
-					Router.go('/upload');
-					sAlert.error("There was some error in converting your uploaded file");
-				}
-		    
-		});
-	
-	
-/*
-	fsFile.gFile = modelId;
-        	
-	ThumbFiles.insert(fsFile,function(err,thumbFile) {
-	    if (err) {
-			sAlert.error("No image or invalid image format selected");
+	ModelFiles.update(modelId, {$set: {name: filename, about: description}}, function(error, res) {
+	    if (error) {
+			sAlert.error(error.reason);
 	    } else {
-			sAlert.success("Image has been Uploaded");		
-			ModelFiles.update(modelId, {$set: {name: filename, about: description, thumbnail:thumbFile._id}}, function(error, reason) {
-		    if (error) {
-				sAlert.error(error.reason);
-		    } else {
-				sAlert.success("Data about model has been saved");
-		    }
-		});
-  
+			sAlert.success("Data about model has been saved");
 	    }
-	}); 
+	});
+	if(category.length > 0){
+		ModelFiles.update(modelId, {$set: {categories: category}}, function(error, res) {
+	    if (error) {
+	    	sAlert.error(error.reason);
+	    } else {
+			sAlert.success("Data about model has been saved");					
+	    }
+	});
+	}
 
 	var uploadedModel = ModelFiles.findOne(modelId);
-		if( uploadedModel.converted ) {
-			sAlert.success("Data about model saved");
-			Router.go('/models');
-		} else {
-			sAlert.error("There was some error in converting your uploaded file");			
-			Router.go('/upload');
-*/		}
-    } 
-});
+	if( uploadedModel.converted ){
+		Router.go('/models/'+uploadedModel._id+'/shared=true');
+		sAlert.success("Data about model has been saved");
+	} else {
+		ModelFiles.remove(uploadedModel._id);
+		ThumbFiles.remove(uploadedModel.thumbnail);
+		Router.go('/upload');
+		sAlert.success("There was some error in converting your uploaded file");
+	}
+		 
+
+		    
+}
+});		
 
 /**
 * helper to display already present categories in the model

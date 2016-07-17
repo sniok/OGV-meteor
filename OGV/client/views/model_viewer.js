@@ -56,6 +56,19 @@ Template.modelViewer.events({
     'click #sm-item-owner':function() 
     {
 	ownerId();
+    },
+
+    'click .edit-thumb-btn': function()
+    {
+	imageData = renderer.domElement.toDataURL('image/png');
+	model = ModelFiles.findOne(this._id);
+	ModelFiles.update(this._id, {$set: {screenshot: imageData}}, function(error, res) {
+	    if (error) {
+			sAlert.error(error.reason);
+	    } else {
+			sAlert.success("Data about model has been saved");
+	    }
+	});
     }
 
 });
@@ -84,11 +97,23 @@ Template.modelViewer.helpers({
 
     ownerId: function()
     {
-    var parts = location.href.split('/');
-    // Id of model whose page is being visited
-    var modelId = parts.pop(); 
-    var model = ModelFiles.findOne(modelId);
+    model = ModelFiles.findOne(this._id);
     return model.owner;
+    },
+
+    ownerDp: function()
+    {
+        imgId = Meteor.users.findOne(model.owner).profile.pic;
+	return ProfilePictures.findOne(imgId).url();
+    },
+
+    screenshot: function(){
+	screenshot = model.screenshot;
+	if(screenshot){
+	 return false;
+	}else {
+	return true;
+	}
     }
 });
 
@@ -96,7 +121,7 @@ Template.modelViewer.rendered = function()
 {
     console.log("rendered");
     model = this.data;
-    objList = getObjFiles(model);	
+    objList = getObjFiles(model);
     console.log(objList);
   
     init();
@@ -109,7 +134,7 @@ Template.modelViewer.rendered = function()
 
 function getObjFiles(model) 
 {
-    var objUrls = [];
+    objUrls = [];
     sAlert.success("Getting obj files");    
     modelId = model._id;
     OBJFiles.find({ gFile : modelId }).forEach( function (objFile) {
@@ -313,9 +338,9 @@ function init()
      * If webgl is there then use it otherwise use canvas
      */
     if (Detector.webgl) {
-	renderer = new THREE.WebGLRenderer({antialias:true});
+	renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer: true});
     } else {
-	renderer = new THREE.CanvasRenderer(); 
+	renderer = new THREE.CanvasRenderer();
     }
 
     /**

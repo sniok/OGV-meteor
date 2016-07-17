@@ -25,6 +25,11 @@
 	
 	<div id="model-container">
 	<div class="secondary-menu">
+		{{#if screenshot}}
+                <div class="sm-item" id="sm-item-thumb">
+			<button class="edit-thumb-btn">Use this as preview</button>
+		</div>
+		{{/if}}
 		<div class="sm-item" id="sm-item-download">
 		<a href = "/cfs/files/modelFiles/{{_id}}/{{name}}">	<img src="/icons/Download.png" width="28px" height="28px">
 			<p class="sm-menu-text">Download</p></a>
@@ -46,7 +51,7 @@
 		</div>
 
 		<div class="sm-item" id="sm-item-owner">
-		<a href = "/profile/{{ownerId}}"><img src="/icons/User.png" width="28px" height="28px">
+		<a href = "/profile/{{ownerId}}"><img src="{{ownerDp}}" width="28px" height="28px">
 			<p class="sm-menu-text">Owner</p></a>
 		</div>
 

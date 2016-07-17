@@ -1,15 +1,16 @@
 var filter_array, text;
 
 Template.explore.events({
-    "keyup #search-box": _.throttle(function(e) {
-        var text = $(e.target).val().trim();
-        ModelSearch.search(text);
-    }, 200),
-
-    "keyup #search-user-box": _.throttle(function(e) {
-        var text = $(e.target).val().trim();
-        UserSearch.search(text);
-    }, 200),
+    'keyup .search-textbox': _.throttle(function(e){
+	searchQuery = e.currentTarget.value.trim();
+        ModelSearch.search(searchQuery);
+	UserSearch.search(searchQuery);
+	if(searchQuery.length < 1){
+		$('.result-container').css('display', 'none');
+	} else{
+		$('.result-container').css('display', 'block');
+	}
+	}, 200),
 
     "change .filter-select": function(e) {
         var newValue = $(e.target).val();
