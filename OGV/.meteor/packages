@@ -20,7 +20,6 @@ accounts-base
 accounts-password
 accounts-ui
 accounts-github
-meteor-platform
 accounts-google
 accounts-facebook
 mizzao:user-status
@@ -35,3 +34,18 @@ ishwerdas:ogv-threejs
 aldeed:collection2
 aldeed:simple-schema
 juliancwirko:s-alert-genie
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+jquery
+tracker
+logging
+reload
+random
+ejson
+spacebars
+check
+standard-minifier-css
+standard-minifier-js

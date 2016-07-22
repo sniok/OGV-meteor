@@ -66,9 +66,11 @@ Template.modelViewer.events({
 	    if (error) {
 			sAlert.error(error.reason);
 	    } else {
-			sAlert.success("Data about model has been saved");
+			sAlert.success("Updated thumbnail preview");
 	    }
 	});
+	Router.go('/profile/'+model.owner);
+	
     }
 
 });
@@ -350,7 +352,8 @@ function init()
     renderer.setClearColor(0x555555, 1);
     
    shared = UI._globalHelpers['embeddedView']();
-   if(!shared){
+   edit = UI._globalHelpers['editMode']();
+   if(!shared && !edit){
     controller.appendChild(datGUI.domElement);
    }
     container.appendChild(renderer.domElement); 

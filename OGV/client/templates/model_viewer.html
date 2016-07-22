@@ -1,8 +1,17 @@
 <template name = "modelViewer">
-   {{#if embeddedView}}
+   {{#if editMode}}
 	<div id="model-container">
+		<div class="secondary-menu">
+		<div class="sm-item">
+			<button class="edit-thumb-btn">Use this as preview</button>
+		</div>
+		</div>
 		<div id="modelController">
 		</div>
+	</div>
+   {{else}}
+   {{#if embeddedView}}
+	<div id="model-container">
 	</div>
         <div class="post-item love-wrapper lovemeter-embedded">
 	      {{> lovemeter }}
@@ -25,11 +34,6 @@
 	
 	<div id="model-container">
 	<div class="secondary-menu">
-		{{#if screenshot}}
-                <div class="sm-item" id="sm-item-thumb">
-			<button class="edit-thumb-btn">Use this as preview</button>
-		</div>
-		{{/if}}
 		<div class="sm-item" id="sm-item-download">
 		<a href = "/cfs/files/modelFiles/{{_id}}/{{name}}">	<img src="/icons/Download.png" width="28px" height="28px">
 			<p class="sm-menu-text">Download</p></a>
@@ -70,6 +74,7 @@
 	</div>
 	
 	</div>
+	{{/if}}
 	{{/if}}
 
 </template>
