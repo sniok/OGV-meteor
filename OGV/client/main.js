@@ -75,7 +75,6 @@ if (Accounts._verifyEmailToken) {
  */
 Meteor.subscribe('sharedModels');
 Meteor.subscribe('objFiles');
-Meteor.subscribe('thumbFiles');
 Meteor.subscribe('comments');
 Meteor.subscribe('lovers');
 Meteor.subscribe('profilePictures');

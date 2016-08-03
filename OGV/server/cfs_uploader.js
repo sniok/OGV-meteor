@@ -24,8 +24,17 @@
  *  it uploads .g files to server and then converts them to .obj files
  */
 
+var convertPercentage;
 
 Meteor.methods({
+    /**
+     * Return convert percentage
+     */
+    convertPercent: function()
+    {
+	return convertPercentage;
+    },
+
     /**
      * Converts g into obj iles 
      */
@@ -49,6 +58,9 @@ Meteor.methods({
 	    mgedPath = settings.mgedPath,
 	    g_objPath = settings.gobjPath,
 	    cmd = mgedPath + " -c  " + filePath +" ls -a 2>&1",
+            filePathArray = filePath.split('-');
+	    mergeObjName = fileId;
+	    mergecmd = mgedPath + " -c  " + filePath + " r " + mergeObjName;
 	    uploadDirPath = filePath.substring(0, filePath.lastIndexOf("/")); 
 	
 	/**
@@ -62,14 +74,44 @@ Meteor.methods({
 		 */
 		sys.print('stdout' + stdout);
 		objects = stdout.split(" ");
-		console.log(objects);
 		sys.print('stderr' + stderr);
+		console.log(objects);
 	   
 		if (error != null) {
 		    console.log('exec error: ' + error);
 	    	} else {
 
-		    for (i = 1; i < objects.length; i++) {
+		    for (i = 0; i < objects.length-1; i++) {
+			var regex = /\w*\.r/g;
+			var rFile = regex.test(objects[i]);
+			if(!rFile) {
+				mergecmd += " u " + objects[i];
+			}
+		    }
+		console.log(mergecmd);
+		(function() {
+		   child = exec(mergecmd, Meteor.bindEnvironment (function( error, stdout, stderr) {
+			sys.print('stdout ' + stdout);
+			sys.print('stderr ' + stderr);
+	
+			if(error != null){
+				console.log('exec error: ' + error);
+			} else {
+				console.log('added merged object');
+		   child = exec(cmd, Meteor.bindEnvironment (function (error, stdout, stderr) {
+		   /**
+		    * the command in cmd returns a list of obj files which are then converted into
+		    * array , which is hence traversed to store each OBJ file in database
+		    */
+		   sys.print('stdout' + stdout);
+		   objects = stdout.split(" ");
+		   console.log(objects);
+		   sys.print('stderr' + stderr);
+	   
+		   if (error != null) {
+		       console.log('exec error: ' + error);
+	    	   } else {
+		      for (i = 0; i < objects.length; i++) {
 			var counter = 0;
 			(function(i) {
 			    objPath[i] = uploadDirPath + "/" + objects[i] + ".obj";
@@ -81,13 +123,18 @@ Meteor.methods({
 			        } else {
 				    console.log("File has been converted" + objects[i] + i);
 				    objFS = new FS.File(objPath[i]);
-				    objFS.gFile = fileId;				
+				    objFS.gFile = fileId;
+				    if(objects[i] == mergeObjName){
+				       objFS.objtype = "complete";
+				    } else {
+				       objFS.objtype = "partial";
+				    }
 				    OBJFiles.insert(objFS, function (err, objFile) {
 			    	        if (err) { 
 					    console.log(err); 
 				        } else {
 					     counter = counter + 1;
-					     var convertPercentage =  (counter/(objects.length - 2)) *100; 
+					     convertPercentage =  (counter/(objects.length - 2)) *100; 
 					     console.log("done " + convertPercentage + " %");
 					    /**
 					     * The acceptance rate for succesfull conversion is at least 70%
@@ -100,13 +147,19 @@ Meteor.methods({
 					    }
 					}
 				    });	
-			        }    
+			       }    
 	   	            }));
 		        })(i);	
-		    }
-
-	    }       
+		      }
+	       }       
+	       }));
+	       }
+		}));
+		})();
+	    }
 	}));
+
+
     }
 
 
