@@ -60,12 +60,12 @@ Template.modelMeta.events({
 			sAlert.success("Data about model has been saved");
 	    }
 	});
-	Posts.insert({
+	/*Posts.insert({
 		postType: "new",
 		postedAt: currentModel.timeUploaded,
 		postId: modelId,
 		postedBy: currentUser._id
-	});
+	});*/
 	if(category.length > 0){
 		ModelFiles.update(modelId, {$set: {categories: category}}, function(error, res) {
 	    if (error) {
@@ -75,10 +75,11 @@ Template.modelMeta.events({
 	    }
 	});
 	}
-	cPercent = Meteor.call('convertPercent');
+	/*cPercent = Meteor.call('convertPercent');
 	console.log("######");
 	console.log(cPercent);
-	console.log("######");
+	console.log("######");*/
+
 	var uploadedModel = ModelFiles.findOne(modelId);
 	if( uploadedModel.converted ){
 		Router.go('/models/'+uploadedModel._id+'/edit');
