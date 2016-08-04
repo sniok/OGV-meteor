@@ -61,32 +61,31 @@ Meteor.methods({
             filePathArray = filePath.split('-');
 	    mergeObjName = fileId;
 	    mergecmd = mgedPath + " -c  " + filePath + " r " + mergeObjName;
+	    listcmd = mgedPath + " -c " + filePath + " search -not -type region";
 	    uploadDirPath = filePath.substring(0, filePath.lastIndexOf("/")); 
 	
 	/**
 	 * exec() function executes system commands and Meteor.BindEnvironment binds it
 	 * meteor environment so that they can share each other's variables
 	 */
-	child = exec(cmd, Meteor.bindEnvironment (function (error, stdout, stderr) {
+	child = exec(listcmd, Meteor.bindEnvironment (function (error, stdout, stderr) {
 		/**
 		 * the command in cmd returns a list of obj files which are then converted into
 		 * array , which is hence traversed to store each OBJ file in database
 		 */
 		sys.print('stdout' + stdout);
-		objects = stdout.split(" ");
+		objects = stderr.split("\n");
 		sys.print('stderr' + stderr);
+		console.log("objects in list cmd");
 		console.log(objects);
+		console.log("#######");
 	   
 		if (error != null) {
 		    console.log('exec error: ' + error);
 	    	} else {
 
 		    for (i = 0; i < objects.length-1; i++) {
-			var regex = /\w*\.r/g;
-			var rFile = regex.test(objects[i]);
-			if(!rFile) {
-				mergecmd += " u " + objects[i];
-			}
+			mergecmd += " u " + objects[i];
 		    }
 		console.log(mergecmd);
 		(function() {

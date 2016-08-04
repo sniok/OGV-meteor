@@ -1854,3 +1854,22 @@ input[type="text"].search-textbox {
    height:30px;
    background-color:#016e97;
 }
+
+#save-btn{
+   display:none;
+}
+
+progress[value]{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+   appearance: none;
+   width: 100%;
+}
+
+progress[value]::-webkit-progress-bar{
+   background-color:#c7324d;
+}
+
+progress[value]::-webkit-progress-value{
+   background-color:#EE3B5B;
+}

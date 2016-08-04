@@ -60,6 +60,12 @@ Template.modelMeta.events({
 			sAlert.success("Data about model has been saved");
 	    }
 	});
+	Posts.insert({
+		postType: "new",
+		postedAt: currentModel.timeUploaded,
+		postId: modelId,
+		postedBy: currentUser._id
+	});
 	if(category.length > 0){
 		ModelFiles.update(modelId, {$set: {categories: category}}, function(error, res) {
 	    if (error) {
@@ -69,7 +75,10 @@ Template.modelMeta.events({
 	    }
 	});
 	}
-
+	cPercent = Meteor.call('convertPercent');
+	console.log("######");
+	console.log(cPercent);
+	console.log("######");
 	var uploadedModel = ModelFiles.findOne(modelId);
 	if( uploadedModel.converted ){
 		Router.go('/models/'+uploadedModel._id+'/edit');
@@ -85,6 +94,19 @@ Template.modelMeta.events({
 		    
 }
 });		
+
+Template.modelMeta.helpers({
+    'progressValue': function(){
+		var value = 20;
+		if(value >= 70) {
+			$('progress[value]').css('display', 'none');
+			$('#save-btn').css('display', 'block');
+			return value;
+		} else {
+		return value;
+		}
+	}
+});
 
 /**
 * helper to display already present categories in the model
