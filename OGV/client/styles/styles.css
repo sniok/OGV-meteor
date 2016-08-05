@@ -1867,9 +1867,18 @@ progress[value]{
 }
 
 progress[value]::-webkit-progress-bar{
-   background-color:#c7324d;
+   background-color:#333;
 }
 
 progress[value]::-webkit-progress-value{
    background-color:#EE3B5B;
+}
+
+.progress-label{
+    margin-top: -44px;
+    text-align: center;
+    width: 100%;
+    display: block;
+    color:#FAF9F9;
+    font-size:1.4em;
 }

@@ -20,17 +20,10 @@ function uploadFile(event, temp)
 	fsFile.converted = false;
 	fsFile.timeUploaded = new Date();
 	fsFile.about = "The model " + fsFile.name() + " was uploaded on " + fsFile.timeUploaded;
-	fsFile.thumbnail = new FS.File();
 	fsFile.viewsCount = 0;
+	fsFile.conversion = 0;
 	var currentUser = Meteor.user();
 
-	Meteor.users.update(currentUser._id, {$inc:{"profile.countModels": 1}}, function(error, res) {
-		if (error) {
-			sAlert.error(error.reason);
-		} else {
-			sAlert.success("Updated number of models for user");			
-		}
-	});
 	ModelFiles.insert(fsFile,function(err) {
 	    if (err) {
 	    	sAlert.error("There was some error in uploading your file, please try again/later");

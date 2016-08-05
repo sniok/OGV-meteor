@@ -177,12 +177,6 @@ Template.profileModelFeed.events({
 		if (r == true) {
 			//Removing both ThumbFiles and ModelFiles associated with the give model id
 		    var model = ModelFiles.findOne(this._id);
-		    var prevThumbnail = ThumbFiles.findOne(model.thumbnail);
-		    //In case model is not without a thumbnail
-		    if(typeof prevThumbnail != 'undefined'){
-				ThumbFiles.remove(model.thumbnail);
-    		}
-					    
 		    ModelFiles.remove(model._id);
 		    Meteor.users.update({_id: model.owner}, {$inc: {"profile.countModels": -1}});
 		    sAlert.info("Model permanently deleted");

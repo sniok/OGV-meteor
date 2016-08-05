@@ -86,7 +86,6 @@ Template.modelMeta.events({
 		sAlert.success("Data about model has been saved");
 	} else {
 		ModelFiles.remove(uploadedModel._id);
-		ThumbFiles.remove(uploadedModel.thumbnail);
 		Router.go('/upload');
 		sAlert.success("There was some error in converting your uploaded file");
 	}
@@ -98,7 +97,10 @@ Template.modelMeta.events({
 
 Template.modelMeta.helpers({
     'progressValue': function(){
-		var value = 20;
+	        var id = $('#model-id').val(),
+		modelObj = ModelFiles.findOne({_id: id});	
+		var value = parseInt(modelObj.conversion, 10);
+		if(value == null) value = 0;
 		if(value >= 70) {
 			$('progress[value]').css('display', 'none');
 			$('#save-btn').css('display', 'block');
