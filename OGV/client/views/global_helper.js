@@ -33,7 +33,7 @@ Template.registerHelper('loggedInUser', function(){
 		}
  		var followings = user.profile.following;
  		var followers = user.profile.follower;
- 		var modelsCount = user.profile.countModels;
+ 		var modelsCount = ModelFiles.find({owner:user._id, converted: true}).count();
 	
  		if(!followings){
  		    followingsCount = 0
@@ -47,10 +47,6 @@ Template.registerHelper('loggedInUser', function(){
  		    followersCount = followers.length;  
  		}
 		
-		if (!modelsCount){
-			modelsCount = 0;
-		}
-
  		return {
 		   obj : user,
 		   profilePic: picUrl,

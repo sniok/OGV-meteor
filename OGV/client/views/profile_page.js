@@ -50,6 +50,12 @@ Template.profilePage.events({
 
 
 Template.profilePage.helpers({
+    countModels: function() {
+	var parts = location.href.split('/');
+	var otherId = parts.pop(); //id of user whose page is being visited
+	return ModelFiles.find({owner: otherId, converted: true}).count();
+    },
+
     currentFollowsThis: function() {
 	var parts = location.href.split('/');
 	var otherId = parts.pop(); //id of user whose page is being visited	
@@ -112,10 +118,10 @@ Template.profilePage.helpers({
 	var currentProfile = Meteor.users.findOne(otherId);
 
 	var followings = currentProfile.profile.following;
-	if (followings.length == 0){
+	if (!followings){
 		return 0;
 	} else {
-		return (followings.length - 1);	
+		return (followings.length);	
 	}
     },
     
@@ -178,7 +184,6 @@ Template.profileModelFeed.events({
 			//Removing both ThumbFiles and ModelFiles associated with the give model id
 		    var model = ModelFiles.findOne(this._id);
 		    ModelFiles.remove(model._id);
-		    Meteor.users.update({_id: model.owner}, {$inc: {"profile.countModels": -1}});
 		    sAlert.info("Model permanently deleted");
 		}
   	}

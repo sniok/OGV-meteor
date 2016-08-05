@@ -35,10 +35,6 @@ userProfileSchema = new SimpleSchema({
 		type:String,
 		optional:true
 	},
-	countModels: {
-		type: Number,
-		defaultValue: 0
-	},
 	follower: {
 		type: Array,
 		optional:true

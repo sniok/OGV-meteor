@@ -37,7 +37,7 @@ Template.newsfeedSidebar.items = function() {
 
 Template.newsfeedSidebar.helpers({
     /**
-    * Returns user info of other users
+    * Returns user info of other user
     * All users excluding the ones who are being already followed and the user himself
     * Sorted on the basis of number of Models.
     * Users having highest number of models will be displayed on top.
@@ -45,7 +45,7 @@ Template.newsfeedSidebar.helpers({
     suggestownerInfo: function()
     {
         var currentUser = Meteor.user();
-        return Meteor.users.find( {$and: [{"profile.follower": {$not: currentUser._id}}, {_id: {$not: currentUser._id}}]}, {sort:{"profile.countModels":-1}, limit: 1});
+        return Meteor.users.find( {$and: [{"profile.follower": {$not: currentUser._id}}, {_id: {$not: currentUser._id}}]}, {sort:{"profile.follower":-1}, limit: 1});
     },
 
     /**
