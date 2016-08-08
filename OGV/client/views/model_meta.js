@@ -41,6 +41,7 @@ Template.modelMeta.events({
 	    filename = modelMetaForm.find('#desc-filename').val().toLowerCase(),
 	    description = modelMetaForm.find('#desc-about').val(),
 	    modelId = modelMetaForm.find('#model-id').val(),
+	    audience = modelMetaForm.find('#desc-audience').val(),
 	    currentUser = Meteor.user();
 	    
 	/**
@@ -53,7 +54,7 @@ Template.modelMeta.events({
 
 	var currentModel = ModelFiles.findOne(modelId);		
 
-	ModelFiles.update(modelId, {$set: {name: filename, about: description}}, function(error, res) {
+	ModelFiles.update(modelId, {$set: {name: filename, about: description, audience: audience}}, function(error, res) {
 	    if (error) {
 			sAlert.error(error.reason);
 	    } else {
@@ -103,6 +104,7 @@ Template.modelMeta.helpers({
 		if(value == null) value = 0;
 		if(value >= 70) {
 			$('progress[value]').css('display', 'none');
+			$('.progress-label').css('display', 'none');
 			$('#save-btn').css('display', 'block');
 			return value;
 		} else {

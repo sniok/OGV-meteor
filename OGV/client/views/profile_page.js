@@ -153,10 +153,20 @@ Template.profileModelFeed.helpers({
      */
     models: function() 
     {
-    var parts = location.href.split('/');
+        var parts = location.href.split('/');
 	var urlId = parts.pop(); //id of user whose page is being visited
-	
-	model = ModelFiles.find({owner: urlId}, {sort:{timeUploaded:-1}});
+	var followers = Meteor.users.findOne(urlId).profile.follower;
+	var isFollower = $.inArray(Meteor.userId(), followers);
+	if(Meteor.userId() == urlId){	
+	   model = ModelFiles.find({owner: urlId}, {sort:{timeUploaded:-1}});
+	} else {
+	   if(isFollower >= 0){
+		audience = ['public', 'followers'];
+		model = ModelFiles.find( {audience: {$in: audience}, owner:urlId }, {sort: {timeUploaded: -1}});
+	   } else{
+		model = ModelFiles.find({owner: urlId, audience: "public"}, {sort:{timeUploaded:-1}});
+	   }
+	}
 	if (model.count()) {
 	    return model;
 	} else {

@@ -20,14 +20,18 @@
 			<p class ="help-text"> What you want to be known as around </p>	
 			<input class="form-control filename" id="desc-filename" name="filename" value="{{ name }}" type="text">
 
+			<label for="audience" class="input-head"><strong>Who can see this model: </strong> </label>
+			<p class="help-text"> Choose who can see this uploaded model</p>
+			<select class="form-control audience" id="desc-audience" name="audience">
+			<option value="public">Everyone can see this</option>
+			<option value="followers">People who follow you</option>
+			<option value="onlyme">Only you can see this</option>
+			</select>
+
 			<label for="uplaoder-about" class ="input-head"> <strong>About Model:</strong> </label>
 			<p class = "help-text"> Provide a short description about your model </p>
 			<textarea class="form-control secondary-textarea" id = "desc-about" cols=25 maxlength="150" onkeyup="textCounter(this,'counter',150);">{{ about }}</textarea>
 			<p id="counter" style="color:red;font-size:10px">*150 characters left</p>
-
-<!--			<label for="filename" class ="input-head"><strong> Model-Image</strong> </label>
-			<p class ="help-text"> An image that will be used as a thumbnail for your model, the preferred size is 500 X 300 </p>	
-			<input class="form-control model-thumb" id="desc-model-thumb" name="modelThumb" type="file">-->
 
 			<div id="checkform-body">
 			<label for="uploader-about" class ="input-head"><strong> Category </strong></label><br>			

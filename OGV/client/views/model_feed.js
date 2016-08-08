@@ -45,7 +45,9 @@ Template.modelFeed.helpers({
 	return model; 
     } else {
     	var currentUser = Meteor.user();
-	model = ModelFiles.find( {owner: {$in: currentUser.profile.following}}, {sort: {timeUploaded: -1}});
+	var audience = ['public', 'followers'];
+	model = ModelFiles.find( {audience: {$in: audience}, owner: {$in: currentUser.profile.following}}, {sort: {timeUploaded: -1}});
+//	model = Posts.find( {postedBy: {$in: currentUser.profile.following}}, {sort: {postedAt: -1}});
 
 	if (model.count()) {
 	    return model;

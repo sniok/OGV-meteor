@@ -37,6 +37,11 @@ Template.modelViewer.events({
 	    }
 	});
     },
+    
+    'click #sm-item-edit': function()
+     {
+	Router.current().render(Template.ModelViewer).data();
+     },
 
     'click #sm-item-embed':function() 
     {
@@ -106,7 +111,11 @@ Template.modelViewer.helpers({
     ownerDp: function()
     {
         imgId = Meteor.users.findOne(model.owner).profile.pic;
-	return ProfilePictures.findOne(imgId).url();
+	if(imgId){
+	   return ProfilePictures.findOne(imgId).url();
+	} else {
+	   return "/icons/User.png";
+	}
     },
 
     screenshot: function(){
@@ -351,9 +360,8 @@ function init()
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x555555, 1);
     
-   shared = UI._globalHelpers['embeddedView']();
    edit = UI._globalHelpers['editMode']();
-   if(!shared && !edit){
+   if(edit){
     controller.appendChild(datGUI.domElement);
    }
     container.appendChild(renderer.domElement); 
