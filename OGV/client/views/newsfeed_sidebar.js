@@ -86,7 +86,7 @@ Template.shareTickr.helpers({
 	'shareMessage': function(){
 	    var userName = Meteor.users.findOne(this.sharedby).profile.name;
 	    var ownerName = Meteor.users.findOne(this.ownerId).profile.name;
-	    var modelName = ModelFiles.findOne(this.model).name();
+	    var modelName = ModelFiles.findOne(this.model).name;
 	    var message = userName + " shared " + ownerName + "'s model " + modelName;
 	    return message;
 	}

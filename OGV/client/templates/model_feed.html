@@ -5,11 +5,9 @@
     {{> newsfeedSidebar}}
     </div>
     <div class="left-container">
-    {{#if models}}
-	{{#each models}}
-	    {{#if converted }}
-			{{> modelPost }}
-	    {{/if}}
+    {{#if posts}}
+	{{#each posts}}
+		{{> modelPost }}
 	{{/each}}
     {{else}}
 	<h3>You seem to be new here, your newsfeed looks empty</h3>
@@ -21,32 +19,37 @@
 <template name ="modelPost">
     <div class="feed-item model-post">
       <div class="post-section post-sidebar user-info">
-		<a href="/profile/{{ owner._id }}">
+		<a href="/profile/{{ postedBy }}">
 			<div class="post-item user-image" style="background-image:url('{{userImg}}');"></div>
 		</a>
 		<div class="post-item post-meta user-meta"></div>
       </div>
 	    
      <div class="post-section post-content model-info">
-		<p class="post-item post-text user-name"> 
-			<a href="/profile/{{ owner._id }}"> {{ owner.profile.name }}</a> posted {{ name }} <br>on <em>{{uploadedAt}}</em>
+		<p class="post-item post-text">
+			{{#if sharedInfo}}
+				{{{sharedInfo}}}
+			{{/if}}
+		</p>
+		<p class="post-item post-text user-name">
+			<a href="/profile/{{ owner._id }}"> {{ owner.profile.name }}</a> posted {{ model.name }} <br>on <em>{{model.uploadedAt}}</em>
 		</p>
 		<div class="post-item">
 	        {{> modelView }}
 	        <div id = "editModelButtons">
 	            <a href="#"><i id="deleteModel" class="fa fa-cog fa-minus-square-o fa-2x" title="Delete model"></i></a>&nbsp;&nbsp;&nbsp;
-	            <a href ="/description/{{_id}}"><i class="fa fa-cog fa-cogs fa-2x" title="Change model settings"></i></a>
+	            <a href ="/description/{{postId}}"><i class="fa fa-cog fa-cogs fa-2x" title="Change model settings"></i></a>
 	        </div>	        	
-			<p class="post-text post-subitem"> {{ about }} </p>
+			<p class="post-text post-subitem"> {{ model.about }} </p>
 		</div>
         <div class="post-item love-wrapper">
             {{> lovemeter }}
         </div>
         <img src="/icons/views.png" style="height:45px;width:35px">
-		    {{this.viewsCount}}
-	<button class="shareButton" data-src={{_id}}>Share</button>
+		    {{model.viewsCount}}
+	<button class="shareButton" data-src={{postId}}>Share</button>
         <div class="post-item comments-wrapper">
-        	{{> comments }}    
+        	{{> comments }}
         </div>
      </div>
      <span class="clear"></span>
@@ -55,10 +58,10 @@
 
 
 <template name="modelView">
-	<div class="post-item model-preview" style="background-image:url(&quot;{{screenshot}}&quot;);">
-		<a class = " model-preview-link" href="/models/{{_id}}/shared=false">
+	<div class="post-item model-preview" style="background-image:url(&quot;{{model.screenshot}}&quot;);">
+		<a class = " model-preview-link" href="/models/{{postId}}/shared=false">
 			<h2 class="post-subitem model-name">
-				<span class="model-link-text">{{ name }}</span>
+				<span class="model-link-text">{{ model.name }}</span>
 			</h2>
 		</a>
 	</div>

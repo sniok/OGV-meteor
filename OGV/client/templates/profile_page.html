@@ -55,11 +55,9 @@
 <template name="profileModelFeed">
     <div class="profile-feed-wrapper">
     <hr>
-    {{#if models}}
-    {{#each models}}
-        {{#if converted }}
+    {{#if posts}}
+    {{#each posts}}
             {{> modelPost }}
-        {{/if}}
     {{/each}}
     {{else}}
     <h3>{{user.profile.name}} has no uploaded models</h3>

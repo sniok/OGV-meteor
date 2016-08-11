@@ -81,7 +81,7 @@ Meteor.subscribe('profilePictures');
 Meteor.subscribe('ogvSettings');
 Meteor.subscribe('profiles');
 Meteor.subscribe('notifications');
-
+Meteor.subscribe('posts');
 /*                                                                    
  * Local Variables:                                                   
  * mode: javascript                                                            

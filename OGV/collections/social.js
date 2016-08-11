@@ -91,9 +91,10 @@ Meteor.methods({
 	var owner = shareAttributes.owner;
 	var post = shareAttributes.model;
 	var sharedBy = shareAttributes.sharedBy;
-	
-	SharedModels.insert({ownerId: owner, sharedby: sharedBy, model: post, timeShared: new Date()});
+	var time = new Date();
 
+	id = SharedModels.insert({ownerId: owner, sharedby: sharedBy, model: post, timeShared: time});
+	Posts.insert({postType: "shared", postedAt: time, postId: id, postedBy: sharedBy, audience: "public"});
     
 	if(user._id != owner){
 		Notifications.insert({

@@ -35,7 +35,7 @@ Template.modelFeed.helpers({
      * models helper finds all the models from the database and then sorts
      * them in reverse chronological order. 
      */
-    models: function() 
+    posts: function() 
     {
     url = Router.current().url;
     url = url.split('/');
@@ -46,14 +46,13 @@ Template.modelFeed.helpers({
     } else {
     	var currentUser = Meteor.user();
 	var audience = ['public', 'followers'];
-	model = ModelFiles.find( {audience: {$in: audience}, owner: {$in: currentUser.profile.following}}, {sort: {timeUploaded: -1}});
-//	model = Posts.find( {postedBy: {$in: currentUser.profile.following}}, {sort: {postedAt: -1}});
+	posts = Posts.find( {audience: {$in: audience}, postedBy: {$in: currentUser.profile.following}}, {sort: {postedAt: -1}});
 
-	if (model.count()) {
-	    return model;
+	if (posts.count()) {
+	    return posts;
 	} else {
 	    return false;
-	} 
+	}
     }
     }
 }); 
@@ -81,7 +80,12 @@ Template.modelPost.helpers({
      */
     userImg: function()
     {
-	modelOwner = Meteor.users.findOne(this.owner);
+	if(this.postType == "posted"){
+		modelOwner = Meteor.users.findOne(this.postedBy);
+	} else if(this.postType == "shared"){
+		sharedModel = SharedModels.find({_id: this.postId}).fetch()[0];
+		modelOwner = Meteor.users.findOne(sharedModel.sharedby);
+	}
 	picId = modelOwner.profile.pic;
 	if (picId) {
 	    pic = ProfilePictures.findOne(picId);
@@ -94,7 +98,37 @@ Template.modelPost.helpers({
     
     owner: function()
     {
-	return Meteor.users.findOne(this.owner);
+	if(this.postType == "posted"){
+		return Meteor.users.findOne(this.postedBy);
+	} else if(this.postType == "shared"){
+		sharedModel = SharedModels.find({_id: this.postId}).fetch()[0];
+		return Meteor.users.findOne(sharedModel.ownerId);
+	}
+    },
+
+    sharedInfo: function()
+    {
+	if(this.postType == "posted") {
+		return false;
+	} else if(this.postType == "shared") {
+		sharedModel = SharedModels.find({_id: this.postId}).fetch()[0];
+		owner = Meteor.users.find({_id:this.postedBy}).fetch()[0];
+	   	model = ModelFiles.find({_id: sharedModel.model}).fetch()[0];
+		message = "<a href=\"/profile/"+ this.postedBy+"\"> "+ owner.profile.name+"</a> shared this model";
+		return message;
+	}
+    },
+
+    model: function()
+    {
+       if(this.postType == "posted") {
+	  model = ModelFiles.find({_id: this.postId, converted: true}).fetch();
+	}
+	else if(this.postType == "shared"){
+	   sharedModel = SharedModels.find({_id: this.postId}).fetch()[0];
+	   model = ModelFiles.find({_id: sharedModel.model}).fetch();
+        }
+	return model[0];
     }
 });
     

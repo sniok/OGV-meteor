@@ -55,6 +55,10 @@ Meteor.publish('notifications', function(){
   return Notifications.find();
 });
 
+Meteor.publish('posts', function(){
+  return Posts.find();
+});
+
 /**
  * Not every detail about user is published to client
  * for security reasons

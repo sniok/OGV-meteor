@@ -151,24 +151,27 @@ Template.profileModelFeed.helpers({
      * models helper finds all the models from the user and then sorts
      * them in reverse chronological order. 
      */
-    models: function() 
+    posts: function() 
     {
         var parts = location.href.split('/');
 	var urlId = parts.pop(); //id of user whose page is being visited
 	var followers = Meteor.users.findOne(urlId).profile.follower;
 	var isFollower = $.inArray(Meteor.userId(), followers);
-	if(Meteor.userId() == urlId){	
-	   model = ModelFiles.find({owner: urlId}, {sort:{timeUploaded:-1}});
+	if(Meteor.userId() == urlId){
+	   post = Posts.find({postedBy: urlId}, {sort:{postedAt: -1}});
+	   //model = ModelFiles.find({owner: urlId}, {sort:{timeUploaded:-1}});
 	} else {
 	   if(isFollower >= 0){
 		audience = ['public', 'followers'];
-		model = ModelFiles.find( {audience: {$in: audience}, owner:urlId }, {sort: {timeUploaded: -1}});
+		post = Posts.find({audience: {$in: audience}, postedBy: urlId }, {sort: {postedAt: -1}});
+		//model = ModelFiles.find( {audience: {$in: audience}, owner:urlId }, {sort: {timeUploaded: -1}});
 	   } else{
-		model = ModelFiles.find({owner: urlId, audience: "public"}, {sort:{timeUploaded:-1}});
+		post = Posts.find({postedBy: urlId, audience: "public"}, {sort: {postedAd: -1}});
+		//model = ModelFiles.find({owner: urlId, audience: "public"}, {sort:{timeUploaded:-1}});
 	   }
 	}
-	if (model.count()) {
-	    return model;
+	if (post.count()) {
+	    return post;
 	} else {
 	    return false;
 	} 

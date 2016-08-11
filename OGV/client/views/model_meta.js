@@ -61,12 +61,13 @@ Template.modelMeta.events({
 			sAlert.success("Data about model has been saved");
 	    }
 	});
-	/*Posts.insert({
-		postType: "new",
+	Posts.insert({
+		postType: "posted",
 		postedAt: currentModel.timeUploaded,
 		postId: modelId,
-		postedBy: currentUser._id
-	});*/
+		postedBy: currentUser._id,
+		audience: audience
+	});
 	if(category.length > 0){
 		ModelFiles.update(modelId, {$set: {categories: category}}, function(error, res) {
 	    if (error) {
