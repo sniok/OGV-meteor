@@ -14,7 +14,7 @@ Template.commentSubmit.events({
 	    var $body = $(e.target).find('[name=body]');
 	    var comment = {
 		body: $body.val(),
-		postId: this._id
+		postId: this.postId
 	    };
     
 	    Meteor.call('comment', comment, function(error, commentId) {
@@ -35,7 +35,7 @@ Template.commentSubmit.events({
 Template.commentBody.helpers({
     comments: function() 
     {
-	var commentList = Comments.find({postId:this._id});
+	var commentList = Comments.find({postId:this.postId});
 	if (!commentList) commentList = Comments.find({postId:this.data._id});
 	return commentList
     }
@@ -64,7 +64,7 @@ Template.comments.events({
 Template.lovemeter.events({
     'click .lovemeter-wrapper':function(){
         var love = {
-            postId: this._id
+            postId: this.postId
         };
      	Meteor.call('love', love, function(error, loveId) {
 		if (error){
@@ -76,7 +76,7 @@ Template.lovemeter.events({
 
 Template.lovemeter.helpers({
     lovers: function(){
-        loversObj = Lovers.findOne({postId: this._id});
+        loversObj = Lovers.findOne({postId: this.postId});
         if(loversObj){
         loversArray = loversObj.lovers;
         return loversArray.length;

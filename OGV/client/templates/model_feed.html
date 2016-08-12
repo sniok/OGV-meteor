@@ -35,7 +35,13 @@
 			<a href="/profile/{{ owner._id }}"> {{ owner.profile.name }}</a> posted {{ model.name }} <br>on <em>{{model.uploadedAt}}</em>
 		</p>
 		<div class="post-item">
-	        {{> modelView }}
+		<div class="post-item model-preview" style="background-image:url(&quot;{{model.screenshot}}&quot;);">
+			<a class = " model-preview-link" href="/models/{{postId}}/shared=false">
+				<h2 class="post-subitem model-name">
+					<span class="model-link-text">{{ model.name }}</span>
+				</h2>
+			</a>
+		</div>
 	        <div id = "editModelButtons">
 	            <a href="#"><i id="deleteModel" class="fa fa-cog fa-minus-square-o fa-2x" title="Delete model"></i></a>&nbsp;&nbsp;&nbsp;
 	            <a href ="/description/{{postId}}"><i class="fa fa-cog fa-cogs fa-2x" title="Change model settings"></i></a>
@@ -54,15 +60,4 @@
      </div>
      <span class="clear"></span>
 </div>
-</template>
-
-
-<template name="modelView">
-	<div class="post-item model-preview" style="background-image:url(&quot;{{model.screenshot}}&quot;);">
-		<a class = " model-preview-link" href="/models/{{postId}}/shared=false">
-			<h2 class="post-subitem model-name">
-				<span class="model-link-text">{{ model.name }}</span>
-			</h2>
-		</a>
-	</div>
 </template>

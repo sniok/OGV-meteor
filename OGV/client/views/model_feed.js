@@ -131,20 +131,3 @@ Template.modelPost.helpers({
 	return model[0];
     }
 });
-    
-
-Template.modelView.helpers({
-    /**
-    * returns thumbnail of the model from the user database, if there's no image 
-    * a default image is shown.
-    */
-    thumbImg:function()
-    {
-    	thumbImage = ThumbFiles.findOne({gFile:this._id});
-        if (thumbImage) {
-            return thumbImage;
-        } else {
-            // return test;
-        }  
-    }
-});
