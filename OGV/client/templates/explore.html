@@ -18,12 +18,10 @@
 
 <template name="exploreResult">
 	{{#if models}}
-	{{#each models}}
-	    {{#if converted }}
-			{{> modelPost }}
-	    {{/if}}
-	{{/each}}
-    {{/if}}
+	   {{#each model}}
+		{{>modelPost}}
+	   {{/each}}
+	{{/if}}
 </template>
 
 <template name="searchResult">
@@ -52,16 +50,16 @@
     <h3 class="user-result-heading">Users</h3>
     {{/if}}
     {{#each getUsers}}
-    <a class="user-result-a-tag" href="profile/{{_id}}" style="display:block;">
     <div class="searchUsers" id="view-model-options" style="padding:2px">
       <div class="user-profile-pic dp-explore" style="background-image:url('/cfs/files/profilePictures/{{profile.pic}}');"></div>
       <div class="explore-user-info">
+    <a class="user-result-a-tag" href="profile/{{_id}}" style="display:block;">
       <h4 class="name">{{profile.name}}</h4>
+	</a>
       <h5 style="color:black;">{{profile.bio}}</h5>
       <button class="btn primary-btn btn-default" id="followButton" data-src="{{this._id}}" > + Follow </button>
       </div>
     </div>
-	</a>
     {{/each}}
   </div>
 </template>

@@ -112,7 +112,8 @@ Template.exploreResult.helpers({
     models: function() 
     {    
     var currentUser = Meteor.user();
-    model = ModelFiles.find( {owner: {$in: currentUser.profile.following}, "categories.0": {$in: filter_array}}, {sort: {timeUploaded: -1}});
+    var audience = ['public', 'followers'];
+    model = ModelFiles.find({ converted:true, audience: {$in: audience},  owner: {$in: currentUser.profile.following}}, {sort: {timeUploaded: -1}});
     if (model.count()) {
         return model;
     } else {

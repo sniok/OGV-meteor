@@ -19,7 +19,7 @@
 <template name ="modelPost">
     <div class="feed-item model-post">
       <div class="post-section post-sidebar user-info">
-		<a href="/profile/{{ postedBy }}">
+		<a href="/profile/{{ owner._id }}">
 			<div class="post-item user-image" style="background-image:url('{{userImg}}');"></div>
 		</a>
 		<div class="post-item post-meta user-meta"></div>
@@ -36,7 +36,7 @@
 		</p>
 		<div class="post-item">
 		<div class="post-item model-preview" style="background-image:url(&quot;{{model.screenshot}}&quot;);">
-			<a class = " model-preview-link" href="/models/{{postId}}/shared=false">
+			<a class = " model-preview-link" href="/models/{{model._id}}/shared=false">
 				<h2 class="post-subitem model-name">
 					<span class="model-link-text">{{ model.name }}</span>
 				</h2>

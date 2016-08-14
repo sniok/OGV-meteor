@@ -85,6 +85,9 @@ Template.modelPost.helpers({
 	} else if(this.postType == "shared"){
 		sharedModel = SharedModels.find({_id: this.postId}).fetch()[0];
 		modelOwner = Meteor.users.findOne(sharedModel.sharedby);
+	} else if(this.converted){
+		var ownerId = ModelFiles.findOne(this._id).owner;
+		modelOwner = Meteor.users.findOne(ownerId);
 	}
 	picId = modelOwner.profile.pic;
 	if (picId) {
@@ -103,6 +106,9 @@ Template.modelPost.helpers({
 	} else if(this.postType == "shared"){
 		sharedModel = SharedModels.find({_id: this.postId}).fetch()[0];
 		return Meteor.users.findOne(sharedModel.ownerId);
+	} else if(this.converted){
+		var ownerId =  ModelFiles.findOne(this._id).owner;
+		return Meteor.users.findOne(ownerId);
 	}
     },
 
@@ -128,6 +134,9 @@ Template.modelPost.helpers({
 	   sharedModel = SharedModels.find({_id: this.postId}).fetch()[0];
 	   model = ModelFiles.find({_id: sharedModel.model}).fetch();
         }
+	else if(this.converted){
+	  model = ModelFiles.find({_id: this._id, converted:true}).fetch();
+	}
 	return model[0];
     }
 });
