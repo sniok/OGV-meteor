@@ -45,7 +45,7 @@ Template.modelViewer.events({
 
     'click #sm-item-embed':function() 
     {
-	generateEmbedCode();
+    	sAlert.success("Embed code has been copied to clipboard");
     },
 
     'click #sm-item-comment':function() 
@@ -77,10 +77,16 @@ Template.modelViewer.events({
 	Router.go('/profile/'+model.owner);
 	
     }
-
 });
 
 Template.modelViewer.helpers({
+    embedCode: function()
+    {
+       var thisURL = Meteor.absoluteUrl() + "models/" + this._id +"/shared=true";
+       embedCode = "<iframe width=\"500\" height=\"250\" src=\"" + thisURL + "\" frameborder=\"0\"></iframe>";
+       return embedCode;
+    },
+
     lovers: function() 
     {
 	loversObj = Lovers.findOne({postId: this._id});
@@ -116,15 +122,6 @@ Template.modelViewer.helpers({
 	} else {
 	   return "/icons/User.png";
 	}
-    },
-
-    screenshot: function(){
-	screenshot = model.screenshot;
-	if(screenshot){
-	 return false;
-	}else {
-	return true;
-	}
     }
 });
 
@@ -134,7 +131,19 @@ Template.modelViewer.rendered = function()
     model = this.data;
     objList = getObjFiles(model);
     console.log(objList);
-  
+    clipboard = new Clipboard('#sm-item-embed');
+    clipboard.on('success', function(e) {
+        console.log('Action:', e.action);
+        console.log('Text:', e.text);
+        console.log('Trigger:', e.trigger);
+
+        e.clearSelection();
+    });
+
+    clipboard.on('error', function(e) {
+       console.log('Action:', e.action);
+       console.log('Trigger:', e.trigger);
+    });
     init();
     animate();
 }
@@ -148,8 +157,8 @@ function getObjFiles(model)
     objUrls = [];
     sAlert.success("Getting obj files");    
     modelId = model._id;
-    OBJFiles.find({ gFile : modelId}).forEach( function (objFile) {
-	objUrls.push(objFile.url());
+    OBJFiles.find({ gFile : modelId, show:true}).forEach( function (objFile) {
+	objUrls.push(objFile);
     });
     console.log(objUrls);
     return objUrls;
@@ -254,7 +263,7 @@ function init()
     OBJMaterial = new THREE.MeshPhongMaterial(); 
     OBJMaterialOver = new THREE.MeshPhongMaterial({visible: false}); 
     for (i in objList) {
-	loader.load( objList[i], function(object) {
+	loader.load( objList[i].url(), function(object) {
 	    object.traverse(function(child) {
 		if (child instanceof THREE.Mesh) {
 		    child.material = OBJMaterial;
@@ -264,7 +273,7 @@ function init()
         object.position.y = 0.1;
 	    object.rotation.z =  90 * Math.PI/180;
 	    object.rotation.x = -90 * Math.PI/180;
-        
+  
 	    group.add(object);
         scene.add(group);
 	});
@@ -361,9 +370,7 @@ function init()
     renderer.setClearColor(0x555555, 1);
     
    edit = UI._globalHelpers['editMode']();
-   if(edit){
-    controller.appendChild(datGUI.domElement);
-   }
+   
     container.appendChild(renderer.domElement); 
     
     /**
@@ -421,19 +428,6 @@ function animate()
 {
     requestAnimationFrame(animate);
     render();
-}
-
-
-/**
- * Generate embed code for the current model, this iframe can
- * be added on any webpage to view the model.
- */
-function generateEmbedCode()
-{
-    var thisURL = Meteor.absoluteUrl() + "models/" + model._id +"/shared=true";
-    embedCode = "<iframe width=\"500\" height=\"250\" src=\"" + thisURL + "\" frameborder=\"0\"></iframe>";
-    sAlert.success(embedCode);
-    return embedCode;
 }
 
 function handleColorChange ( color ) {

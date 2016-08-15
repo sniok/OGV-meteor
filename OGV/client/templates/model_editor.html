@@ -1,0 +1,37 @@
+<template name="modelEditor">
+	<div id="model-container">
+		<div class="secondary-menu">
+		<div class="sm-item">
+			<button class="edit-thumb-btn">Use this as preview</button>
+		</div>
+		</div>
+		<div id="modelController">
+		<div class="color-controller">
+		   <div class="search-bar">
+			<input class="obj-search-bar" type="text" placeholder="Search for an Object">
+		        <div class="all-objs obj-list-li">
+			   <img class="eye-img" src="/icons/white-eye.png">
+			   <p class="obj-name-label all-obj-label">All Objects</p>
+			</div>
+		   </div>
+		   <div class="obj-list">
+			   <ul class="obj-list-ul">
+		  		{{#each object}}
+				<li class="obj-list-li">
+				   <div data-src={{_id}} class="obj-heading">
+				   <img class="eye-img" src="/icons/eye.png">
+				   <p class="obj-name-label">{{original.name}}</p>
+				   <img class="arrow" src="/icons/drop-down-arrow.png">
+				   </div>
+				   <div class="control">
+					<label for="faceColor">Color</label>
+					<input class="color-picker" type="color" name="faceColor">
+				   </div>
+				</li>
+		  		{{/each}}
+			   </ul>
+		   </div>
+		</div>
+		</div>
+	</div>
+</template>

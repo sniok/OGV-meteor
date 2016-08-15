@@ -1,14 +1,6 @@
 <template name = "modelViewer">
    {{#if editMode}}
-	<div id="model-container">
-		<div class="secondary-menu">
-		<div class="sm-item">
-			<button class="edit-thumb-btn">Use this as preview</button>
-		</div>
-		</div>
-		<div id="modelController">
-		</div>
-	</div>
+	{{>modelEditor}}
    {{else}}
    {{#if embeddedView}}
 	<div id="model-container">
@@ -54,7 +46,7 @@
 			<p class="sm-menu-text">Comment</p>
 		</div>
 
-		<div class="sm-item" id="sm-item-embed">
+		<div data-clipboard-text="{{embedCode}}" class="sm-item" id="sm-item-embed">
 			<img src="/icons/Link.png" width="28px" height="28px">
 			<p class="sm-menu-text">Embed</p>
 		</div>

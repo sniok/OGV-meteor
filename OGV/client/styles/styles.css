@@ -1882,3 +1882,90 @@ progress[value]::-webkit-progress-value{
     color:#FAF9F9;
     font-size:1.4em;
 }
+
+
+.color-controller{
+
+    width:230px;
+
+    background-color:#333;
+}
+
+input[type=text].obj-search-bar{
+   width:80%;
+   background-color:#bababa;
+   color:#333;
+   height:25px;
+   margin:10px;
+   outline:none;
+   border:none;
+}
+
+
+.obj-list{
+    background-color:#dfdfdf;
+    color:#555555;
+    height:220px;
+    overflow-y:auto;
+}
+
+.obj-list-ul{
+    list-style-type:none;
+    margin:0px;
+}
+
+.obj-list-li{
+    margin:0;
+    padding-top:10px;
+}
+
+.eye-img{
+    width:20px;
+    height:auto;
+    margin:5px;
+}
+
+.all-obj-label{
+    color:#bababa;
+}
+
+.obj-name-label{
+    display:inline;
+    
+}
+
+input[type='color'].color-picker{
+    padding:0;
+    width:60%;
+    border: none;
+    height: 22px;
+    margin: 0;
+}
+
+.control {
+   background-color:#bababa;
+   padding:10px;
+   display:none;
+}
+
+.control label{
+ margin:0;
+}
+
+.arrow{
+   float:right;
+   margin-right:10px;
+   width:20px;
+   height:auto;
+}
+
+.obj-heading{
+   border-bottom:3px solid #bababa;
+   cursor:pointer;
+}
+
+.obj-heading::after{
+    display:block;
+    content: "";
+    clear:both;
+}

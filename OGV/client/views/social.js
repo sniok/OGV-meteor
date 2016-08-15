@@ -76,7 +76,12 @@ Template.lovemeter.events({
 
 Template.lovemeter.helpers({
     lovers: function(){
-        loversObj = Lovers.findOne({postId: this.postId});
+	if(this.postId){
+		id = this.postId;
+	} else {
+		id = this._id;
+	}
+        loversObj = Lovers.findOne({postId: id});
         if(loversObj){
         loversArray = loversObj.lovers;
         return loversArray.length;
