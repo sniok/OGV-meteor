@@ -157,7 +157,7 @@ function getObjFiles(model)
     objUrls = [];
     sAlert.success("Getting obj files");    
     modelId = model._id;
-    OBJFiles.find({ gFile : modelId, show:true}).forEach( function (objFile) {
+    OBJFiles.find({ gFile : modelId}).forEach( function (objFile) {
 	objUrls.push(objFile);
     });
     console.log(objUrls);
