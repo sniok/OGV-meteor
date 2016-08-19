@@ -100,8 +100,9 @@ Template.modelMeta.events({
 Template.modelMeta.helpers({
     'progressValue': function(){
 	        var id = $('#model-id').val(),
-		modelObj = ModelFiles.findOne({_id: id});	
-		var value = parseInt(modelObj.conversion, 10);
+		modelObj = ModelFiles.findOne({_id: id});
+		var value = modelObj.conversion;
+		value = parseInt(value, 10);
 		if(value == null) value = 0;
 		if(value >= 70) {
 			$('progress[value]').css('display', 'none');

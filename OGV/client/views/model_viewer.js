@@ -61,21 +61,6 @@ Template.modelViewer.events({
     'click #sm-item-owner':function() 
     {
 	ownerId();
-    },
-
-    'click .edit-thumb-btn': function()
-    {
-	imageData = renderer.domElement.toDataURL('image/png');
-	model = ModelFiles.findOne(this._id);
-	ModelFiles.update(this._id, {$set: {screenshot: imageData}}, function(error, res) {
-	    if (error) {
-			sAlert.error(error.reason);
-	    } else {
-			sAlert.success("Updated thumbnail preview");
-	    }
-	});
-	Router.go('/profile/'+model.owner);
-	
     }
 });
 
@@ -183,7 +168,7 @@ var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
 var finalRotationY
-var guiControls, OBJMaterial, OBJMaterialOver;
+var guiControls, OBJMaterialOver;
 // var keyboard = new KeyboardState();
 var renderColour = 0xafa8a8;
 
@@ -259,31 +244,40 @@ function init()
      * Adds material to the model, which hence controls 
      * how the model shall look 
      */
-     
-    OBJMaterial = new THREE.MeshPhongMaterial(); 
+    OBJMaterialArray = []; 
     OBJMaterialOver = new THREE.MeshPhongMaterial({visible: false}); 
     for (i in objList) {
+      (function(i) {
+      var OBJMaterial = new THREE.MeshPhongMaterial();
+	OBJMaterialArray.push(OBJMaterial);
 	loader.load( objList[i].url(), function(object) {
 	    object.traverse(function(child) {
 		if (child instanceof THREE.Mesh) {
-		    child.material = OBJMaterial;
+			colorhex = handleColorChange(objList[i].color);
+			colorhex = parseInt(colorhex, 16);
+			color = new THREE.Color( colorhex );
+			OBJMaterialArray[i].needsUpdate = true;
+			OBJMaterialArray[i].color = color;
+		    child.material = OBJMaterialArray[i];
 		}
 	    });
 
         object.position.y = 0.1;
 	    object.rotation.z =  90 * Math.PI/180;
 	    object.rotation.x = -90 * Math.PI/180;
-  
+
+        
 	    group.add(object);
         scene.add(group);
 	});
+      })(i);
     }
     
    
    /**
     * datGUI variable initializations
     */
-    guiControls = new function() {
+/*    guiControls = new function() {
         this.backgroundColor = "#a1a1a1";
 
         this.opacity = OBJMaterial.opacity;
@@ -299,27 +293,27 @@ function init()
         this.wireframe = OBJMaterialOver.wireframe;
         this.wireframeLinewidth = OBJMaterialOver.wireframeLinewidth;
         this.color = OBJMaterialOver.color;
-    }
+    }*/
 
     //Initialize dat.GUI
 
-    datGUI = new dat.GUI({autoPlace:false});
+//    datGUI = new dat.GUI({autoPlace:false});
     
    /**
     * Add folders/sub categories in controls
     */
     // Consisting of changes to be shown in the model
-    var modelGui = datGUI.addFolder("Model");        
+  //  var modelGui = datGUI.addFolder("Model");        
     // Activated OBJMAterialOver that overlaps the existing models
-    var overmodelGui = datGUI.addFolder("WireFrame + Model");   
+    //var overmodelGui = datGUI.addFolder("WireFrame + Model");   
 
    /** 
     * datGUI GUI and of variables defined above functionality
     */
-    modelGui.add(guiControls, 'visible').onChange(function (e) {
+/*    modelGui.add(guiControls, 'visible').onChange(function (e) {
         OBJMaterial.visible = e;
-    });
-    modelGui.add(guiControls, 'opacity', 0, 1).onChange(function (e) {
+    });*/
+/*    modelGui.add(guiControls, 'opacity', 0, 1).onChange(function (e) {
         OBJMaterial.opacity = e;
     });
     modelGui.add(guiControls, 'transparent').onChange(function (e) {
@@ -352,7 +346,7 @@ function init()
     });
     overmodelGui.addColor(guiControls, 'color').onChange(function (e) {
         OBJMaterialOver.color = new THREE.Color(e);
-    });
+    });*/
 
     /**
      * If webgl is there then use it otherwise use canvas
@@ -431,12 +425,10 @@ function animate()
 }
 
 function handleColorChange ( color ) {
-    return function ( value ){
-        if (typeof value === "string") {
-            value = value.replace('#', '0x');
-        }
-        color.setHex( value );
-    };
+    if( typeof color === "string") {
+	color = color.replace('#', '0x');
+    }
+    return color;
 }
 /**
  * onKeyDown function helps to view model from 

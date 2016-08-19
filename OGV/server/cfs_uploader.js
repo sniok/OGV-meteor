@@ -1,5 +1,5 @@
 /*                C F S _ U P L O A D E R . J S
- * BRL-CAD
+* BRL-CAD
  *
  * Copyright (c) 1995-2013 United States Government as represented by
  * the U.S. Army Research Laboratory.
@@ -85,6 +85,8 @@ Meteor.methods({
 			    console.log("File has been converted" + objects[i] + i);
 			    objFS = new FS.File(objPath[i]);
 			    objFS.gFile = fileId;
+			    objFS.show = true;
+			    objFS.color = '#ffffff';
 			    OBJFiles.insert(objFS, function (err, objFile) {
 		    	        if (err) { 
 				    console.log(err); 

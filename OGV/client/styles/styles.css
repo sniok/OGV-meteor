@@ -1901,6 +1901,9 @@ input[type=text].obj-search-bar{
    border:none;
 }
 
+.all-objs{
+   cursor:pointer;
+}
 
 .obj-list{
     background-color:#dfdfdf;
@@ -1919,7 +1922,7 @@ input[type=text].obj-search-bar{
     padding-top:10px;
 }
 
-.eye-img{
+.eye-img, .white-eye-img{
     width:20px;
     height:auto;
     margin:5px;
@@ -1968,4 +1971,44 @@ input[type='color'].color-picker{
     display:block;
     content: "";
     clear:both;
+}
+
+.edit-thumb-btn{
+    width:300px;
+    height:30px;
+    border:none;
+    outline:none;
+    background-color:#f03b5b;
+    color:#fafafa;
+}
+
+.edit-thumb-btn:hover{
+    background-color:#c7324d;
+}
+
+.preview-box{
+    transition:all 0.6s;
+    width:335px;
+    margin-left:0px;
+}
+
+.preview-box-hidden{
+    margin-left:-300px;
+}
+
+.image-toggle{
+   float:right;
+   background-color:#333;
+   padding:5px;
+   cursor:pointer;
+}
+
+.thumbnail-preview{
+    width:300px;
+    height:250px;
+    border:2px solid #333;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-color: #333;
 }
