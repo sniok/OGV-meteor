@@ -84,7 +84,7 @@ Template.modelMeta.events({
 
 	var uploadedModel = ModelFiles.findOne(modelId);
 	if( uploadedModel.converted ){
-		Router.go('/models/'+uploadedModel._id+'/edit');
+		Router.go('/models/'+uploadedModel._id);
 		sAlert.success("Data about model has been saved");
 	} else {
 		ModelFiles.remove(uploadedModel._id);

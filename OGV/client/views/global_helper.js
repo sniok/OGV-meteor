@@ -10,18 +10,6 @@ Template.registerHelper('embeddedView', function(){
 	}
 );
 
-Template.registerHelper('editMode', function() {
-		var url = Router.current().url;
-		var parts = url.split('/');
-		var edit = parts.pop();
-		if(edit == "edit") {
-			return true;
-		} else {
-			return false;
-		}
-	}
-);
-
 Template.registerHelper('loggedInUser', function(){
 		var user = Meteor.user();
 		var picId = user.profile.pic;

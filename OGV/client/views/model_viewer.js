@@ -65,6 +65,16 @@ Template.modelViewer.events({
 });
 
 Template.modelViewer.helpers({
+    youAreOwner: function()
+    {
+       var loggedIn = Meteor.userId();
+       if(loggedIn == this.owner) {
+          return true;
+       } else {
+	  return false;
+       }
+    },
+
     embedCode: function()
     {
        var thisURL = Meteor.absoluteUrl() + "models/" + this._id +"/shared=true";
@@ -361,9 +371,7 @@ function init()
      * Sets size and color to renderer
      */
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x555555, 1);
-    
-   edit = UI._globalHelpers['editMode']();
+    renderer.setClearColor(0x555555, 1); 
    
     container.appendChild(renderer.domElement); 
     

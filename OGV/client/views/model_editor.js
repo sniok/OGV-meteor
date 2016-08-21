@@ -48,10 +48,6 @@ Template.modelEditor.events({
 	}
     },
 
-    'click .eye-img':function(e)
-    {
-    },
-
     'click .edit-thumb-btn': function()
     {
 	imageData = renderer.domElement.toDataURL('image/png');
@@ -66,16 +62,40 @@ Template.modelEditor.events({
 	
     },
 
-    'click .image-toggle': function()
+    'click .info-tool-toggle': function()
     {
-	$('.preview-box').toggleClass('preview-box-hidden');
-    }
+	$('.edit-controls-info').toggleClass('edit-controls-hidden');
+    },
+
+    'click .model-tool-toggle': function()
+    {
+	$('.edit-controls-model').toggleClass('edit-controls-hidden');
+    },
+
+    'keyup .obj-search-bar': _.throttle(function(e){
+	searchQuery = e.currentTarget.value.trim();
+        var options = {gFile: this._id};
+        ObjSearch.search(searchQuery, options);
+	}, 200)
 });
+
+var objfields = ['original.name', 'gFile'];
+ObjSearch = new SearchSource('objFiles', objfields);
 
 Template.modelEditor.helpers({
    object: function()
    {
-	obj = OBJFiles.find({gFile: this._id});
-	return obj;
+      return ObjSearch.getData({
+      transform: function(matchText, regExp) {
+        return matchText.replace(regExp, "$&")
+      }
+    });
    }
 });
+
+Template.modelEditor.rendered = function(){
+  gfile = $('.edit-controls-wrapper').data('src');
+  var options = {gFile: gfile};
+  console.log(options);
+  ObjSearch.search('', options);
+}

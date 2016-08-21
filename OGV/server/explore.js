@@ -22,6 +22,15 @@ SearchSource.defineSource('users', function(searchText, options) {
   }
 });
 
+SearchSource.defineSource('objFiles', function(searchText, options) {
+    if(searchText) {
+	var regExp = buildRegExp(searchText);
+	var selector = {'original.name': regExp, 'gFile': options.gFile};
+	return OBJFiles.find(selector).fetch();
+     } else {
+	return OBJFiles.find({gFile: options.gFile}).fetch();
+     }
+});
 
 function buildRegExp(searchText) {
   var words = searchText.trim().split(/[ \-\:]+/);
