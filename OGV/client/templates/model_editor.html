@@ -2,12 +2,23 @@
 	   <div data-src={{_id}} class="edit-controls-wrapper">
 
 	   <div class="edit-controls-icons">
-		<img class="model-tool-toggle" src="/icons/tools-folder.png">
-		<img class="info-tool-toggle" src="/icons/clipboard-with-pencil.png">
+		<img class="menu-toggle" src="/icons/menu.png">
+		{{#if youAreOwner}}
+		<img class="model-tools-icon" src="/icons/tools-folder.png">
+		{{/if}}
+		<img class="comments-icon" src="/icons/clipboard-with-pencil.png">
 	    </div>
 
-	    <div class="edit-controls edit-controls-model edit-controls-hidden">
-		<div class="color-controller">
+	    <div class="edit-controls edit-controls-hidden">
+		<div class="comments-toolbar ec-inactive">
+		    {{#each comments}}
+			{{> comment}}
+		    {{/each}}
+		    {{>commentSubmit}} 
+		</div>
+		{{#if youAreOwner}}
+		<div class="ec-model">
+		<div class="color-controller ec-item">
 		   <div class="search-bar">
 			<input class="obj-search-bar" type="text" placeholder="Search for an Object">
 		        <div class="all-objs obj-list-li">
@@ -33,12 +44,15 @@
 			   </ul>
 		   </div>
 		</div>
-		<div class="preview-box">
+		<div class="preview-box ec-item">
 			<div class="thumbnail-preview" style="background-image:url('{{this.screenshot}}');">
 			</div>
 			<button class="edit-thumb-btn">Use this as preview</button>
 		</div>
 	   </div>
+            {{/if}}
+	   </div>
+	  
 
 	   </div>
 </template>

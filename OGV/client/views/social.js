@@ -12,9 +12,14 @@ Template.commentSubmit.events({
     'submit form': function(e, template) {
 	e.preventDefault();
 	    var $body = $(e.target).find('[name=body]');
+	    if(this.converted){
+		postId = this._id;
+	    } else {
+		postId = this.postId;
+	   }
 	    var comment = {
 		body: $body.val(),
-		postId: this.postId
+		postId: postId
 	    };
     
 	    Meteor.call('comment', comment, function(error, commentId) {

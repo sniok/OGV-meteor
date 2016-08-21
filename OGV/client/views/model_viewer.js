@@ -50,7 +50,9 @@ Template.modelViewer.events({
 
     'click #sm-item-comment':function() 
     {
-	$('#overlay-comments').css({'bottom':'0px'});
+	$('.comments-toolbar').removeClass('ec-inactive');
+	$('.ec-model').addClass('ec-inactive');
+        $('.edit-controls').toggleClass('edit-controls-hidden');
     },
 
     'click #comments-close-button':function() 
@@ -65,16 +67,6 @@ Template.modelViewer.events({
 });
 
 Template.modelViewer.helpers({
-    youAreOwner: function()
-    {
-       var loggedIn = Meteor.userId();
-       if(loggedIn == this.owner) {
-          return true;
-       } else {
-	  return false;
-       }
-    },
-
     embedCode: function()
     {
        var thisURL = Meteor.absoluteUrl() + "models/" + this._id +"/shared=true";
@@ -91,11 +83,6 @@ Template.modelViewer.helpers({
         } else {
             return 0;
         }
-    },
-
-    comments: function() 
-    {
-	return Comments.find({postId: this._id});
     },
 
     model: function() 

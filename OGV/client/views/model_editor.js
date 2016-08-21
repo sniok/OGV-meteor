@@ -62,17 +62,25 @@ Template.modelEditor.events({
 	
     },
 
-    'click .info-tool-toggle': function()
+    'click .model-tools-icon': function()
     {
-	$('.edit-controls-info').toggleClass('edit-controls-hidden');
+	$('.ec-model').removeClass('ec-inactive');
+	$('.comments-toolbar').addClass('ec-inactive');
     },
 
-    'click .model-tool-toggle': function()
+    'click .comments-icon': function()
     {
-	$('.edit-controls-model').toggleClass('edit-controls-hidden');
+	$('.comments-toolbar').removeClass('ec-inactive');
+	$('.ec-model').addClass('ec-inactive');
+    },
+
+    'click .menu-toggle': function()
+    {
+        $('.edit-controls').toggleClass('edit-controls-hidden');
     },
 
     'keyup .obj-search-bar': _.throttle(function(e){
+	test = e;
 	searchQuery = e.currentTarget.value.trim();
         var options = {gFile: this._id};
         ObjSearch.search(searchQuery, options);
@@ -90,6 +98,22 @@ Template.modelEditor.helpers({
         return matchText.replace(regExp, "$&")
       }
     });
+   },
+
+   youAreOwner: function()
+   {
+      var loggedIn = Meteor.userId();
+      if(loggedIn == this.owner) {
+         return true;
+      } else {
+         return false;
+      }
+   },
+
+
+   comments: function() 
+   {
+       return Comments.find({postId: this._id});
    }
 });
 

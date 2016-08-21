@@ -617,15 +617,13 @@ input:focus {
     background:rgba(255,255,255,0.5);
     bottom:-10000px;
     right:0px;
-    max-height:600px;
+    height:300px;
     border-radius:5px;
     min-width: 300px;
     max-width: 600px;
     z-index: 950;
     padding: 20px 20px;
-    padding-top:50px;
     overflow-y:auto;
-    max-height:90%;
 }
 
 #comments-close-button {
@@ -1937,6 +1935,10 @@ progress[value]::-webkit-progress-value{
 
 .edit-controls{
     float: right;
+    height:600px;
+    width:300px;
+    overflow-y:auto;
+    overflow-x:hidden;
     transition:all 0.6s;
 }
 
@@ -1949,6 +1951,19 @@ progress[value]::-webkit-progress-value{
     margin-left:20px;
 }
 
+.ec-item{
+    padding:10px 0px 10px 0px;
+}
+
+
+.comments-toolbar{
+     display:block;
+     background-color:#bababa;
+}
+
+.ec-inactive{
+     display:none;
+}
 .color-controller{
     width:230px;
     background-color:#333;
@@ -2050,10 +2065,15 @@ input[type='color'].color-picker{
 }
 
 .thumbnail-preview{
-    height:250px;
+    height:220px;
     border:2px solid #333;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    background-color: #333;
+    background-color: #bababa;
+}
+
+.shareButton{
+    width:10rem;
+    height:3.5rem;
 }

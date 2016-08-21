@@ -7,17 +7,11 @@
 	 </div>
    {{else}}
 	<div id="overlay-comments">
-	<div id ="comments-close-button"> X </div>
 	<div class="comments">
 	    {{#each comments}}
 		{{> comment}}
 	    {{/each}}
 
-	    {{#if currentUser}}
-		{{> commentSubmit}}
-	    {{else}}
-	        <p> Please log in to leave a comment.</p>
-	    {{/if}}
 	</div>
 	</div>
 	
@@ -60,9 +54,7 @@
 	</div>	
 
 	<div id="modelController">
-		{{#if youAreOwner}}
 		{{>modelEditor}}
-		{{/if}}
 	</div>
 	
 	</div>
