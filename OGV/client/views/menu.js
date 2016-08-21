@@ -26,7 +26,19 @@
 Template.menu.events({
     'click #notification-icon': function(e,t)
     {
+        $('.user-menu').slideUp("fast");
 	$('.notifications').slideToggle("fast");
+    },
+
+    'click #user': function(e,t)
+    {
+        $('.notifications').slideUp("fast");
+        $('.user-menu').slideToggle("fast");
+    },
+
+    'click .um-item': function(e,t)
+    {
+        $('.user-menu').slideUp("fast");
     },
 
     'click #log-out':function(e,t)
