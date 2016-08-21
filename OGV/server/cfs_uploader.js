@@ -24,7 +24,6 @@
  *  it uploads .g files to server and then converts them to .obj files
  */
 
-var convertPercentage = 0;
 
 Meteor.methods({
     /**
@@ -40,6 +39,7 @@ Meteor.methods({
 	var sys = Npm.require('sys'),
 	    fs = Npm.require('fs'),
 	    exec = Npm.require('child_process').exec;
+	var convertPercentage = 0;
 
 	var modelObj = ModelFiles.findOne(fileId),
 	    readStream = modelObj.createReadStream('modelFiles'),

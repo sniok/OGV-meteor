@@ -69,10 +69,11 @@ Accounts.onCreateUser(function(options, user) {
     followingArray[0] = adminUser._id;
     followingArray[1] = user._id;
 
-    options.profile.following = followingArray;
-
     if (options.profile){
+        options.profile.following = followingArray;
         user.profile = options.profile;
+    } else {
+	console.log(options);
     }
 
     return user;

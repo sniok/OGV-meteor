@@ -42,17 +42,20 @@ Router.configure({
  */
 
 Router.map(function() {
-    this.route('landingPage', {
-    path : '/'
-    });
+    this.route('landingPage', { path : '/' });
     this.route('signUp', {path : 'sign-up'});
     this.route('feedbackThanks', {path : 'thanks'});
     this.route('logIn', {path : 'log-in'});
-    this.route('cfsUploader', {path : 'upload'});
     this.route('notVerified', {path : 'not-verified'});
     this.route('forgotPassword', {path : 'forgot-password'});
     this.route('home', {path : 'home'});
-    
+    this.route('cfsUploader',{
+    path: 'upload',
+    waitOn: function() {
+	return Meteor.subscribe('modelFiles');
+    }
+    });
+	 
     this.route('dashboard',{
     path: 'dashboard',
     waitOn: function() {
