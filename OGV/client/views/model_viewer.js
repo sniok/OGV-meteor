@@ -109,7 +109,6 @@ Template.modelViewer.helpers({
 
 Template.modelViewer.rendered = function() 
 {
-    console.log("rendered");
     model = this.data;
     objList = getObjFiles(model);
     console.log(objList);
@@ -127,7 +126,7 @@ Template.modelViewer.rendered = function()
        console.log('Trigger:', e.trigger);
     });
     init();
-    animate();
+    render();
 }
 
 /**
@@ -227,6 +226,7 @@ function init()
     manager.onProgress = function(item, loaded, total) 
     {
 	   console.log(item, loaded, total);
+       animate();
     };
 
     /**
@@ -349,9 +349,10 @@ function init()
      * If webgl is there then use it otherwise use canvas
      */
     if (Detector.webgl) {
-	renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer: true});
+        var pixelRatio = window.devicePixelRatio || 1;
+	    renderer = new THREE.WebGLRenderer({antialias:false, preserveDrawingBuffer: true,devicePixelRatio: pixelRatio});
     } else {
-	renderer = new THREE.CanvasRenderer();
+	    renderer = new THREE.CanvasRenderer();
     }
 
     /**
@@ -415,8 +416,7 @@ function render()
 
 function animate() 
 {
-    requestAnimationFrame(animate);
-    render();
+    requestAnimationFrame(render);
 }
 
 function handleColorChange ( color ) {
@@ -455,4 +455,5 @@ function onKeyDown( event )
             camera.lookAt(scene.position);
             break;                
     }
+    animate();
 }  
