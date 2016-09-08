@@ -22,94 +22,108 @@
  *  @brief file for email validation configuration
  *
  *  This file  serves two purposes. Firstly it contains configuration
- *  regarding sending email for the purpose of validating the new 
- *  registered user. After verification  one can upload their models, 
+ *  regarding sending email for the purpose of validating the new
+ *  registered user. After verification  one can upload their models,
  *  and use OGV.
  */
 
 /**
- * Create a test user without admin roles and a super user with 
+ * Create a test user without admin roles and a super user with
  * admin roles on a fresh install (when number of users is zero)
  */
+
 Accounts.config({
-  sendVerificationEmail:true,
-  //forbidClientAccountCreation: false
+    sendVerificationEmail: true,
+    //forbidClientAccountCreation: false
 })
 
 if (Meteor.users.find().fetch().length === 0) {
-    var users = [
-	{name:"Test User",email:"normal@example.com",roles:[]},
-	{name:"Super User",email:"admin@example.com",roles:['admin']}
-    ];
+    const users = [{
+        name: 'Test User',
+        email: 'normal@example.com',
+        roles: [],
+    }, {
+        name: 'Super User',
+        email: 'admin@example.com',
+        roles: ['admin'],
+    }]
 
-	var Bio = "greatest 3d modeller on the planet";
-    _.each(users, function (userData) {
-	var id,
-	    user; 
+    const Bio = 'greatest 3d modeller on the planet'
+    _.each(users, (userData) => {
+        const id = Accounts.createUser({
+            email: userData.email,
+            password: 'ogv123',
+            profile: {
+                name: userData.name,
+                bio: Bio,
+            },
+        })
 
-	id = Accounts.createUser({
-	    email: userData.email,
-            password: "ogv123",
-            profile: { name: userData.name, bio: Bio }
-	});
+        // email verification
+        Meteor.users.update({
+            _id: id,
+        }, {
+            $set: {
+                'emails.0.verified': true,
+            },
+        })
 
-	// email verification
-	Meteor.users.update({_id: id}, {$set:{'emails.0.verified': true}});
+        Roles.addUsersToRoles(id, userData.roles)
+    })
+}
 
-	Roles.addUsersToRoles(id, userData.roles);
-    
-    });
+Accounts.onCreateUser((options, user) => {
+    const followingArray = []
+    // followingArray[0] = user._id;
+    const adminUser = Meteor.users.findOne({
+        'roles.0': 'admin',
+    })
+    followingArray[0] = adminUser._id
+    followingArray[1] = user._id
 
-} 
-
-Accounts.onCreateUser(function(options, user) {
-    var followingArray = [];
-    //followingArray[0] = user._id;
-    var adminUser = Meteor.users.findOne({'roles.0': "admin"});
-    followingArray[0] = adminUser._id;
-    followingArray[1] = user._id;
-
-    if (options.profile){
-        options.profile.following = followingArray;
-        user.profile = options.profile;
+    if (options.profile) {
+        options.profile.following = followingArray
+        user.profile = options.profile
     } else {
-	console.log(options);
+        console.log(options)
     }
 
-    return user;
-});
+    return user
+})
 
-/*Meteor.users.allow({
-    update: function(userId, user, fields) 
-    {   
-        if (!fields.isEqualTo(['profile.following', 'profile.follower'])) { 
-            return false; 
+/* Meteor.users.allow({
+    update: function(userId, user, fields)
+    {
+        if (!fields.isEqualTo(['profile.following', 'profile.follower'])) {
+            return false;
         } else {
             return true;
         }
-    }    
+    }
 });
 */
 
 
 /**
-*  Need to allow the users to update only the follwers array of other users
-*/
+ *  Need to allow the users to update only the follwers array of other users
+ */
 Meteor.users.allow({
-    update: function(userId, user, fieldNames, modifier) 
-    {
-        return true;
-    }    
-});
+    update() {
+        return true
+    },
+})
 
 /**
  * Intended to Delete/Remove users who have not verified their Emails in hrs hours
  */
-var hrs = 1;
-Meteor.setInterval(function() {
-    Meteor.users.find({'emails.0.verified': false}).forEach(function(user) {
-        //Do action with 'user' that has not verified email for 1 hour
-        Meteor.users.remove({_id: user._id}, true);
-    });
-}, (3600000 * hrs));
-
+const hrs = 1
+Meteor.setInterval(() => {
+    Meteor.users.find({
+        'emails.0.verified': false,
+    }).forEach((user) => {
+        // Do action with 'user' that has not verified email for 1 hour
+        Meteor.users.remove({
+            _id: user._id,
+        }, true)
+    })
+}, (3600000 * hrs))

@@ -51,3 +51,4 @@ standard-minifier-css
 standard-minifier-js
 http
 aldeed:http
+ecmascript

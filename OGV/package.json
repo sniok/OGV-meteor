@@ -1,0 +1,66 @@
+{
+  "name": "ogv",
+  "version": "1.0.0",
+  "description": "Online Geometry Viewer",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.4.0",
+    "eslint-config-airbnb": "^11.0.0",
+    "eslint-import-resolver-meteor": "^0.3.3",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.2.1",
+    "eslint-plugin-meteor": "^4.0.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "fix": "eslint server/cfs_uploader.js --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "allowImportExportEverywhere": true,
+      "ecmaVersion": 6
+    },
+    "plugins": [
+      "meteor"
+    ],
+    "extends": [
+      "airbnb",
+      "plugin:meteor/recommended"
+    ],
+    "settings": {
+      "import/resolver": "meteor"
+    },
+    "env": {
+      "meteor": true,
+      "node": true,
+      "browser": true
+    },
+    "rules": {
+      "react/require-extension": "off",
+      "semi": [2, "never"],
+      "meteor/no-session":[0],
+      "indent": [2, 4],
+      "no-underscore-dangle": 0,
+      "no-undef":0,
+      "func-names":0,
+      "array-callback-return":0,
+      "no-param-reassign": 0,
+      "no-console": 0,
+      "one-var": 0,
+      "no-use-before-define": [0,"nofunc"]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BRL-CAD/OGV-meteor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BRL-CAD/OGV-meteor/issues"
+  },
+  "homepage": "https://github.com/BRL-CAD/OGV-meteor#readme"
+}
