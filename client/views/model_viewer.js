@@ -98,7 +98,7 @@ Template.modelViewer.helpers({
     },
 })
 
-Template.modelViewer.onRendered = function () {
+Template.modelViewer.rendered = function () {
     model = this.data
     objList = getObjFiles(model)
     console.log(objList)

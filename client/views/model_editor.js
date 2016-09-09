@@ -103,7 +103,7 @@ Template.modelEditor.helpers({
     },
 })
 
-Template.modelEditor.onRendered = function () {
+Template.modelEditor.rendered = function () {
     gfile = $('.edit-controls-wrapper').data('src')
     const options = { gFile: gfile }
     console.log(options)
