@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # OGV Deploy script
-cd ..
 PACKAGE_VERSION=$(grep -m1 version package.json | awk -F: '{ print $2 }' | sed 's/[", ]//g')
 echo "# Online Geometry Viewer"
 echo "# Version $PACKAGE_VERSION"
@@ -30,7 +29,7 @@ meteor npm install
 
 # Linting
 meteor npm run lint 
-echo "✅ Linted succesfuly"
+echo "# Linted succesfuly"
 
 echo "# OGV Deployed"
 echo "# To launch OGV run: "
