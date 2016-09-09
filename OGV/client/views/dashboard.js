@@ -29,98 +29,98 @@
 Template.dashboard.events({
     /**
      * When user form is submitted, upload the picture and save
-     * the settings 
+     * the settings
      */
-    'submit #dash-user-form' : function(e, t) 
-    {
-  e.preventDefault();
+    'submit #dash-user-form': function (e) {
+        e.preventDefault()
 
-  var userDash = $(e.currentTarget),
-      userBio = userDash.find('#dash-short-bio').val(),
-      userName = userDash.find('#dash-username').val();
-      
-  var currentUser = Meteor.user();
+        const userDash = $(e.currentTarget),
+            userBio = userDash.find('#dash-short-bio').val(),
+            userName = userDash.find('#dash-username').val(),
+            currentUser = Meteor.user(),
+            saveSettings = function (picId) {
+            /**
+             * If user has not changed the profile picture then use
+             * existing profile pic.
+             */
+                if (!picId) {
+                    picId = currentUser.profile.pic
+                }
 
-	var saveSettings = function(picId)
-	{   
- 	    /**
-	     * If user has not changed the profile picture then use
-	     * existing profile pic.
-	     */
-	    if (!picId) {
-		picId = currentUser.profile.pic;
-	    } 
+                Meteor.users.update(currentUser._id, {
+                    $set: {
+                        'profile.bio': userBio,
+                        'profile.name': userName,
+                        'profile.pic': picId,
+                    },
+                }, (error) => {
+                    if (error) {
+                        sAlert.error('There was an error, Please fill all the fields correctly')
+                    } else {
+                        sAlert.success('Settings saved')
+                    }
+                })
+            }
 
-	    Meteor.users.update( currentUser._id,{ $set: {'profile.bio' : userBio, 'profile.name': userName, 'profile.pic': picId}}, function(error, res) {
-		if (error) {
-    	sAlert.error("There was an error, Please fill all the fields correctly");
-	    	} else {
-        sAlert.success("Settings saved");
-		}
-	    });
-	}
-	
-	if (e.target[2].files[0]) {
-	    var fsFile = new FS.File(e.target[2].files[0]);
-	    console.log(fsFile);
-	    fsFile.user = currentUser._id;
-		
-		var prevProfilePicture = ProfilePictures.findOne({user: currentUser._id});
-		if(typeof prevProfilePicture != 'undefined'){
-	   		ProfilePictures.remove(prevProfilePicture._id);
-	   	}
+        if (e.target[2].files[0]) {
+            const fsFile = new FS.File(e.target[2].files[0])
+            console.log(fsFile)
+            fsFile.user = currentUser._id
 
-	    ProfilePictures.insert(fsFile, function(err, dpFile) {
-		if (err) {
-		    sAlert.error(err.reason);
-	    } else {
-            sAlert.success("Profile pic uploaded");
-	    	saveSettings(dpFile._id);
-		} 
-	    });
-	} else {
-	    saveSettings();
-	}
-  
+            const prevProfilePicture = ProfilePictures.findOne({
+                user: currentUser._id,
+            })
+            if (typeof prevProfilePicture !== 'undefined') {
+                ProfilePictures.remove(prevProfilePicture._id)
+            }
 
+            ProfilePictures.insert(fsFile, (err, dpFile) => {
+                if (err) {
+                    sAlert.error(err.reason)
+                } else {
+                    sAlert.success('Profile pic uploaded')
+                    saveSettings(dpFile._id)
+                }
+            })
+        } else {
+            saveSettings()
+        }
     },
 
     /**
      * When admin form is submitted, get the values form the form
      * and update the settings.
      */
-    'submit #dash-admin-form' : function(e,t) 
-    {
-  e.preventDefault();
-  
-  var adminDash = $(e.currentTarget),
-      primaryBranding = adminDash.find('#dash-primary-branding').val(),
-      mailUrl = adminDash.find ('#dash-mail-url').val(),
-      mgedPath = adminDash.find('#dash-mged-path').val(),
-      gobjPath = adminDash.find('#dash-g-obj-path').val();
-  
-  settings = OgvSettings.findOne();
+    'submit #dash-admin-form': function (e) {
+        e.preventDefault()
 
-  OgvSettings.update( settings._id, { 
-      $set: { 
-    siteName: primaryBranding, 
-    mailUrl : mailUrl, 
-    mgedPath : mgedPath, 
-    gobjPath :gobjPath 
-      }
-  }, function(error, res) {
-      if (error) {
-    sAlert.error("There was an error, Please fill all the fields correctly");
-      } else {
-    sAlert.success("Admin Settings saved");
-      }
-  }); 
-    }
-});
+        const adminDash = $(e.currentTarget),
+            primaryBranding = adminDash.find('#dash-primary-branding').val(),
+            mailUrl = adminDash.find('#dash-mail-url').val(),
+            mgedPath = adminDash.find('#dash-mged-path').val(),
+            gobjPath = adminDash.find('#dash-g-obj-path').val()
+
+        settings = OgvSettings.findOne()
+
+        OgvSettings.update(settings._id, {
+            $set: {
+                siteName: primaryBranding,
+                mailUrl,
+                mgedPath,
+                gobjPath,
+            },
+        }, (error) => {
+            if (error) {
+                sAlert.error('There was an error, Please fill all the fields correctly')
+            } else {
+                sAlert.success('Admin Settings saved')
+            }
+        })
+    },
+})
 
 Template.dashboard.helpers({
-    settings: function() 
-    {
-  return OgvSettings.findOne();
-    }
-});
+    settings() {
+        return OgvSettings.findOne()
+    },
+})

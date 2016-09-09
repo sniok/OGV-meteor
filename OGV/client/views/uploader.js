@@ -1,4 +1,3 @@
-
 /*                     U P L O A D E R . J S
  * BRL-CAD
  *
@@ -21,62 +20,64 @@
 
 /** @file OGV/client/views/uploader.js
  *  @brief client side uploading mechanism
- * 
+ *
  * User file uploading is handled by calling a SaveFile method defined
- * in server/uploader.js. 
+ * in server/uploader.js.
  */
 
 /**
  * Checks if the file is text or binary and then encode it accordingly
  */
-Meteor.saveFile = function(blob,name,path, type)
-{
-	console.log (path); 
-    var fileReader = new FileReader(), 
-	method, encoding = 'binary', type = type || 'binary'; 
-    switch (type) { 
-	case 'text': 
-	   method = 'readAsText'; 
-	   encoding = 'utf8' 
-	break; 
-              
-	case 'binary': 
-	    method = 'readAsBinaryString'; 
-	    encoding = 'binary'; 
-	break;
-              
-	default:
-	    method = 'readAsBinaryString';
-	    encoding = 'binary';
-	break;
+Meteor.saveFile = function (blob, name, path, _type) {
+    console.log(path)
+    const fileReader = new FileReader(),
+        type = _type || 'binary'
+
+    let method,
+        encoding = 'binary'
+
+    switch (type) {
+    case 'text':
+        method = 'readAsText'
+        encoding = 'utf8'
+        break
+
+    case 'binary':
+        method = 'readAsBinaryString'
+        encoding = 'binary'
+        break
+
+    default:
+        method = 'readAsBinaryString'
+        encoding = 'binary'
+        break
     }
     /**
-     * Call server method saveFile 
+     * Call server method saveFile
      */
-    fileReader.onload = function(file) {
-	Meteor.call('saveFile', file.srcElement.result, name, path, encoding, function(err) { 
-	    if (err) {
-		Session.set('alert','Sorry,' + err);
-	    } else {
-		Session.set('alert','Yay! file uploaded');
-	    }
-	});
+    fileReader.onload = function (file) {
+        Meteor.call('saveFile', file.srcElement.result, name, path, encoding, (err) => {
+            if (err) {
+                Session.set('alert', `Sorry, ${err}`)
+            } else {
+                Session.set('alert', 'Yay! file uploaded')
+            }
+        })
     }
-        
-    fileReader[method](blob);
+
+    fileReader[method](blob)
 }
 
 /**
- * Whenever the input changes, save the file by calling saveFile function 
+ * Whenever the input changes, save the file by calling saveFile function
  * which is defined in server/uploader.js from server
  */
 
-Template.uploader.events({ 
-    'change input': function(ev) {
-	Session.set('alert','Uploading . . .');
-	_.each(ev.currentTarget.files, function(file)
-	{
-	    Meteor.saveFile(file, file.name );
-	});	
-    }
-}); 
+Template.uploader.events({
+    'change input': function (ev) {
+        Session.set('alert', 'Uploading . . .')
+        _.each(ev.currentTarget.files, (file) => {
+            Meteor.saveFile(file, file.name)
+        })
+    },
+})

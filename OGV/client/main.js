@@ -21,71 +21,70 @@
 /** @file OGV/client/main.js
  *  @brief helper file for index.html
  *
- *  Helper for main template (index.html) that checks for the reset 
+ *  Helper for main template (index.html) that checks for the reset
  *  and verify email tokens. It also takes care of the display of
  *  forgot password form.
  */
 
-/** 
+/**
  * index.html helper
  *
  * Helper function for the template index.html that returns the
  * session variable resetPasswordToken which is set in function
  * @return reset password token
  */
-   
+
 Template.models.helpers({
-    resetPasswordToken: function()
-    {
-	return Session.get('resetPasswordToken');
-    }
-});
+    resetPasswordToken() {
+        return Session.get('resetPasswordToken')
+    },
+})
 
 /**
  * Sets reset password token.
  *
  * Checks for reset password token in the url and sets the session
- * variable resetPasswordToken accordingly. Such token shall be 
- * sent to user's email-id along with the link. 
+ * variable resetPasswordToken accordingly. Such token shall be
+ * sent to user's email-id along with the link.
  */
 if (Accounts._resetPasswordToken) {
-    Session.set('resetPasswordToken', Accounts._resetPasswordToken);
+    Session.set('resetPasswordToken', Accounts._resetPasswordToken)
 }
 
 /**
- * Verifies email 
+ * Verifies email
  *
- * It checks if verify email token is set or not and verifies the 
+ * It checks if verify email token is set or not and verifies the
  * email ID accordingly. Such token shall be sent to user's email-id
  * along with a "verify your email" link.
- */ 
+ */
 if (Accounts._verifyEmailToken) {
-    Accounts.verifyEmail(Accounts._verifyEmailToken, function(err) {
-	if (err) {
-	    Session.set('alert',err.message);
-	} else {
-	    Session.set('alert','Your email is verified');
-	}
-    });
+    Accounts.verifyEmail(Accounts._verifyEmailToken, (err) => {
+        if (err) {
+            Session.set('alert', err.message)
+        } else {
+            Session.set('alert', 'Your email is verified')
+        }
+    })
 }
 
 /**
  * Subscribe to various collections
  *
  */
-Meteor.subscribe('sharedModels');
-Meteor.subscribe('objFiles');
-Meteor.subscribe('comments');
-Meteor.subscribe('lovers');
-Meteor.subscribe('profilePictures');
-Meteor.subscribe('ogvSettings');
-Meteor.subscribe('profiles');
-Meteor.subscribe('notifications');
-Meteor.subscribe('posts');
-/*                                                                    
- * Local Variables:                                                   
- * mode: javascript                                                            
+Meteor.subscribe('sharedModels')
+Meteor.subscribe('objFiles')
+Meteor.subscribe('comments')
+Meteor.subscribe('lovers')
+Meteor.subscribe('profilePictures')
+Meteor.subscribe('ogvSettings')
+Meteor.subscribe('profiles')
+Meteor.subscribe('notifications')
+Meteor.subscribe('posts')
+/*
+ * Local Variables:
+ * mode: javascript
  * tab-width: 8
- * End:                                                               
- * ex: shiftwidth=4 tabstop=8                                         
+ * End:
+ * ex: shiftwidth=4 tabstop=8
  */

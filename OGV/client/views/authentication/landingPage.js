@@ -1,5 +1,5 @@
 /**
-/*                    	L A N D I N G  P A G E . J S
+/*                    L A N D I N G  P A G E . J S
  * BRL-CAD
  *
  * Copyright (c) 1995-2013 United States Government as represented by
@@ -26,7 +26,7 @@
  */
 
 Template.landingPage.helpers({
-	isFillingForm: function () {
-		return true;
-	}
-});
+    isFillingForm() {
+        return true
+    },
+})

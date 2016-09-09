@@ -1,4 +1,3 @@
-
 /*                P U B L I C A T I O N S . J S
  * BRL-CAD
  *
@@ -23,71 +22,58 @@
  *  @brief publishes data from server to client
  */
 
-Meteor.publish('modelFiles', function() {
-    return ModelFiles.find();
-});
+Meteor.publish('modelFiles', () => ModelFiles.find())
 
-Meteor.publish('objFiles', function() {
-    return OBJFiles.find();
-});
+Meteor.publish('objFiles', () => OBJFiles.find())
 
-Meteor.publish('comments', function() {
-    return Comments.find();
-});
+Meteor.publish('comments', () => Comments.find())
 
-Meteor.publish('profilePictures', function() {
-    return ProfilePictures.find();
-});
+Meteor.publish('profilePictures', () => ProfilePictures.find())
 
-Meteor.publish('lovers', function(){
-    return Lovers.find();
-});
+Meteor.publish('lovers', () => Lovers.find())
 
-Meteor.publish('ogvSettings', function(){
-    return OgvSettings.find();
-});
+Meteor.publish('ogvSettings', () => OgvSettings.find())
 
-Meteor.publish('sharedModels', function(){
-   return SharedModels.find();
-});
+Meteor.publish('sharedModels', () => SharedModels.find())
 
-Meteor.publish('notifications', function(){
-  return Notifications.find();
-});
+Meteor.publish('notifications', () => Notifications.find())
 
-Meteor.publish('posts', function(){
-  return Posts.find();
-});
+Meteor.publish('posts', () => Posts.find())
 
 /**
  * Not every detail about user is published to client
  * for security reasons
  */
-Meteor.publish('profiles', function() {
-    return Meteor.users.find({}, {fields: {emails : 1, profile: 1, roles: 1}});
-}); 
+Meteor.publish('profiles', () =>
+    Meteor.users.find({}, {
+        fields: {
+            emails: 1,
+            profile: 1,
+            roles: 1,
+        },
+    })
+)
 
-Meteor.publish("userProfile",function(id){
-    Meteor._sleepForMs(1000);
+Meteor.publish('userProfile', function (id) {
+    check(id)
+    Meteor._sleepForMs(1000)
     // try to find the user by id
-    var user=Meteor.users.findOne({
-        _id:id
-    });
+    const user = Meteor.users.findOne({
+        _id: id,
+    })
     // if we can't find it, mark the subscription as ready and quit
-    if(!user){
-        this.ready();
-        return;
+    if (!user) {
+        this.ready()
+        return
     }
     // if the user we want to display the profile is the currently logged in user...
-    if(this.userId==user._id){
+    if (this.userId === user._id) {
         // then we return the corresponding full document via a cursor
-        return Meteor.users.find(this.userId);
+        return Meteor.users.find(this.userId)
     }
-    else{
         // if we are viewing only the public part, strip the "profile"
         // property from the fetched document, you might want to
         // set only a nested property of the profile as private
         // instead of the whole property
-        return Meteor.users.find(user._id);
-    }
-});
+    return Meteor.users.find(user._id)
+})

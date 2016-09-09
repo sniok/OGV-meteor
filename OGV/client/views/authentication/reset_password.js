@@ -22,33 +22,31 @@
  *  @brief Deals with resetting password
  *
  *  This view normally shows up when user has applied for the forgotten
- *  password form 
+ *  password form
  */
 Template.resetPassword.events({
-    'submit #reset-password-form': function(e,t)
-    {
-	e.preventDefault();
+    'submit #reset-password-form': function (e) {
+        e.preventDefault()
 
-	var resetPasswordForm = $(e.currentTarget),
-	    password = resetPasswordForm.find('#reset-password-password').val(),
-	    passwordConfirm = resetPasswordForm.find('#reset-password-confirm').val();
+        const resetPasswordForm = $(e.currentTarget),
+            password = resetPasswordForm.find('#reset-password-password').val(),
+            passwordConfirm = resetPasswordForm.find('#reset-password-confirm').val()
 
         /**
- 	 * Validate the password fields and show errors if any 
-	 */
-	
-	if (isNotEmpty(password) &&
-	    areValidPasswords(password,passwordConfirm)) {
-	    Accounts.resetPassword(Session.get('resetPasswordToken'),password,function(err)
-	    {
-		if (err) {
-			sAlert.error('We\'re sorry but something went wrong');
-		} else {
-		    sAlert.success('Your password has been changed. Welcome back!');
-		    Session.set('resetPassword',null);
-		}
-	    });
-	}
-	return false;
-    }
-});
+      * Validate the password fields and show errors if any
+     */
+
+        if (isNotEmpty(password) &&
+        areValidPasswords(password, passwordConfirm)) {
+            Accounts.resetPassword(Session.get('resetPasswordToken'), password, (err) => {
+                if (err) {
+                    sAlert.error('We\'re sorry but something went wrong')
+                } else {
+                    sAlert.success('Your password has been changed. Welcome back!')
+                    Session.set('resetPassword', null)
+                }
+            })
+        }
+        return false
+    },
+})

@@ -19,56 +19,58 @@
  */
 
 /** @file OGV/collections/ogv_meta.js
- *  @brief Collections for site wide settings. 
+ *  @brief Collections for site wide settings.
  *
  */
 
 OgvSchema = new SimpleSchema({
-	gobjPath: { 
-		type: String
-	},
-	mailUrl: {
-		type: String
-	},
-	mgedPath: {
-		type: String
-	},
-	siteName: {
-		type: String
-	},
-	settingSwitch: {
-		type: Boolean
-	}
-});
+    gobjPath: {
+        type: String,
+    },
+    mailUrl: {
+        type: String,
+    },
+    mgedPath: {
+        type: String,
+    },
+    siteName: {
+        type: String,
+    },
+    settingSwitch: {
+        type: Boolean,
+    },
+})
 
-OgvSettings = new Meteor.Collection('OgvSettings');
-OgvSettings.attachSchema(OgvSchema);
-/**
- * No one is allowed to insert and only admin can update the settings
- */
+OgvSettings = new Meteor.Collection('OgvSettings')
+OgvSettings.attachSchema(OgvSchema)
+    /**
+     * No one is allowed to insert and only admin can update the settings
+     */
 
 OgvSettings.allow({
-    insert: function(userId, setting)
-    {
-	throw (new Meteor.Error(550, "You are not allowed to insert new settings, you can edit the old ones though"));
-	return false;
+    insert() {
+        throw (
+            new Meteor.Error(550,
+                'You are not allowed to insert new settings, you can edit the old ones though')
+        )
     },
-    update: function(userId, setting)
-    {
-	roles = Meteor.user().roles;
-	var isAdmin = false;
+    update() {
+        roles = Meteor.user().roles
+        let isAdmin = false
 
-	for (role in roles)
-	{
-	    if (roles[role] === 'admin') {
-		isAdmin = true;
-	    }
-	}
+        for (role in roles) {
+            if (roles[role] === 'admin') {
+                isAdmin = true
+            }
+        }
 
-	if (!isAdmin) {
-	    throw (new Meteor.Error(550, "Sorry you need to be admin before you can edit site settings"));
-	}
+        if (!isAdmin) {
+            throw (
+                new Meteor.Error(550,
+                'Sorry you need to be admin before you can edit site settings')
+            )
+        }
 
-	return isAdmin;
-    }
-});
+        return isAdmin
+    },
+})

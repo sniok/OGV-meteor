@@ -26,15 +26,13 @@
  */
 
 Template.logOut.events({
-    'click #log-out':function(e,t)
-    {
-	Meteor.logout(function() {
-	     throwError('Bye!, See you back soon');
-	     Router.go('/');
-	    /*sAlert.info('Bye!, See you back soon', {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});
-	    Router.go("/"); */
-	});
-	
-	return false;
-    }
-});
+    'click #log-out': function () {
+        Meteor.logout(() => {
+            throwError('Bye!, See you back soon')
+            Router.go('/')
+        /* sAlert.info('Bye!, See you back soon', {effect: 'flip', onRouteClose: false, stack: false, timeout: 4000, position: 'top'});
+        Router.go("/"); */
+        })
+        return false
+    },
+})

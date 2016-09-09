@@ -24,9 +24,8 @@
  * website that's shown at various places.
  */
 Template.primaryBranding.helpers({
-    primaryBranding: function()
-    {
-	settings = OgvSettings.findOne();
-	return settings.siteName;
-    }
-});
+    primaryBranding() {
+        settings = OgvSettings.findOne()
+        return settings.siteName
+    },
+})

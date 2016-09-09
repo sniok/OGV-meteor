@@ -1,5 +1,5 @@
 /**
-/*                    	L O G I N . J S
+/*                        L O G I N . J S
  * BRL-CAD
  *
  * Copyright (c) 1995-2013 United States Government as represented by
@@ -26,36 +26,31 @@
  */
 
 Template.logIn.events({
-    'submit #log-in-form':function(e,t)
-    {
-	e.preventDefault();
+    'submit #log-in-form': function (e) {
+        e.preventDefault()
 
-	var logInForm = $(e.currentTarget),
-	    email = trimInput(logInForm.find('#log-in-email').val().toLowerCase()),
-	    password = logInForm.find('#log-in-password').val();
-        
+        const logInForm = $(e.currentTarget),
+            email = trimInput(logInForm.find('#log-in-email').val().toLowerCase()),
+            password = logInForm.find('#log-in-password').val()
+
      /**
- 	 * If login fails show the error message else go to /upload 
-	 */
+      * If login fails show the error message else go to /upload
+     */
 
-	if (isNotEmpty(email) &&
-	    isEmail(email) &&
-	    isNotEmpty(password) &&
-	    isValidPassword(password)) {
-	    Meteor.loginWithPassword(email,password,function(err){
-	        if (err) {
-		    sAlert.error(err.reason);
-		    console.log(err);
-		} else {
-			sAlert.info('Welcome back');
-		    Router.go('/upload');
-		}
-	    });
-	}
-
-	return false;
-	
+        if (isNotEmpty(email) &&
+        isEmail(email) &&
+        isNotEmpty(password) &&
+        isValidPassword(password)) {
+            Meteor.loginWithPassword(email, password, (err) => {
+                if (err) {
+                    sAlert.error(err.reason)
+                    console.log(err)
+                } else {
+                    sAlert.info('Welcome back')
+                    Router.go('/upload')
+                }
+            })
+        }
+        return false
     },
-	
-
-});	    
+})

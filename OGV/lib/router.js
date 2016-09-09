@@ -190,6 +190,6 @@ Router.onBeforeAction(validateUser, {
         'index'],
 })
 Router.onBeforeAction(actionReady, {
-    only: ['index', 'modelViewer', 'profilePage', 'explore', 'models', 'modelFeed']
+    only: ['index', 'modelViewer', 'profilePage', 'explore', 'models', 'modelFeed'],
 })
 Router.onBeforeAction(loggingIn)

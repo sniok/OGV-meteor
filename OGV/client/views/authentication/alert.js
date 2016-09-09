@@ -26,8 +26,7 @@
  */
 
 Template.alert.helpers({
-    alert: function()
-    {
-	return Session.get('alert');
-    }
-});
+    alert() {
+        return Session.get('alert')
+    },
+})

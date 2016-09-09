@@ -24,90 +24,80 @@
  */
 
 /**
- * gStore is the store where model files are stored. It hosts a 
- * function called transformWrite that calls a function which 
- * converts g files into obj files. 
+ * gStore is the store where model files are stored. It hosts a
+ * function called transformWrite that calls a function which
+ * converts g files into obj files.
  */
-  
-gStore = new FS.Store.FileSystem("modelFiles", {
-    transformWrite: function(fileObj, readStream, writeStream)
-    {
-	var fileId = fileObj._id;
+gStore = new FS.Store.FileSystem('modelFiles', {
+    transformWrite(fileObj, readStream, writeStream) {
+        const fileId = fileObj._id
 
-	Meteor.call('convertFile', fileId, function(err) {
-	     if (err) {
-		throw (new Meteor.Error('590', err.reason));	
- 	    } 	
-	});
+        Meteor.call('convertFile', fileId, (err) => {
+            if (err) {
+                throw (new Meteor.Error('590', err.reason))
+            }
+        })
 
-	/* g files are not actually converted into obj files but 
-	 * a g file is used to get a number of obj files, so it's
-	 * piped as it is.
-	 */
-	   
-	readStream.pipe(writeStream); 
-    } 
-});
+/* g files are not actually converted into obj files but
+ * a g file is used to get a number of obj files, so it's
+ * piped as it is.
+ */
+
+        readStream.pipe(writeStream)
+    },
+})
 
 
 /**
- * Model files is a collection that stores FS.FILE object of .g 
- * file uploaded by user 
+ * Model files is a collection that stores FS.FILE object of .g
+ * file uploaded by user
  */
 
-ModelFiles = new FS.Collection("modelFiles", {
-    stores: [ gStore ]
-});
+ModelFiles = new FS.Collection('modelFiles', {
+    stores: [gStore],
+})
 
 
 ModelFiles.allow({
-    insert: function(userId, file) 
-    {
-	if ((file.extension() == 'g') || (file.extension() == 'obj')) {	
-	    return true;
-	} else {
-	    return false;
-	}
+    insert(userId, file) {
+        if ((file.extension() === 'g') || (file.extension() === 'obj')) {
+            return true
+        }
+        return false
     },
-    update: function(userId,file, fieldNames, modifier) 
-    {
-	   return (userId && file.owner === userId) || modifier.$inc.viewsCount !== userId;
+    update(userId, file, fieldNames, modifier) {
+        return (userId && file.owner === userId) || modifier.$inc.viewsCount !== userId
     },
-    download: function() 
-    {
-    	return true;
+    download() {
+        return true
     },
-    remove: function (userId, file) {
-        return userId && file.owner === userId;
-    }	
-});
+    remove(userId, file) {
+        return userId && file.owner === userId
+    },
+})
 
 /**
  * OBJFiles is a collection for all the obj files that get generated
  * after conversion from g file.
  */
 
-OBJFiles = new FS.Collection ("objFiles", {
+OBJFiles = new FS.Collection('objFiles', {
     stores: [
-	new FS.Store.FileSystem("objFiles")
-    ]
-});
+        new FS.Store.FileSystem('objFiles'),
+    ],
+})
 
 OBJFiles.allow({
-    insert: function(userId, file) 
-    { 
-	return !! userId;
-    
+    insert(userId) {
+        return !!userId
     },
-    update: function(userId,file) 
-    {
-	return !! userId;
+    update(userId) {
+        return !!userId
     },
-    download: function() 
-    {
-    	return true;
+    download() {
+        return true
     },
-    remove: function (userId, file) {
-        return userId && file.owner === userId;
-    }	
-});
+    remove(userId, file) {
+        return userId && file.owner === userId
+    },
+})

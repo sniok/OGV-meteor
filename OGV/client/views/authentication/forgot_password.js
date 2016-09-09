@@ -1,4 +1,3 @@
-
 /*                F O R G O T _ P A S S W O R D . J S
  * BRL-CAD
  *
@@ -27,30 +26,31 @@
 
 /**
  * Things to do when submit button of forgot-password-form
- * is clicked 
+ * is clicked
  */
 
 Template.forgotPassword.events({
-    'submit #forgot-password-form':function(e,t)
-    {
-	e.preventDefault();
-        
-	var forgotPasswordForm = $(e.currentTarget),
-	    email = trimInput(forgotPasswordForm.find('#forgot-password-email').val().toLowerCase());
-        /** 
+    'submit #forgot-password-form': function (e) {
+        e.preventDefault()
+
+        const forgotPasswordForm = $(e.currentTarget),
+            email = trimInput(forgotPasswordForm.find('#forgot-password-email').val().toLowerCase())
+        /**
          * Send an email to the user if he forgets the password
          */
-	if (isNotEmpty(email) &&
-	    isEmail(email)) {
-	    Accounts.forgotPassword({email:email},function(err){
-		if (err) {
-		    throwError(err.reason);
-	        } else {
-		    throwNotification('Email Sent, Please check your mailbox to reset your password');
-	        }
-	    });
-	}
-	return false;
+        if (isNotEmpty(email) &&
+            isEmail(email)) {
+            Accounts.forgotPassword({
+                email,
+            }, (err) => {
+                if (err) {
+                    throwError(err.reason)
+                } else {
+                    throwNotification('Email Sent, Please check your mailbox to reset your password')
+                }
+            })
+        }
+        return false
     },
-    
-});
+
+})
