@@ -55,7 +55,7 @@ Meteor.publish('profiles', () =>
 )
 
 Meteor.publish('userProfile', function (id) {
-    check(id)
+    check(id, String)
     Meteor._sleepForMs(1000)
     // try to find the user by id
     const user = Meteor.users.findOne({
