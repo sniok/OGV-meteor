@@ -84,11 +84,11 @@ Template.searchUserResult.helpers({
 })
 
 
-Template.searchResult.onRendered = function () {
+Template.searchResult.rendered = function () {
     ModelSearch.search('')
 }
 
-Template.searchUserResult.onRendered = function () {
+Template.searchUserResult.rendered = function () {
     UserSearch.search('')
 }
 

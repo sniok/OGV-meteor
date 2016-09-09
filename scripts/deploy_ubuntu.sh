@@ -16,6 +16,11 @@ node --version
 echo "# Npm Version"
 npm --version
 
+# Mongo
+echo "# Installing mongo"
+sudo apt-get install mongodb
+mongo --version
+
 # Meteor
 echo "# Installing Meteor"
 curl https://install.meteor.com | /bin/sh

@@ -16,7 +16,7 @@
   "scripts": {
     "start": "meteor",
     "lint": "eslint .",
-    "test": "eslint .; meteor"
+    "test": "eslint ."
   },
   "eslintConfig": {
     "parser": "babel-eslint",

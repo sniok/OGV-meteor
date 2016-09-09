@@ -1,14 +1,20 @@
 # Online Geometry Viewer
-
+[![Build Status](https://travis-ci.org/sniok/OGV-meteor.svg?branch=eslint)](https://travis-ci.org/sniok/OGV-meteor)  
 Online Geometry Viewer is an online web application, where users can upload, view
 and share 3D CAD models. They can also host these models online, can like (love)
 or comment on them. In a nutshell it can be looked at as a social blogging 
 platform for 3D models. 
 
-----------------------
-#Installation Steps
-#### Debian and Ubuntu based Linux distributions
+# Install
 
+## Debian and Ubuntu based Linux distributions
+### Using deploy script
+```sh
+./scripts/deploy_ubuntu.sh
+```
+You will be asked for sudo access twice (for node and mongo)
+
+### Manually
 * Install Nodejs :
 
   * sudo apt-get install python-software-properties python g++ make
@@ -30,12 +36,19 @@ platform for 3D models.
   * sudo apt-get install git
   * git clone https://github.com/BRL-CAD/OGV-meteor
 
-* Run OGV
-    
-  * cd OGV-meteor/OGV
-  * meteor
+# Run
+To run app use: 
+```
+meteor
+```
+Then open Browser and type in URL
+```
+http://localhost:3000
+```
 
-* Open Browser and type in URL
-
-  * http://localhost:3000
+# Lint
+To run ESlint check run 
+```
+meteor npm run lint 
+```
 
