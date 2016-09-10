@@ -116,6 +116,9 @@ Template.newsfeedSidebar.helpers({
 
     sharedModel() {
         const currentUser = Meteor.user()
+        if (!currentUser.profile.following) {
+            return false
+        }
         model = SharedModels.find({
             sharedby: {
                 $in: currentUser.profile.following,

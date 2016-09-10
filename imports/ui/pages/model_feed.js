@@ -41,15 +41,11 @@ Template.modelFeed.helpers({
      * them in reverse chronological order.
      */
     posts() {
-        url = Router.current().url
-        url = url.split('/')
-        modelId = url.pop()
-        const model = ModelFiles.find(modelId)
-        if (model.count()) {
-            return model
-        }
         const currentUser = Meteor.user()
         const audience = ['public', 'followers']
+        if (!currentUser.profile.following) {
+            return false
+        }
         posts = Posts.find({
             audience: {
                 $in: audience,

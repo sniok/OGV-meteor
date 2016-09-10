@@ -1,3 +1,2 @@
-client/lib/*
-server/uploader.js
+# 3rd party libs
 imports/utils
