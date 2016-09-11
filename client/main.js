@@ -20,8 +20,9 @@
 
 // Import UI
 
-import '../imports/ui/layouts/layout.html'        // Main layout
+import '../imports/ui/layouts/layout.js'        // Main layout
 
+import '../imports/ui/components/menu_new.js'     // temp new menu
 import '../imports/ui/components/menu.js'         // Top menu
 import '../imports/ui/components/preloader.html'  // Preloader
 

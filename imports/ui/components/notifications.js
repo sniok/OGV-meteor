@@ -18,7 +18,6 @@
  * information.
  */
 
-// Does nothing
 
 /**
  * Returns all the notifications that are in the database

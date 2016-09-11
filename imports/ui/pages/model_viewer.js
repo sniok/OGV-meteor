@@ -163,6 +163,7 @@ function init() {
      */
     container = document.getElementById('model-container')
     controller = document.getElementById('modelController')
+    const target = document.getElementById('main')
 
     /**
      * Create a scene, that will hold all our elements such
@@ -173,7 +174,7 @@ function init() {
     /**
      * Create a camera, which defines where we're looking at.
      */
-    camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 1, 100000)
+    camera = new THREE.PerspectiveCamera(65, target.clientWidth / target.clientHeight, 1, 100000)
     camera.position.z = 2000
     camera.position.x = 2000
     camera.position.y = 2000
@@ -338,7 +339,8 @@ function init() {
     /**
      * Sets size and color to renderer
      */
-    renderer.setSize(window.innerWidth, window.innerHeight)
+
+    renderer.setSize(target.clientWidth, target.clientHeight)
     renderer.setClearColor(0x555555, 1)
 
     container.appendChild(renderer.domElement)
@@ -357,10 +359,12 @@ function init() {
  * when window resizes, the size of modelviewer needs to resize
  */
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight
+    const target = document.getElementById('main')
+
+    camera.aspect = target.clientWidth / target.clientHeight
     camera.updateProjectionMatrix()
 
-    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setSize(target.clientWidth, target.clientHeight)
 
     render()
 }

@@ -56,10 +56,6 @@ h2 {
     margin:auto;
 }
 
-#main {
-    padding-top:50px;
-}
-
 .wrapper {
     margin-top:20px;
 }
@@ -469,9 +465,6 @@ input:focus {
 
 #model-container {
     position:fixed;
-    left:0;
-    top:0;
-    z-index: 900;
 }
 
 .dropzone-text{

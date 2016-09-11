@@ -1,0 +1,15 @@
+<template name="newMenu">
+    <div class="nav">
+        <div class="logo">
+            OGV
+        </div>
+        <div class="menu">
+            <ul>
+                <li class="{{ activeIfTemplateIs 'models' }}"><a href="/newsfeed"><i class="mdi mdi-menu"></i>Feed</a></li>
+                <li class="{{ activeIfTemplateIs 'explore' }}"><a href="/explore"><i class="mdi mdi-magnify"></i>Explore</a></li>
+                <li class="{{ activeIfTemplateIs 'cfsUploader' }}"><a href="/upload"><i class="mdi mdi-upload"></i>Upload</a></li>
+                <li class="{{ activeIfTemplateIs 'profilePage' }}"><a href="/profile/{{ loggedInUser._id}}"><i class="mdi mdi-account"></i>Profile</a></li>
+            </ul>
+        </div>
+    </div>
+</template>

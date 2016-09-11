@@ -43,15 +43,12 @@ Template.modelFeed.helpers({
     posts() {
         const currentUser = Meteor.user()
         const audience = ['public', 'followers']
-        if (!currentUser.profile.following) {
-            return false
-        }
         posts = Posts.find({
             audience: {
                 $in: audience,
             },
             postedBy: {
-                $in: currentUser.profile.following,
+                $in: currentUser.profile.following.concat(currentUser._id),
             },
         }, {
             sort: {
