@@ -50,7 +50,7 @@ SearchSource.defineSource('objFiles', (searchText, options) => {
 
 function buildRegExp(searchText) {
     const words = searchText.trim().split(/[ \-:]+/)
-    const exps = _.map(words, (word) => `(?=.*${word})`)
+    const exps = _.map(words, word => `(?=.*${word})`)
     const fullExp = `${exps.join('')}.+`
     return new RegExp(fullExp, 'i')
 }
