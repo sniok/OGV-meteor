@@ -1,5 +1,6 @@
 
 import './social.html'
+import './social.css'
 
 /**
  * Comments and its backend implementation

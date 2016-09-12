@@ -23,7 +23,6 @@ a {
 a:hover {
     color:#f74c3c;
     text-decoration: none;
-    border-bottom: 1px dashed #F03B5B;
 }
 
 a:focus {
@@ -212,15 +211,15 @@ h2 {
 }
 
 .notifications {
-    max-width:300px;
+    min-width:300px;
     max-height:250px;
     overflow-y:auto;
     position:absolute;
-    margin-left:-100px;
+    padding: 20px;
     z-index:1100;
     word-wrap:break-word;
-    background-color:#fafafa;
-    box-shadow: 0px 0px 5px 0.1px #333;
+    background-color:#FFF;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
     display: none;
 }
 

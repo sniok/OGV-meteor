@@ -1,4 +1,5 @@
 <template name="modelEditor">
+		{{#if currentUser}}
 	   <div data-src={{_id}} class="edit-controls-wrapper">
 
 	   <div class="edit-controls-icons">
@@ -55,4 +56,5 @@
 	  
 
 	   </div>
+	   {{/if}}
 </template>

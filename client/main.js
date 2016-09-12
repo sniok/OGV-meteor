@@ -20,10 +20,9 @@
 
 // Import UI
 
-import '../imports/ui/layouts/layout.js'        // Main layout
+import '../imports/ui/layouts/layout.js'          // Main layout
 
 import '../imports/ui/components/menu_new.js'     // temp new menu
-import '../imports/ui/components/menu.js'         // Top menu
 import '../imports/ui/components/preloader.html'  // Preloader
 
 import '../imports/ui/pages/landingPage.js'       // /
@@ -246,14 +245,14 @@ Router.onBeforeAction(validateUser, {
         'newsfeedSidebar',
         'models',
         'modelFeed',
-        'explore',
         'profilePage',
         'index'],
 })
 Router.onBeforeAction(actionReady, {
-    only: ['index', 'modelViewer', 'profilePage', 'explore', 'models', 'modelFeed'],
+    only: ['index', 'modelViewer', 'explore', 'models', 'modelFeed'],
 })
 Router.onBeforeAction(loggingIn)
+
 
 /*
  * Local Variables:

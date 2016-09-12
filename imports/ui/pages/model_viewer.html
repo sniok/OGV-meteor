@@ -21,7 +21,7 @@
 		<a href = "/cfs/files/modelFiles/{{_id}}/{{name}}"><img src="/icons/Download.png" width="28px" height="28px">
 			<p class="sm-menu-text">Download</p></a>
 		</div>
-
+		{{#if currentUser}}
 		<div class="sm-item" id="sm-item-love">
 			<img src="/icons/Shape-Heart.png" width="28px" height="28px">
 			<p class="sm-menu-text">Love ({{ lovers }})</p>
@@ -31,6 +31,7 @@
 			<img src="/icons/Message.png" width="28px" height="28px">
 			<p class="sm-menu-text">Comment</p>
 		</div>
+		{{/if}}
 
 		<div data-clipboard-text="{{embedCode}}" class="sm-item" id="sm-item-embed">
 			<img src="/icons/Link.png" width="28px" height="28px">

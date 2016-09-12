@@ -194,43 +194,41 @@ Meteor.methods({
             for (l in loversArray) {
                 if (loversArray[l] === user._id) {
                     alreadyLoved = true
+                    loversArray.splice(l, 1)
                 }
             }
             /**
              * If user already loves the post, then throw an error
              */
-            if (alreadyLoved) {
-                throw (new Meteor.Error(550, 'you already love this'))
-            } else {
+            if (!alreadyLoved) {
                 loversArray.push(user._id)
-                return Lovers.update({
-                    postId: loveAttributes.postId,
-                }, {
-                    $set: {
-                        lovers: loversArray,
-                        countLovers: loversArray.length,
-                    },
-                }) // update lovers
             }
-        } else {
-            modelId = loveAttributes.postId
-            ownerId = post.owner
-            if (user._id !== ownerId) {
-                Notifications.insert({
-                    user: user._id,
-                    ownerId,
-                    modelId,
-                    type: 'love',
-                    seen: false,
-                    timeNotified: new Date(),
-                })
-            }
-
-            love = _.extend(_.pick(loveAttributes, 'postId'), {
-                lovers,
-                submitted: new Date().getTime(),
-            })
-            return Lovers.insert(love)
+            return Lovers.update({
+                postId: loveAttributes.postId,
+            }, {
+                $set: {
+                    lovers: loversArray,
+                    countLovers: loversArray.length,
+                },
+            }) // update lovers
         }
+        modelId = loveAttributes.postId
+        ownerId = post.owner
+        if (user._id !== ownerId) {
+            Notifications.insert({
+                user: user._id,
+                ownerId,
+                modelId,
+                type: 'love',
+                seen: false,
+                timeNotified: new Date(),
+            })
+        }
+
+        love = _.extend(_.pick(loveAttributes, 'postId'), {
+            lovers,
+            submitted: new Date().getTime(),
+        })
+        return Lovers.insert(love)
     },
 })

@@ -46,7 +46,6 @@ Template.menu.events({
             sAlert.info('Bye!, See you back soon')
             Router.go('/')
         })
-
         return false
     },
 })

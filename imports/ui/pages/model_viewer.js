@@ -107,6 +107,7 @@ Template.modelViewer.helpers({
 })
 
 Template.modelViewer.rendered = function () {
+    Template.newMenu.toggle(true)
     model = this.data
     objList = getObjFiles(model)
     console.log(objList)
@@ -133,7 +134,6 @@ Template.modelViewer.rendered = function () {
 
 function getObjFiles(model) {
     objUrls = []
-    sAlert.success('Getting obj files')
     modelId = model._id
     OBJFiles.find({
         gFile: modelId,
