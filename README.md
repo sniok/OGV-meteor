@@ -1,5 +1,7 @@
 # Online Geometry Viewer
-[![Build Status](https://travis-ci.org/sniok/OGV-meteor.svg?branch=eslint)](https://travis-ci.org/sniok/OGV-meteor)  
+[![Build Status](https://travis-ci.org/sniok/OGV-meteor.svg?branch=eslint)](https://travis-ci.org/sniok/OGV-meteor)
+[![IRC](https://img.shields.io/badge/chat-on%20irc%20channel-green.svg)](http://webchat.freenode.net/?channels=#brlcad)
+[![IRC](https://img.shields.io/badge/join-mailing%20list-green.svg)](https://lists.sourceforge.net/lists/listinfo/brlcad-devel)  
 Online Geometry Viewer is an online web application, where users can upload, view
 and share 3D CAD models. They can also host these models online, can like (love)
 or comment on them. In a nutshell it can be looked at as a social blogging 
