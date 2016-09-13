@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# OGV Deploy script
+# OGV Install script
 PACKAGE_VERSION=$(grep -m1 version package.json | awk -F: '{ print $2 }' | sed 's/[", ]//g')
 echo "# Online Geometry Viewer"
 echo "# Version $PACKAGE_VERSION"
