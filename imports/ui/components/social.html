@@ -5,7 +5,6 @@
     </div>
 </template>
 <template name ="comments">
-	{{> commentsHeader }}
 	{{> commentBody }} 
 </template>
 
@@ -35,11 +34,11 @@
 
 <template name = "comment">
     <div class ="comment-item">
-        <div class="post-meta comment-meta">
-	    <span class="author">{{author}}</span>
-            <span class="date">on {{submittedText}}</span>
-        </div>
-        <div class="post-text"><p> {{body}}</p></div>
+		<div class="comment-info">
+			<span class="author"><a href="/profile/{{userId}}">{{author}}</a></span>
+       		<span style="float: right" class="date">on {{submittedText}}</span>
+		</div>
+		<p> {{body}}</p>
     </div>
 </template>
 
@@ -48,12 +47,12 @@
 	    <div class="control-group">
 		<div class="controls">
 		    <label for="body">Comment on this post</label>
-		    <textarea class="comment-item" name="body"></textarea>
+		    <textarea class="comment-input" name="body"></textarea>
 		</div>
 	    </div>
 	    <div class="control-group">
 		<div class="controls">
-		    <button type="submit" class="btn secondary-btn add-coment-btn">Add Comment</button>
+		    <button type="submit" class="add-coment-btn">Add Comment</button>
 		</div>
 	    </div>
 	</form>

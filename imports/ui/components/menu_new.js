@@ -22,8 +22,12 @@ Template.newMenu.events({
         })
         return false
     },
-    'click #notification-button': function () {
+    'click #notification-button': function (e) {
+        const notificationButton = $(e.target)
         $('.notifications').slideToggle('fast')
+        $('.notifications').css(
+            'top', notificationButton.offset().top + notificationButton.outerHeight() + 8
+        )
     },
     'click #navToggle': function () {
         Template.newMenu.toggle()
@@ -39,6 +43,6 @@ Template.newMenu.toggle = function (hide) {
         $('#main').toggleClass('smallMain')
     }
     if (Router.current().route.getName() === 'modelViewer') {
-        setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 320)
+        setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 420)
     }
 }

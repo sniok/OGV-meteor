@@ -20,6 +20,9 @@ Template.modelPost.events({
             }
         })
     },
+    'click .commentButton': function (e) {
+        $(e.target).parents('.post').find('.comments').slideToggle()
+    },
 })
 
 Template.modelPost.helpers({
@@ -75,7 +78,16 @@ Template.modelPost.helpers({
             model = ModelFiles.find({
                 _id: sharedModel.model,
             }).fetch()[0]
-            message = `<a href="/profile/${this.postedBy}"> ${owner.profile.name}</a> shared this model`
+            modelOwner = Meteor.users.findOne(sharedModel.sharedby)
+            picId = modelOwner.profile.pic
+            if (picId) {
+                pic = ProfilePictures.findOne(picId)
+                picUrl = pic.url()
+            } else {
+                picUrl = '/icons/User.png'
+            }
+            message = `<a href="/profile/${this.postedBy}"><img src="${picUrl}"> ${owner.profile.name}</a>` +
+                ` shared <a href="/profile/${modelOwner._id}">${modelOwner.profile.name}</a>'s model`
             return message
         }
     },

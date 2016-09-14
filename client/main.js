@@ -37,6 +37,7 @@ import '../imports/ui/pages/model_viewer.js'      // /model/:id
 import '../imports/ui/pages/404.html'             // /404
 import '../imports/ui/pages/forgot_password.js'   // /forgot-password
 import '../imports/ui/pages/notverified.html'     // /not-verified
+import '../imports/ui/pages/model_meta.js'        // /description/:id
 
 // Startup
 

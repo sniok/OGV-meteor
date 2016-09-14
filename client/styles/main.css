@@ -211,8 +211,7 @@ h2 {
 }
 
 .notifications {
-    min-width:300px;
-    max-height:250px;
+    max-width:300px;
     overflow-y:auto;
     position:absolute;
     padding: 20px;
@@ -633,43 +632,6 @@ input:focus {
 
 #overlay-comments .comments {
     display:block;
-}
-.comments-wrapper {
-    margin-top:5px;
-}    
-.comments {
-    display:none;
-    overflow:hidden;
-}
-
-.comments-header {
-    line-height:30px;
-    border-radius:5px;
-    display:block;
-    padding-left: 10px;
-    height:30px;
-}
-
-.comments-header:hover {
-    cursor:pointer;
-    background:rgba(231,76,60,0.1);
-}
-.comments-icon {
-    float:left;
-}
-.comment-item{
-    text-align:left;
-    padding:5px 5px 5px 10px;
-    margin-top:10px;
-    background:#eaeaea;
-    border-radius:5px;
-}
-.comment-meta{
-    padding-top:10px;    
-    color:#666;
-    font-size:12px;
-    font-style:italic;
-    color:#8a8a8a;
 }
 
 .author{

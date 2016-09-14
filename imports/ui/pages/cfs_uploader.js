@@ -1,5 +1,4 @@
 import './cfs_uploader.html'
-import '../components/model_meta.js'
 
 Template.cfsUploader.events({
     'dropped #dropzone': function (event, temp) {
