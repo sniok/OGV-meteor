@@ -55,7 +55,7 @@ ${url}\n\nThank You`
 
     Accounts.emailTemplates.resetPassword.text = function (user, url) {
         return `How could you do this
-Well everything\'s gonaa be fine, trust us
+Well everything's gonaa be fine, trust us
 Just click on the link below to change your password:
  ${url}\n\nThank You`
     }

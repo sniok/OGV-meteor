@@ -47,7 +47,7 @@ isNotEmpty = function (value) {
  */
 
 isEmail = function (value) {
-    const filter = /^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+    const filter = /^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/ // eslint-disable-line
     if (filter.test(value)) {
         return true
     }
