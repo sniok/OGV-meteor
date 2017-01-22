@@ -107,10 +107,9 @@ Template.modelViewer.helpers({
 })
 
 Template.modelViewer.rendered = function () {
-    Template.newMenu.toggle(true)
     model = this.data
     objList = getObjFiles(model)
-    console.log(objList)
+    console.log(`[model_viewer] Loading .obj files ${objList}`)
     clipboard = new Clipboard('#sm-item-embed')
     clipboard.on('success', (e) => {
         console.log('Action:', e.action)
@@ -131,7 +130,6 @@ Template.modelViewer.rendered = function () {
 /**
  * Get list of OBJ files for the current .g database
  */
-
 function getObjFiles(model) {
     objUrls = []
     modelId = model._id
@@ -140,29 +138,25 @@ function getObjFiles(model) {
     }).forEach((objFile) => {
         objUrls.push(objFile)
     })
-    console.log(objUrls)
     return objUrls
 }
 
 /**
+ * 3D stuff
+ */
+let scene
+let camera
+
+/**
  * Initializes the model viewer
  */
-const targetRotationX = 0
-
-const targetRotationY = 0
-
-
-let finalRotationY
-// var keyboard = new KeyboardState();
-
 function init() {
     /**
      * Setting Up the scene:
      * Grabs the model-container div from template into a variable
      * named container, and sets up the scene
      */
-    container = document.getElementById('model-container')
-    controller = document.getElementById('modelController')
+    const container = document.getElementById('model-container')
     const target = document.getElementById('main')
 
     /**
@@ -182,27 +176,27 @@ function init() {
     /**
      * Light up the scene
      */
-    ambient = new THREE.AmbientLight(0x555555)
+    const ambient = new THREE.AmbientLight(0x555555)
     scene.add(ambient)
 
-    directionalLight = new THREE.PointLight(0xaaaaaa)
+    const directionalLight = new THREE.PointLight(0xaaaaaa)
     directionalLight.position = camera.position
     scene.add(directionalLight)
 
     /** Axes */
-    axes = new THREE.AxisHelper(10000)
+    const axes = new THREE.AxisHelper(10000)
     scene.add(axes)
 
     /** Grid */
-    grid = new THREE.GridHelper(3000, 100)
+    const grid = new THREE.GridHelper(3000, 100)
     scene.add(grid)
 
     /**
      * Loader Managerial tasks
      */
-    manager = new THREE.LoadingManager()
+    const manager = new THREE.LoadingManager()
     manager.onProgress = function (item, loaded, total) {
-        console.log(item, loaded, total)
+        console.log(`[model_viewer] Loading ${loaded}/${total} files`)
         animate()
     }
 
@@ -211,17 +205,15 @@ function init() {
      * using OBJ-Loader
      */
 
-    group = new THREE.Object3D()
-    loader = new THREE.OBJLoader(manager)
+    const group = new THREE.Object3D()
+    const loader = new THREE.OBJLoader(manager)
 
     /**
      * Adds material to the model, which hence controls
      * how the model shall look
      */
-    OBJMaterialArray = []
-    OBJMaterialOver = new THREE.MeshPhongMaterial({
-        visible: false,
-    })
+    const OBJMaterialArray = []
+
     for (i in objList) {
         const OBJMaterial = new THREE.MeshPhongMaterial()
         OBJMaterialArray.push(OBJMaterial)
@@ -238,89 +230,11 @@ function init() {
             })
 
             object.position.y = 0.1
-            object.rotation.z = (90 * Math.PI) / 180
-            object.rotation.x = (-90 * Math.PI) / 180
-
 
             group.add(object)
             scene.add(group)
         })
     }
-
-
-    /**
-     * datGUI variable initializations
-     */
-    /*    guiControls = new function() {
-            this.backgroundColor = "#a1a1a1";
-
-            this.opacity = OBJMaterial.opacity;
-            this.transparent = OBJMaterial.transparent;
-            this.ambient = OBJMaterial.ambient.getHex();
-            this.emissive = OBJMaterial.emissive.getHex();
-            this.wireframe = OBJMaterial.wireframe;
-            this.wireframeLinewidth = OBJMaterial.wireframeLinewidth;
-            this.shininess = OBJMaterial.shininess;
-            this.visible = OBJMaterial.visible;
-
-            this.visible = OBJMaterialOver.visible;
-            this.wireframe = OBJMaterialOver.wireframe;
-            this.wireframeLinewidth = OBJMaterialOver.wireframeLinewidth;
-            this.color = OBJMaterialOver.color;
-        }*/
-
-    // Initialize dat.GUI
-
-    //    datGUI = new dat.GUI({autoPlace:false});
-
-    /**
-     * Add folders/sub categories in controls
-     */
-    // Consisting of changes to be shown in the model
-    //  var modelGui = datGUI.addFolder("Model");
-    // Activated OBJMAterialOver that overlaps the existing models
-    // var overmodelGui = datGUI.addFolder("WireFrame + Model");
-
-    /**
-     * datGUI GUI and of variables defined above functionality
-     */
-    /*    modelGui.add(guiControls, 'visible').onChange(function (e) {
-            OBJMaterial.visible = e;
-        });*/
-    /*    modelGui.add(guiControls, 'opacity', 0, 1).onChange(function (e) {
-            OBJMaterial.opacity = e;
-        });
-        modelGui.add(guiControls, 'transparent').onChange(function (e) {
-            OBJMaterial.transparent = e;
-        });
-        modelGui.addColor(guiControls, 'ambient').onChange(function (e) {
-            OBJMaterial.ambient = new THREE.Color(e);
-        });
-        modelGui.addColor(guiControls, 'emissive').onChange(function (e) {
-            OBJMaterial.emissive = new THREE.Color(e);
-        });
-        modelGui.add(guiControls, 'wireframe').onChange(function (e) {
-            OBJMaterial.wireframe = e;
-        });
-        modelGui.add(guiControls, 'wireframeLinewidth', 0, 10).onChange(function (e) {
-            OBJMaterial.wireframeLinewidth = e;
-        });
-        modelGui.add(guiControls, 'shininess', 0, 100).onChange(function (e) {
-            OBJMaterial.shininess = e;
-        });
-
-        overmodelGui.add(guiControls, 'visible').onChange(function (e) {
-            OBJMaterialOver.visible = e;
-        });
-        overmodelGui.add(guiControls, 'wireframe').onChange(function (e) {
-            OBJMaterialOver.wireframe = e;
-        });
-        overmodelGui.add(guiControls, 'wireframeLinewidth', 0, 10).onChange(function (e) {
-            OBJMaterialOver.wireframeLinewidth = e;
-        });
-        overmodelGui.addColor(guiControls, 'color').onChange(function (e) {
-            OBJMaterialOver.color = new THREE.Color(e);
-        });*/
 
     /**
      * If webgl is there then use it otherwise use canvas
@@ -333,16 +247,15 @@ function init() {
             devicePixelRatio: pixelRatio,
         })
     } else {
+        console.warn('[model_viewer] WebGL not supported. Using canvas instead.')
         renderer = new THREE.CanvasRenderer()
     }
 
     /**
      * Sets size and color to renderer
      */
-
     renderer.setSize(target.clientWidth, target.clientHeight)
     renderer.setClearColor(0x555555, 1)
-
     container.appendChild(renderer.domElement)
 
     /**
@@ -371,24 +284,6 @@ function onWindowResize() {
 
 
 function render() {
-    // horizontal rotation
-    group.rotation.y += (targetRotationX - group.rotation.y) * 0.1
-    // vertical rotation
-    finalRotationY = (targetRotationY - group.rotation.x)
-    group.rotation.x += finalRotationY * 0.1
-
-    finalRotationY = (targetRotationY - group.rotation.x)
-    if (group.rotation.x <= 1 && group.rotation.x >= -1) {
-        group.rotation.x += finalRotationY * 0.1
-    }
-    if (group.rotation.x > 1) {
-        group.rotation.x = 1
-    }
-
-    if (group.rotation.x < -1) {
-        group.rotation.x = -1
-    }
-
     renderer.render(scene, camera)
 }
 
@@ -402,11 +297,11 @@ function handleColorChange(color) {
     }
     return color
 }
+
 /**
  * onKeyDown function helps to view model from
  * different angles on keyboard button press.
  */
-
 function onKeyDown(event) {
     switch (event.keyCode) {
     case 84:

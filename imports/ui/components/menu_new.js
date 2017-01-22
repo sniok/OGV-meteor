@@ -30,19 +30,6 @@ Template.newMenu.events({
         )
     },
     'click #navToggle': function () {
-        Template.newMenu.toggle()
+        $('.nav').toggleClass('nav--open')
     },
 })
-
-Template.newMenu.toggle = function (hide) {
-    if (hide) {
-        $('.nav').addClass('smallNav')
-        $('#main').addClass('smallMain')
-    } else {
-        $('.nav').toggleClass('smallNav')
-        $('#main').toggleClass('smallMain')
-    }
-    if (Router.current().route.getName() === 'modelViewer') {
-        setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 420)
-    }
-}

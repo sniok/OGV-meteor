@@ -73,7 +73,8 @@
       "max-len": 0,
       "guard-for-in": 0,
       "no-loop-func": 0,
-      "meteor/no-template-lifecycle-assignments": 0
+      "meteor/no-template-lifecycle-assignments": 0,
+      "global-require": 0
     }
   },
   "repository": {

@@ -24,89 +24,96 @@
  *  it uploads .g files to server and then converts them to .obj files
  */
 
-/**
- * Converts g into obj iles
- */
+Meteor.methods({
+    /**
+     * Converts .g file to .obj and saves
+     *
+     * @param {string} fileId - File ID
+     */
+    convertFile(fileId) {
+        check(fileId, String)
+        /**
+         * child_process
+         * is required for executing shell commands
+         * from within node
+         */
+        const exec = require('child_process').exec,
+            convertPercentage = 0,
+            modelObj = ModelFiles.findOne(fileId),
+            readStream = modelObj.createReadStream('modelFiles'),
+            filePath = readStream.path,
+            settings = OgvSettings.findOne(),
+            mgedPath = settings.mgedPath,
+            gobjPath = settings.gobjPath,
+            uploadDirPath = filePath.substring(0, filePath.lastIndexOf('/'))
 
-Meteor.methods({ convertFile(fileId) {
-    check(fileId, String)
-/**
- * 3 NPM packages sys, fs and child_process
- * are required for executing shell commands
- * from within node
- */
-    const sys = Npm.require('sys'),
-        exec = Npm.require('child_process').exec,
-        convertPercentage = 0,
-        modelObj = ModelFiles.findOne(fileId),
-        readStream = modelObj.createReadStream('modelFiles'),
-        filePath = readStream.path,
-        settings = OgvSettings.findOne(),
-        mgedPath = settings.mgedPath,
-        gobjPath = settings.gobjPath,
-        uploadDirPath = filePath.substring(0, filePath.lastIndexOf('/'))
+        let objects,
+            objPath
 
-    let objects,
-        objPath
+        modelObj.update({
+            $set: {
+                conversion: convertPercentage,
+            },
+        })
 
-    modelObj.update({
-        $set: {
-            conversion: convertPercentage,
-        },
-    })
+        /**
+         * exec() function executes system commands and Meteor.BindEnvironment binds it
+         * meteor environment so that they can share each other's variables
+         */
 
-/**
- * exec() function executes system commands and Meteor.BindEnvironment binds it
- * meteor environment so that they can share each other's variables
- */
-
-    // Get object parts
-    const cmdMged = `${mgedPath} -c ${filePath} ls -a 2>&1`
-    exec(cmdMged, Meteor.bindEnvironment((error, stdout, stderr) => {
-        objects = stdout
-        // Escaping ' and "
-        objects = objects.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0')
-        sys.print(`stderr ${stderr}`)
-
-        if (error != null) {
-            console.log(`exec error:  ${error}`)
-        } else {
-            objPath = `${uploadDirPath}/${fileId}.obj`
-            cmd = `${gobjPath} -n 10 -o ${objPath} ${filePath} ${objects}`
-            console.log(cmd)
-            convertAndSave(cmd)
-        }
-    }))
-
-    // Convert to obj
-    function convertAndSave(cmd) {
-        exec(cmd, Meteor.bindEnvironment((error) => {
+        /**
+         * Get object's parts by using mged's 'ls' command
+         */
+        const cmdMged = `${mgedPath} -c ${filePath} ls -a 2>&1`
+        exec(cmdMged, Meteor.bindEnvironment((error, stdout, stderr) => {
             if (error) {
-                throw (new Meteor.Error(`There's some error in converting file ${error}`))
+                throw (new Meteor.Error(`Error while executing ${cmdMged} : ${error}`))
             }
 
-            console.log(`File #${fileId} has been converted`)
-            objFS = new FS.File(objPath)
-            objFS.gFile = fileId
-            objFS.show = true
-            objFS.color = '#ffffff'
-            OBJFiles.insert(objFS, (err) => {
-                if (err) {
+            objects = stdout
+            objects = objects.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0')
+
+            console.log(`stderr ${stderr}`)
+
+            objPath = `${uploadDirPath}/${fileId}.obj`
+            cmd = `${gobjPath} -n 10 -o ${objPath} ${filePath} ${objects}`
+            convertAndSave(cmd)
+        }))
+
+        /**
+         * Convert .g file to .obj and save
+         *
+         * @param {string} cmd - g-obj command
+         */
+        function convertAndSave(cmd) {
+            exec(cmd, Meteor.bindEnvironment((error) => {
+                if (error) {
                     throw (new Meteor.Error(`There's some error in converting file ${error}`))
                 }
-                modelObj.update({
-                    $set: {
-                        conversion: 100,
-                    },
+
+                console.log(`[cfs_uploader] File #${fileId} has been converted`)
+                objFS = new FS.File(objPath)
+                objFS.gFile = fileId
+                objFS.show = true
+                objFS.color = '#ffffff'
+                OBJFiles.insert(objFS, (err) => {
+                    if (err) {
+                        throw (new Meteor.Error(`Error while saving file ID - ${fileId} : ${error}`))
+                    }
+                    modelObj.update({
+                        $set: {
+                            conversion: 100,
+                        },
+                    })
+                    console.log(`[cfs_uploader] File #${fileId} saved`)
+                    modelObj.update({
+                        $set: {
+                            converted: true,
+                        },
+                    })
+                    console.log(modelObj)
                 })
-                console.log('Object added')
-                modelObj.update({
-                    $set: {
-                        converted: true,
-                    },
-                })
-                console.log(modelObj)
-            })
-        }))
-    }
-} })
+            }))
+        }
+    },
+})

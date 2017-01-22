@@ -108,6 +108,5 @@ Template.modelEditor.helpers({
 Template.modelEditor.rendered = function () {
     gfile = $('.edit-controls-wrapper').data('src')
     const options = { gFile: gfile }
-    console.log(options)
     ObjSearch.search('', options)
 }
