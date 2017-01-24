@@ -101,3 +101,29 @@ OBJFiles.allow({
         return userId && file.owner === userId
     },
 })
+
+/**
+ * MTLFiles is a collection for all the .mtl files that get generated
+ * after conversion from g file.
+ */
+
+MTLFiles = new FS.Collection('mtlFiles', {
+    stores: [
+        new FS.Store.FileSystem('mtlFiles'),
+    ],
+})
+
+MTLFiles.allow({
+    insert(userId) {
+        return !!userId
+    },
+    update(userId) {
+        return !!userId
+    },
+    download() {
+        return true
+    },
+    remove(userId, file) {
+        return userId && file.owner === userId
+    },
+})

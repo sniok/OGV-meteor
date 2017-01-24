@@ -74,7 +74,8 @@
       "guard-for-in": 0,
       "no-loop-func": 0,
       "meteor/no-template-lifecycle-assignments": 0,
-      "global-require": 0
+      "global-require": 0,
+      "no-plusplus": 0
     }
   },
   "repository": {

@@ -26,6 +26,8 @@ Meteor.publish('modelFiles', () => ModelFiles.find())
 
 Meteor.publish('objFiles', () => OBJFiles.find())
 
+Meteor.publish('mtlFiles', () => MTLFiles.find())
+
 Meteor.publish('comments', () => Comments.find())
 
 Meteor.publish('profilePictures', () => ProfilePictures.find())

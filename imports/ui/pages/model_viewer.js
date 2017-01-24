@@ -25,8 +25,9 @@
  */
 
 import './model_viewer.html'
-
-import '../../utils/OBJloader.js'
+import '../../utils/three.js'
+import '../../utils/OBJLoader.js'
+import '../../utils/MTLLoader.js'
 import '../../utils/OrbitControls.js'
 import '../../utils/Detector.js'
 import Clipboard from '../../utils/clipboard.min.js'
@@ -106,6 +107,11 @@ Template.modelViewer.helpers({
     },
 })
 
+/**
+ * Global model var
+ */
+let model = this.data
+
 Template.modelViewer.rendered = function () {
     model = this.data
     objList = getObjFiles(model)
@@ -130,7 +136,7 @@ Template.modelViewer.rendered = function () {
 /**
  * Get list of OBJ files for the current .g database
  */
-function getObjFiles(model) {
+function getObjFiles() {
     objUrls = []
     modelId = model._id
     OBJFiles.find({
@@ -176,10 +182,18 @@ function init() {
     /**
      * Light up the scene
      */
+    /*
     const ambient = new THREE.AmbientLight(0x555555)
     scene.add(ambient)
 
     const directionalLight = new THREE.PointLight(0xaaaaaa)
+    directionalLight.position = camera.position
+    scene.add(directionalLight)
+    */
+    const ambient = new THREE.AmbientLight(0x444444)
+    scene.add(ambient)
+
+    const directionalLight = new THREE.DirectionalLight(0xffeedd)
     directionalLight.position = camera.position
     scene.add(directionalLight)
 
@@ -204,37 +218,39 @@ function init() {
      * Adds the model to the viewer aka loads OBJ files
      * using OBJ-Loader
      */
-
     const group = new THREE.Object3D()
     const loader = new THREE.OBJLoader(manager)
+    const mtlLoader = new THREE.MTLLoader(manager)
+
+    /**
+     * Get .mtl file
+     */
+    const mtlList = MTLFiles.find({
+        gFile: model._id,
+    }).map(o => o)
 
     /**
      * Adds material to the model, which hence controls
      * how the model shall look
      */
     const OBJMaterialArray = []
+    mtlLoader.load(mtlList[0].url(), (material) => {
+        material.preload()
+        console.log(material)
+        for (i in objList) {
+            const OBJMaterial = new THREE.MeshPhongMaterial()
+            OBJMaterialArray.push(OBJMaterial)
+            loader.setMaterials(material)
+            loader.load(objList[i].url(), (object) => {
+                object.position.y = 0.1
+                object.rotation.z = (90 * Math.PI) / 180
+                object.rotation.x = (-90 * Math.PI) / 180
 
-    for (i in objList) {
-        const OBJMaterial = new THREE.MeshPhongMaterial()
-        OBJMaterialArray.push(OBJMaterial)
-        loader.load(objList[i].url(), (object) => {
-            object.traverse((child) => {
-                if (child instanceof THREE.Mesh) {
-                    colorhex = handleColorChange(objList[i].color)
-                    colorhex = parseInt(colorhex, 16)
-                    color = new THREE.Color(colorhex)
-                    OBJMaterialArray[i].needsUpdate = true
-                    OBJMaterialArray[i].color = color
-                    child.material = OBJMaterialArray[i]
-                }
+                group.add(object)
+                scene.add(group)
             })
-
-            object.position.y = 0.1
-
-            group.add(object)
-            scene.add(group)
-        })
-    }
+        }
+    })
 
     /**
      * If webgl is there then use it otherwise use canvas
@@ -289,13 +305,6 @@ function render() {
 
 function animate() {
     requestAnimationFrame(render)
-}
-
-function handleColorChange(color) {
-    if (typeof color === 'string') {
-        color = color.replace('#', '0x')
-    }
-    return color
 }
 
 /**
