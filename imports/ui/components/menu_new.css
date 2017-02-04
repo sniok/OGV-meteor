@@ -28,7 +28,7 @@
     color: inherit;
 }
 .menu {
-    transition-duration: .3s;
+    transition-duration: .1s;
     width: 220px;
 }
 .nav ul {
@@ -58,8 +58,8 @@
     margin-top: 20px;
 }
 #navToggle i {
-    transition-duration: .3s;
+    transition-duration: .2s;
 }
 span {
-    transition-duration: .3s;
+    transition-duration: .1s;
 }

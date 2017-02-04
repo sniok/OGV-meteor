@@ -25,7 +25,6 @@
  */
 
 import './model_viewer.html'
-import '../../utils/three.js'
 import '../../utils/OBJLoader.js'
 import '../../utils/MTLLoader.js'
 import '../../utils/OrbitControls.js'
@@ -193,7 +192,7 @@ function init() {
     const ambient = new THREE.AmbientLight(0x444444)
     scene.add(ambient)
 
-    const directionalLight = new THREE.DirectionalLight(0xffeedd)
+    const directionalLight = new THREE.DirectionalLight(0xaaaaaa)
     directionalLight.position = camera.position
     scene.add(directionalLight)
 
@@ -256,11 +255,10 @@ function init() {
      * If webgl is there then use it otherwise use canvas
      */
     if (Detector.webgl) {
-        const pixelRatio = window.devicePixelRatio || 1
         renderer = new THREE.WebGLRenderer({
-            antialias: false,
-            preserveDrawingBuffer: true,
-            devicePixelRatio: pixelRatio,
+            // antialias: false,
+            // preserveDrawingBuffer: true,
+            devicePixelRatio: window.devicePixelRatio,
         })
     } else {
         console.warn('[model_viewer] WebGL not supported. Using canvas instead.')

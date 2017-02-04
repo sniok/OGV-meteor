@@ -24,7 +24,7 @@ import '../imports/ui/layouts/layout.js'          // Main layout
 
 import '../imports/ui/components/header.js'       // Header
 import '../imports/ui/components/menu_new.js'     // temp new menu
-import '../imports/ui/components/preloader.html'  // Preloader
+import '../imports/ui/components/preloader.js'   // Preloader
 
 import '../imports/ui/pages/landingPage.js'       // /
 import '../imports/ui/pages/model_feed.js'        // /newsfeed

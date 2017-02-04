@@ -236,7 +236,7 @@ Meteor.methods({
                         mtl += `newmtl ${path === '' ? partName : `${path}/${partName}`}
 Ka ${rgb[0] / 255} ${rgb[1] / 255} ${rgb[2] / 255}
 Kd ${rgb[0] / 255} ${rgb[1] / 255} ${rgb[2] / 255}
-Ks 1 1 1
+Ks 0.1 0.1 0.1
 `
                         getColors(part, path === '' ? partName : `${path}/${partName}`)
                     }
