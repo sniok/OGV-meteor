@@ -1,3 +1,2 @@
-
-import './layout.html'
-import './layout.css'
+import "./layout.html";
+import "./layout.css";

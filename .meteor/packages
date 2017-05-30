@@ -54,3 +54,4 @@ aldeed:http
 ecmascript@0.5.8
 shell-server
 dapearce:material-icons
+dispatch:mocha

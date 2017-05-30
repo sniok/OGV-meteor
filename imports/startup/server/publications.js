@@ -22,41 +22,44 @@
  *  @brief publishes data from server to client
  */
 
-Meteor.publish('modelFiles', () => ModelFiles.find())
+Meteor.publish("modelFiles", () => ModelFiles.find());
 
-Meteor.publish('objFiles', () => OBJFiles.find())
+Meteor.publish("objFiles", () => OBJFiles.find());
 
-Meteor.publish('mtlFiles', () => MTLFiles.find())
+Meteor.publish("mtlFiles", () => MTLFiles.find());
 
-Meteor.publish('comments', () => Comments.find())
+Meteor.publish("comments", () => Comments.find());
 
-Meteor.publish('profilePictures', () => ProfilePictures.find())
+Meteor.publish("profilePictures", () => ProfilePictures.find());
 
-Meteor.publish('lovers', () => Lovers.find())
+Meteor.publish("lovers", () => Lovers.find());
 
-Meteor.publish('ogvSettings', () => OgvSettings.find())
+Meteor.publish("ogvSettings", () => OgvSettings.find());
 
-Meteor.publish('sharedModels', () => SharedModels.find())
+Meteor.publish("sharedModels", () => SharedModels.find());
 
-Meteor.publish('notifications', () => Notifications.find())
+Meteor.publish("notifications", () => Notifications.find());
 
-Meteor.publish('posts', () => Posts.find())
+Meteor.publish("posts", () => Posts.find());
 
 /**
  * Not every detail about user is published to client
  * for security reasons
  */
-Meteor.publish('profiles', () =>
-    Meteor.users.find({}, {
-        fields: {
-            emails: 1,
-            profile: 1,
-            roles: 1,
-        },
-    })
-)
+Meteor.publish("profiles", () =>
+  Meteor.users.find(
+    {},
+    {
+      fields: {
+        emails: 1,
+        profile: 1,
+        roles: 1
+      }
+    }
+  )
+);
 
-Meteor.publish('userProfile', (id) => {
-    check(id, String)
-    return Meteor.users.find(id)
-})
+Meteor.publish("userProfile", id => {
+  check(id, String);
+  return Meteor.users.find(id);
+});

@@ -1,2 +1,2 @@
-import './preloader.html'
-import './preloader.css'
+import "./preloader.html";
+import "./preloader.css";

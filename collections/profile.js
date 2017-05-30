@@ -24,95 +24,92 @@
  */
 
 userProfileSchema = new SimpleSchema({
-    name: {
-        type: String,
-    },
-    bio: {
-        type: String,
-        optional: true,
-    },
-    pic: {
-        type: String,
-        optional: true,
-    },
-    follower: {
-        type: Array,
-        optional: true,
-    },
-    'follower.$': {
-        type: String,
-    },
-    following: {
-        type: Array,
-        optional: true,
-    },
-    'following.$': {
-        type: String,
-    },
-})
+  name: {
+    type: String
+  },
+  bio: {
+    type: String,
+    optional: true
+  },
+  pic: {
+    type: String,
+    optional: true
+  },
+  follower: {
+    type: Array,
+    optional: true
+  },
+  "follower.$": {
+    type: String
+  },
+  following: {
+    type: Array,
+    optional: true
+  },
+  "following.$": {
+    type: String
+  }
+});
 
 userSchema = new SimpleSchema({
-    username: {
-        type: String,
-        optional: true,
-    },
-    emails: {
-        type: Array,
-        optional: true,
-    },
-    'emails.$': {
-        type: Object,
-    },
-    'emails.$.address': {
-        type: String,
-        regEx: SimpleSchema.RegEx.Email,
-    },
-    'emails.$.verified': {
-        type: Boolean,
-    },
-    createdAt: {
-        type: Date,
-    },
-    profile: {
-        type: userProfileSchema,
-        optional: true,
-    },
-    services: {
-        type: Object,
-        optional: true,
-        blackbox: true,
-    },
-    roles: {
-        type: Array,
-        optional: true,
-    },
-    'roles.$': {
-        type: String,
-    },
-    heartbeat: {
-        type: Date,
-        optional: true,
-    },
-    status: {
-        type: Object,
-        optional: true,
-        blackbox: true,
-    },
-})
+  username: {
+    type: String,
+    optional: true
+  },
+  emails: {
+    type: Array,
+    optional: true
+  },
+  "emails.$": {
+    type: Object
+  },
+  "emails.$.address": {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
+  },
+  "emails.$.verified": {
+    type: Boolean
+  },
+  createdAt: {
+    type: Date
+  },
+  profile: {
+    type: userProfileSchema,
+    optional: true
+  },
+  services: {
+    type: Object,
+    optional: true,
+    blackbox: true
+  },
+  roles: {
+    type: Array,
+    optional: true
+  },
+  "roles.$": {
+    type: String
+  },
+  heartbeat: {
+    type: Date,
+    optional: true
+  },
+  status: {
+    type: Object,
+    optional: true,
+    blackbox: true
+  }
+});
 
-Meteor.users.attachSchema(userSchema)
+Meteor.users.attachSchema(userSchema);
 
-ProfilePictures = new FS.Collection('profilePictures', {
-    stores: [
-        new FS.Store.FileSystem('profilePictures'),
-    ],
-    filter: {
-        allow: {
-            contentTypes: ['image/png', 'image/jpeg', 'image/jpg'],
-        },
-    },
-})
-
+ProfilePictures = new FS.Collection("profilePictures", {
+  stores: [new FS.Store.FileSystem("profilePictures")],
+  filter: {
+    allow: {
+      contentTypes: ["image/png", "image/jpeg", "image/jpg"]
+    }
+  }
+});
 
 /**
  * Only the owner can edit or add his pic, but anyone can
@@ -120,16 +117,16 @@ ProfilePictures = new FS.Collection('profilePictures', {
  */
 
 ProfilePictures.allow({
-    insert(userId, file) {
-        return userId === file.user
-    },
-    update(userId, file) {
-        return userId === file.user
-    },
-    download() {
-        return true
-    },
-    remove(userId, file) {
-        return userId && file.user === userId
-    },
-})
+  insert(userId, file) {
+    return userId === file.user;
+  },
+  update(userId, file) {
+    return userId === file.user;
+  },
+  download() {
+    return true;
+  },
+  remove(userId, file) {
+    return userId && file.user === userId;
+  }
+});

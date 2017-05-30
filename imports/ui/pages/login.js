@@ -25,35 +25,37 @@
  * authenticate user credentials, shows the errors if any
  */
 
-import './login.html'
-import '../components/primary_branding.js'
+import "./login.html";
+import "../components/primary_branding.js";
 
 Template.logIn.events({
-    'submit #log-in-form': function (e) {
-        e.preventDefault()
+  "submit #log-in-form": function(e) {
+    e.preventDefault();
 
-        const logInForm = $(e.currentTarget),
-            email = trimInput(logInForm.find('#log-in-email').val().toLowerCase()),
-            password = logInForm.find('#log-in-password').val()
+    const logInForm = $(e.currentTarget),
+      email = trimInput(logInForm.find("#log-in-email").val().toLowerCase()),
+      password = logInForm.find("#log-in-password").val();
 
-     /**
+    /**
       * If login fails show the error message else go to /upload
      */
 
-        if (isNotEmpty(email) &&
-        isEmail(email) &&
-        isNotEmpty(password) &&
-        isValidPassword(password)) {
-            Meteor.loginWithPassword(email, password, (err) => {
-                if (err) {
-                    sAlert.error(err.reason)
-                    console.log(err)
-                } else {
-                    sAlert.info('Welcome back')
-                    Router.go('/newsfeed')
-                }
-            })
+    if (
+      isNotEmpty(email) &&
+      isEmail(email) &&
+      isNotEmpty(password) &&
+      isValidPassword(password)
+    ) {
+      Meteor.loginWithPassword(email, password, err => {
+        if (err) {
+          sAlert.error(err.reason);
+          console.log(err);
+        } else {
+          sAlert.info("Welcome back");
+          Router.go("/newsfeed");
         }
-        return false
-    },
-})
+      });
+    }
+    return false;
+  }
+});

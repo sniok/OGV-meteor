@@ -29,30 +29,35 @@
  * is clicked
  */
 
-import './forgot_password.html'
+import "./forgot_password.html";
 
 Template.forgotPassword.events({
-    'submit #forgot-password-form': function (e) {
-        e.preventDefault()
+  "submit #forgot-password-form": function(e) {
+    e.preventDefault();
 
-        const forgotPasswordForm = $(e.currentTarget),
-            email = trimInput(forgotPasswordForm.find('#forgot-password-email').val().toLowerCase())
-        /**
-         * Send an email to the user if he forgets the password
-         */
-        if (isNotEmpty(email) &&
-            isEmail(email)) {
-            Accounts.forgotPassword({
-                email,
-            }, (err) => {
-                if (err) {
-                    throwError(err.reason)
-                } else {
-                    throwNotification('Email Sent, Please check your mailbox to reset your password')
-                }
-            })
+    const forgotPasswordForm = $(e.currentTarget),
+      email = trimInput(
+        forgotPasswordForm.find("#forgot-password-email").val().toLowerCase()
+      );
+    /**
+     * Send an email to the user if he forgets the password
+     */
+    if (isNotEmpty(email) && isEmail(email)) {
+      Accounts.forgotPassword(
+        {
+          email
+        },
+        err => {
+          if (err) {
+            throwError(err.reason);
+          } else {
+            throwNotification(
+              "Email Sent, Please check your mailbox to reset your password"
+            );
+          }
         }
-        return false
-    },
-
-})
+      );
+    }
+    return false;
+  }
+});

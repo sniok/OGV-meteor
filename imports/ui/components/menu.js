@@ -23,29 +23,29 @@
  * Helpers and events for primary menu
  */
 
-import './menu.html'
-import './notifications.js'
+import "./menu.html";
+import "./notifications.js";
 
 Template.menu.events({
-    'click #notification-icon': function () {
-        $('.user-menu').slideUp('fast')
-        $('.notifications').slideToggle('fast')
-    },
+  "click #notification-icon": function() {
+    $(".user-menu").slideUp("fast");
+    $(".notifications").slideToggle("fast");
+  },
 
-    'click #user': function () {
-        $('.notifications').slideUp('fast')
-        $('.user-menu').slideToggle('fast')
-    },
+  "click #user": function() {
+    $(".notifications").slideUp("fast");
+    $(".user-menu").slideToggle("fast");
+  },
 
-    'click .um-item': function () {
-        $('.user-menu').slideUp('fast')
-    },
+  "click .um-item": function() {
+    $(".user-menu").slideUp("fast");
+  },
 
-    'click #log-out': function () {
-        Meteor.logout(() => {
-            sAlert.info('Bye!, See you back soon')
-            Router.go('/')
-        })
-        return false
-    },
-})
+  "click #log-out": function() {
+    Meteor.logout(() => {
+      sAlert.info("Bye!, See you back soon");
+      Router.go("/");
+    });
+    return false;
+  }
+});

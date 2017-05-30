@@ -23,45 +23,52 @@
  *
  */
 
-import './signup.html'
-import '../components/primary_branding.js'
+import "./signup.html";
+import "../components/primary_branding.js";
 
 Template.signUp.events({
-    'submit #sign-up-form': function (e) {
-        e.preventDefault()
+  "submit #sign-up-form": function(e) {
+    e.preventDefault();
 
-        const signUpForm = $(e.currentTarget),
-            email = trimInput(signUpForm.find('#sign-up-email').val().toLowerCase()),
-            password = signUpForm.find('#sign-up-password').val(),
-            passwordConfirm = signUpForm.find('#sign-up-password-confirm').val(),
-            username = signUpForm.find('#sign-up-username').val()
+    const signUpForm = $(e.currentTarget),
+      email = trimInput(signUpForm.find("#sign-up-email").val().toLowerCase()),
+      password = signUpForm.find("#sign-up-password").val(),
+      passwordConfirm = signUpForm.find("#sign-up-password-confirm").val(),
+      username = signUpForm.find("#sign-up-username").val();
 
-        /**
+    /**
          * Validates the sign up form fields and gives errors if any
          */
 
-        if (isNotEmpty(email) &&
-            isNotEmpty(password) &&
-            isNotEmpty(username) &&
-            isEmail(email) &&
-            areValidPasswords(password, passwordConfirm)) {
-            Accounts.createUser({
-                email,
-                password,
-                profile: {
-                    name: username,
-                    bio: 'Greatest 3d modeller on the planet',
-                },
-            }, (err) => {
-                if (err) {
-                    console.log(err)
-                    a = err
-                    sAlert.error(err.reason)
-                } else {
-                    sAlert.success(`Congrats! Check your inbox at ${email} to verify it`)
-                }
-            })
+    if (
+      isNotEmpty(email) &&
+      isNotEmpty(password) &&
+      isNotEmpty(username) &&
+      isEmail(email) &&
+      areValidPasswords(password, passwordConfirm)
+    ) {
+      Accounts.createUser(
+        {
+          email,
+          password,
+          profile: {
+            name: username,
+            bio: "Greatest 3d modeller on the planet"
+          }
+        },
+        err => {
+          if (err) {
+            console.log(err);
+            a = err;
+            sAlert.error(err.reason);
+          } else {
+            sAlert.success(
+              `Congrats! Check your inbox at ${email} to verify it`
+            );
+          }
         }
-        return false
-    },
-})
+      );
+    }
+    return false;
+  }
+});

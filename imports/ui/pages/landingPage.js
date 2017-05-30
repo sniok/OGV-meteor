@@ -25,10 +25,10 @@
  * authenticate user credentials, shows the errors if any
  */
 
-import './landingPage.html'
+import "./landingPage.html";
 
 Template.landingPage.helpers({
-    isFillingForm() {
-        return true
-    },
-})
+  isFillingForm() {
+    return true;
+  }
+});

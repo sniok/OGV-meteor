@@ -30,35 +30,38 @@
  * OGV/clients/views/social.js
  */
 
-import './model_feed.html'
-import '../components/models.html'
-import '../components/social.js'
-import '../components/newsfeed_sidebar.js'
+import "./model_feed.html";
+import "../components/models.html";
+import "../components/social.js";
+import "../components/newsfeed_sidebar.js";
 
 Template.modelFeed.helpers({
-    /**
+  /**
      * models helper finds all the models from the database and then sorts
      * them in reverse chronological order.
      */
-    posts() {
-        const currentUser = Meteor.user()
-        const audience = ['public', 'followers']
-        posts = Posts.find({
-            audience: {
-                $in: audience,
-            },
-            postedBy: {
-                $in: currentUser.profile.following.concat(currentUser._id),
-            },
-        }, {
-            sort: {
-                postedAt: -1,
-            },
-        })
-
-        if (posts.count()) {
-            return posts
+  posts() {
+    const currentUser = Meteor.user();
+    const audience = ["public", "followers"];
+    posts = Posts.find(
+      {
+        audience: {
+          $in: audience
+        },
+        postedBy: {
+          $in: currentUser.profile.following.concat(currentUser._id)
         }
-        return false
-    },
-})
+      },
+      {
+        sort: {
+          postedAt: -1
+        }
+      }
+    );
+
+    if (posts.count()) {
+      return posts;
+    }
+    return false;
+  }
+});

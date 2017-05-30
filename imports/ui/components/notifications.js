@@ -18,63 +18,65 @@
  * information.
  */
 
-
 /**
  * Returns all the notifications that are in the database
  */
 
-import './notifications.html'
+import "./notifications.html";
 
 Template.notifications.helpers({
-    notifications() {
-        allNotifications = Notifications.find({
-            ownerId: Meteor.userId(),
-            seen: false,
-        }, {
-            sort: {
-                timeNotified: -1,
-            },
-        })
-        count = allNotifications.count()
-        if (count === 0) {
-            return false
+  notifications() {
+    allNotifications = Notifications.find(
+      {
+        ownerId: Meteor.userId(),
+        seen: false
+      },
+      {
+        sort: {
+          timeNotified: -1
         }
-        return allNotifications
-    },
-})
+      }
+    );
+    count = allNotifications.count();
+    if (count === 0) {
+      return false;
+    }
+    return allNotifications;
+  }
+});
 
 Template.notification.helpers({
-    message() {
-        _id = this.user
-        username = Meteor.users.findOne(_id).profile.name
-        if (this.type === 'love') {
-            message = `${username} loved your model`
-        } else if (this.type === 'comment') {
-            message = `${username} commented on your model`
-        } else if (this.type === 'share') {
-            message = `${username} shared your model`
-        }
-        return message
-    },
-    icon() {
-        if (this.type === 'love') {
-            icon = '/icons/love.png'
-        } else if (this.type === 'comment') {
-            icon = '/icons/Chat.png'
-        } else if (this.type === 'share') {
-            icon = '/icons/Chat.png'
-        }
-        return icon
-    },
-})
+  message() {
+    _id = this.user;
+    username = Meteor.users.findOne(_id).profile.name;
+    if (this.type === "love") {
+      message = `${username} loved your model`;
+    } else if (this.type === "comment") {
+      message = `${username} commented on your model`;
+    } else if (this.type === "share") {
+      message = `${username} shared your model`;
+    }
+    return message;
+  },
+  icon() {
+    if (this.type === "love") {
+      icon = "/icons/love.png";
+    } else if (this.type === "comment") {
+      icon = "/icons/Chat.png";
+    } else if (this.type === "share") {
+      icon = "/icons/Chat.png";
+    }
+    return icon;
+  }
+});
 
 Template.notification.events({
-    'click .notification-anchor': function () {
-        $('.notifications').slideUp()
-        Notifications.update(this._id, {
-            $set: {
-                seen: true,
-            },
-        })
-    },
-})
+  "click .notification-anchor": function() {
+    $(".notifications").slideUp();
+    Notifications.update(this._id, {
+      $set: {
+        seen: true
+      }
+    });
+  }
+});

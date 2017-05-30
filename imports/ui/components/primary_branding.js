@@ -24,11 +24,11 @@
  * website that's shown at various places.
  */
 
-import './primary_branding.html'
+import "./primary_branding.html";
 
 Template.primaryBranding.helpers({
-    primaryBranding() {
-        settings = OgvSettings.findOne()
-        return settings.siteName
-    },
-})
+  primaryBranding() {
+    settings = OgvSettings.findOne();
+    return settings.siteName;
+  }
+});

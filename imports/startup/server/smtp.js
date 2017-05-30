@@ -24,39 +24,38 @@
  *  consists of changes to emailTemplates for the same
  */
 
-
 Meteor.startup(() => {
-    smtp = {
-        username: 'postmaster%40sandbox5cb71a0119964fde80f91c415ef345a2.mailgun.org',
-        password: 'b38c82be7ed0b4046bdc856547c655d3',
-        server: 'smtp.mailgun.org',
-        port: 587,
-    }
+  smtp = {
+    username: "postmaster%40sandbox5cb71a0119964fde80f91c415ef345a2.mailgun.org",
+    password: "b38c82be7ed0b4046bdc856547c655d3",
+    server: "smtp.mailgun.org",
+    port: 587
+  };
 
-    process.env.MAIL_URL = `smtp://${encodeURIComponent(smtp.username)}:${encodeURIComponent(smtp.password)}@${encodeURIComponent(smtp.server)}:${smtp.port}`
+  process.env.MAIL_URL = `smtp://${encodeURIComponent(smtp.username)}:${encodeURIComponent(smtp.password)}@${encodeURIComponent(smtp.server)}:${smtp.port}`;
 
-    Accounts.emailTemplates.from = 'no-reply@yourdomain.com'
-    Accounts.emailTemplates.sitename = 'Online Geometry Viewer'
+  Accounts.emailTemplates.from = "no-reply@yourdomain.com";
+  Accounts.emailTemplates.sitename = "Online Geometry Viewer";
 
-    Accounts.emailTemplates.verifyEmail.subject = function () {
-        return '[OGV BRL-CAD] Confirm your Email Address - do-not-reply'
-    }
+  Accounts.emailTemplates.verifyEmail.subject = function() {
+    return "[OGV BRL-CAD] Confirm your Email Address - do-not-reply";
+  };
 
-    Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-        return `BRL-CAD welcomes you to the community
+  Accounts.emailTemplates.verifyEmail.text = function(user, url) {
+    return `BRL-CAD welcomes you to the community
 To start using Online Geometry Viewer
 Click on the give link to activate your account:
-${url}\n\nThank You`
-    }
+${url}\n\nThank You`;
+  };
 
-    Accounts.emailTemplates.resetPassword.subject = function () {
-        return '[OGV BRL-CAD] Reset Password - do-not-reply'
-    }
+  Accounts.emailTemplates.resetPassword.subject = function() {
+    return "[OGV BRL-CAD] Reset Password - do-not-reply";
+  };
 
-    Accounts.emailTemplates.resetPassword.text = function (user, url) {
-        return `How could you do this
+  Accounts.emailTemplates.resetPassword.text = function(user, url) {
+    return `How could you do this
 Well everything's gonaa be fine, trust us
 Just click on the link below to change your password:
- ${url}\n\nThank You`
-    }
-})
+ ${url}\n\nThank You`;
+  };
+});

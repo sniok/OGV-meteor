@@ -23,11 +23,11 @@
  * during the first installation of the software
  */
 if (OgvSettings.find().count() === 0) {
-    OgvSettings.insert({
-        settingSwitch: true,
-        siteName: 'Online Geometry Viewer',
-        mailUrl: 'http://username:password@example.com',
-        gobjPath: '/usr/brlcad/dev-7.24.2/bin/g-obj',
-        mgedPath: '/usr/brlcad/dev-7.24.2/bin/mged',
-    })
+  OgvSettings.insert({
+    settingSwitch: true,
+    siteName: "Online Geometry Viewer",
+    mailUrl: "http://username:password@example.com",
+    gobjPath: "/usr/brlcad/dev-7.24.2/bin/g-obj",
+    mgedPath: "/usr/brlcad/dev-7.24.2/bin/mged"
+  });
 }
