@@ -26,6 +26,7 @@
  */
 
 import "./landingPage.html";
+import "./landingPage.css";
 
 Template.landingPage.helpers({
   isFillingForm() {

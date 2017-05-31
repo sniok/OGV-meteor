@@ -7,7 +7,7 @@
  */
 
 body {
-    background:#FAF9F9;
+    background:#FFF;
     font-family:'open sans', sans-serif;
     font-size:16px;
     overflow-x: hidden;
@@ -330,9 +330,10 @@ textarea {
     
 
 .primary-branding {
-    font-size: 24px;
-    font-family: 'megrim',cursive;
-    font-weight:normal;
+    font-size: 36px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
     text-align:center;
 }
 input:focus {
@@ -2030,4 +2031,29 @@ input[type='color'].color-picker{
 .shareButton{
     width:10rem;
     height:3.5rem;
+}
+
+#log-in-container {
+    margin-top: 40px;
+    max-width: 370px;
+    padding: 20px 60px 60px 60px;
+    background-color: #FFF;
+    box-shadow: 0px 5px 30px rgba(0,0,0,0.07);
+}
+
+.primary-input {
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: 0 !important;
+    border-bottom: 1px solid rgba(0,0,0,0.3) !important;
+}
+
+.primary-input:focus {
+    border-bottom: 1px solid #F03B5B !important;
+}
+
+#log-in-button {
+    width: 140px;
+    margin: 30px auto;
 }
