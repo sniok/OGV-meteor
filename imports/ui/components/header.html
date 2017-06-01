@@ -1,21 +1,37 @@
-<template name = "header">
+<template name="header">
 	<header class="main-header">
+		<div class="header-container">
+
 			<a href="/" class="header-logo">
 				OGV
 			</a>
 			<div class="header-right">
-				
+
 				{{#if currentUser}}
+				<div class="header-button">
+					<a href="/upload" class="button button-red">
+						<i class="fa fa-upload" aria-hidden="true"></i>
+						Upload
+					</a>
+				</div>
+				<a href="/explore" class="header-button">
+					<i class="fa fa-search" aria-hidden="true"></i> Explore
+				</a>
+				<div id="header-notification-button" class="header-button">
+					<i class="fa fa-bell" aria-hidden="true"></i> Notifications
+					<div id="header-notification-menu" class="menu-hidden">
+						notifications
+					</div>
+				</div>
 				<div id="header-profile-button" class="header-button">
-					<div class="post-item user-image" 
-					style="background-image:url(&quot;{{ loggedInUser.profilePic }}&quot;); float: left; margin: 14px 9px 0 0; width:30px; height:30px;">
+					<div class="post-item user-image" style="background-image:url(&quot;{{ loggedInUser.profilePic }}&quot;); float: left; margin: 10px 9px 0 0; width:30px; height:30px;">
 					</div>
 					Profile
 					<div id="header-profile-menu" class="menu-hidden">
-						bem
+						profile info
+					</div>
 				</div>
-				</div>
-				
+
 
 				{{else}}
 				<a href="/log-in">
@@ -25,5 +41,7 @@
 				</a>
 				{{/if}}
 			</div>
+		</div>
+
 	</header>
 </template>
