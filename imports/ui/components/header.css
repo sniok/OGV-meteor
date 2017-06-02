@@ -43,7 +43,6 @@
   float: left;
   margin-left: -146px;
   width: 250px;
-  height: 300px;
   background: #FFF;
   box-shadow: 0px 0px 35px rgba(0,0,0,0.1);
 }
@@ -86,4 +85,23 @@
 }
 .header-button:visited {
   color: #FFF;
+}
+
+#header-profile-menu {
+  color: #333;
+}
+
+.header-profile-item {
+  width: 100%;
+  padding: 10px;
+  display: block;
+  line-height: 16px;
+  color: #333;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.notification-none {
+  color: #333;
+  text-align: center;
+  
 }

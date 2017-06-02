@@ -20,7 +20,11 @@
 				<div id="header-notification-button" class="header-button">
 					<i class="fa fa-bell" aria-hidden="true"></i> Notifications
 					<div id="header-notification-menu" class="menu-hidden">
-						notifications
+						{{#if notifications}} {{#each notifications}} {{> notification}} {{/each}} {{else}}
+						<div class="notification-none">
+							No notifications for now.
+						</div>
+						{{/if}}
 					</div>
 				</div>
 				<div id="header-profile-button" class="header-button">
@@ -28,7 +32,8 @@
 					</div>
 					Profile
 					<div id="header-profile-menu" class="menu-hidden">
-						profile info
+						<a href="/profile/{{ loggedInUser._id }}" class="header-profile-item">Profile Page</a>
+						<a href="/log-out" class="header-profile-item">Log Out</a>
 					</div>
 				</div>
 
