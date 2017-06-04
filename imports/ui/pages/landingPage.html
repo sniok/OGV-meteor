@@ -12,7 +12,7 @@
                     <a href="/log-in" class="button button-large button-blue">Login</a>
                 </div>
                 <div class="col-6">
-                    [embedded]
+                    <!-- TODO: Embedded view here -->
                 </div>
             </div>
             <div class="row landing1-points">
@@ -47,111 +47,36 @@
     <!-- Slide 1 Over -->
 
     <!-- Slide 2 Start-->
-    <section class="slide story" id="slide-2" data-slide="2">
+    <section class="slide story" id="landing2" data-slide="2">
         <div class="container">
             <div class="row title-row">
-                <div class="col-12 heading-slide-2">This is what OGV does best</div>
+                <div class="col-12 landing2-title">This is what OGV does best</div>
             </div>
-            <div class="row line-row">
-                <div class="hr">&nbsp;</div>
-            </div>
-            <div class="row content-row">
+            <div class="row">
                 <div class="col-12 col-lg-3 col-sm-6">
                     <p><img class="mobile-view-fileUpload" src="/icons/fileUpload.png" width="200px" height="200px" /></p>
-                    <h2 class="font-thin">Upload Model</h2>
-                    <h4 class="font-thin">Countless number of .g files can be uploaded from your browsers.</h4>
+                    <h3 class="landing2-titles">Upload Model</h3>
+                    <p class="landing2-text">Countless number of .g files can be uploaded from your browsers.</p>
                 </div>
                 <div class="col-12 col-lg-3 col-sm-6">
                     <p><img class="mobile-view-computer" src="/icons/computer.png" width="200px" height="200px" /></p>
-                    <h2 class="font-thin">Visualize</h2>
-                    <h4 class="font-thin">Visualize your models in three dimensions and communicate more effectively.</h4>
+                    <h3 class="landing2-titles">Visualize</h3>
+                    <p class="landing2-text">Visualize your models in three dimensions and communicate more effectively.</p>
                 </div>
                 <div class="col-12 col-lg-3 col-sm-6">
                     <p><img class="mobile-view-share" src="/icons/share.png" width="200px" height="200px" /></p>
-                    <h2 class="font-thin">Embed and Share</h2>
-                    <h4 class="font-thin">Embed and share your models anywhere on social sites, blogs or others.</h4>
+                    <h3 class="landing2-titles">Embed and Share</h3>
+                    <p class="landing2-text">Embed and share your models anywhere on social sites, blogs or others.</p>
                 </div>
                 <div class="col-12 col-lg-3 col-sm-6">
-                    <p><img class="mobile-view-download" src="/icons/download.png" width="200px" height="200px" /></p>
-                    <h2 class="font-thin">Download</h2>
-                    <h4 class="font-thin">Fetch, download and use the 3D models for printing and more.</h4>
+                    <p><img class="mobile-view-download" src="/icons/download-black.png" width="200px" height="200px" /></p>
+                    <h3 class="landing2-titles">Download</h3>
+                    <p class="landing2-text">Fetch, download and use the 3D models for printing and more.</p>
                 </div>
             </div>
         </div>
     </section>
     <!-- Slide 2 over-->
-
-    <!-- Slide 3 Start -->
-    <div id="slide-3" class="slide story" data-slide="3">
-        <div class="container">
-            <div class="col-lg-12 col-md-12 col-sm-12 ">
-                <div class="row text-row">
-                    <div class="heading-slide-3">Freely licensed software</div>
-                    <div class="row line-row">
-                        <div class="hr">&nbsp;</div>
-                    </div><br />
-                    <h3>It's a matter of freedom, not the price.</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Slide 3 Over -->
-
-
-    <!-- Slide 4 Start -->
-    <!-- Container -->
-    <div class="container slide" id="slide-4">
-        <div class="col-lg-12 col-md-12 col-sm-12 ">
-            <div class="heading-slide-2">Feedback</div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 ">
-            <div class="row image-row">
-                <p><img class="circular" src="/icons/feedback.png" /></p>
-            </div>
-        </div>
-        <!-- For Space -->
-        <div class="col-lg-2 col-md-2 col-sm-2 ">
-        </div>
-        <!-- Form -->
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="row">
-                <!-- Enter your email address at the place of <email_here> in order to recieve feedback via emails to your account -->
-                {{#if isFillingForm}}
-                <form action="//formspree.io/deeky.sharma@gmail.com" method="POST" class="feedForm" id="feedForm" onsubmit="notify()">
-                    <div class="form-group">
-                        <!-- <label for="email">Email address</label> -->
-                        <input type="email" class="form-control text-center" id="email" name="email" placeholder="Email Address" title="Enter email address"
-                            required="required">
-                    </div>
-                    <div class="form-group">
-                        <!-- <label for="email">Category</label> -->
-                        <select name="category" class="form-control text-center" id="category" form="feedForm" title="Select reason" required="required"
-                            data-errormessage-value-missing="Please, pick one">
-                            <option selected disabled value="">Please select reason</option>
-                            <option value="Improve this Page">Improve this Page</option>
-                            <option value="Suggest new features/ideas">Suggest new features/ideas</option>
-                            <option value="Pinpoint bug">Pinpoint bug</option>
-                            <option value="User Experience">User Experience</option>
-                            <option value="I love OGV">I love OGV</option>
-                            <option value="Others - General Feedback">Others - General Feedback</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <!-- <label for="email">Message</label>                             -->
-                        <textarea class="form-control" id="message" name="message" form="feedForm" placeholder="Message" title="Write message" required="required"></textarea>
-                    </div>
-                    <p>*All fields are compulsory to fill</p>
-                    <button class="btn primary-btn btn-default form-control" type="submit">Send</button>
-                    <input type="hidden" name="_next" value="//localhost:3000" />
-                    <input type="hidden" name="_subject" value="[OGV] Feedback Submission" />
-                </form>
-                {{/if}}
-            </div>
-        </div>
-        <!-- Form End -->
-    </div>
-    <!-- Container End -->
-    <!-- Slide 4 Over -->
 
     <!-- Footer Start -->
     <footer class="footer" id="footer">

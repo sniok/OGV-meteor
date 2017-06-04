@@ -1,10 +1,13 @@
 <template name="header">
 	<header class="main-header">
 		<div class="header-container">
-
+			{{#if currentUser}}
+			<a href="/newsfeed" class="header-logo">
+				OGV
+			</a> {{else}}
 			<a href="/" class="header-logo">
 				OGV
-			</a>
+			</a> {{/if}}
 			<div class="header-right">
 
 				{{#if currentUser}}
@@ -33,7 +36,8 @@
 					Profile
 					<div id="header-profile-menu" class="menu-hidden">
 						<a href="/profile/{{ loggedInUser._id }}" class="header-profile-item">Profile Page</a>
-						<a href="/log-out" class="header-profile-item">Log Out</a>
+						<a href="/dashboard" class="header-profile-item">Settings</a>
+						<a href="#" id="log-out" class="header-profile-item">Log Out</a>
 					</div>
 				</div>
 
@@ -41,7 +45,7 @@
 				{{else}}
 				<a href="/log-in">
 					<div class="header-button">
-						Login
+						<i class="fa fa-user" aria-hidden="true"></i> Login
 					</div>
 				</a>
 				{{/if}}

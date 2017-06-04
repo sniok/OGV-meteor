@@ -1096,15 +1096,16 @@ input:focus {
  */
 
 #footer {
-    background-color: #111;   
+    background-color: #FFF;   
     width:100%;
     min-height: 100px;
 }
-    #footer p {
-        color: #F03B5B;
-        font-size: 17.2px;
-        padding: 2.8em;
-    }
+#footer p {
+    color: #888;
+    font-size: 11px;
+    font-family: "Montserrat", sans-serif;
+    padding: 1em;
+}
 
 /*
  * Profile Page CSS
@@ -2033,7 +2034,9 @@ input[type='color'].color-picker{
     height:3.5rem;
 }
 
-#log-in-container {
+#log-in-container,
+#sign-up-container {
+    text-align: center;
     margin-top: 40px;
     max-width: 370px;
     padding: 20px 60px 60px 60px;
@@ -2053,7 +2056,8 @@ input[type='color'].color-picker{
     border-bottom: 1px solid #F03B5B !important;
 }
 
-#log-in-button {
+#log-in-button,
+#sign-up-button {
     width: 140px;
     margin: 30px auto;
 }

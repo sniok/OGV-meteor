@@ -7,7 +7,7 @@
 .landing1 {
   background-color: #FFF;
   font-family: "Montserrat", sans-serif;
-  padding: 100px 0;
+  padding: 50px 0;
 }
 
 .landing1 .row {
@@ -52,3 +52,24 @@
   color: #555;
 }
 
+#landing2 {
+  background-color: #FFF;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.landing2-title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
+
+.landing2-titles {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.landing2-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  color: #555;
+}
