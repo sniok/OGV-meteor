@@ -35,6 +35,11 @@ h2 {
     font-weight:300;
 }
 
+h1, h2, h3, h4 {
+    font-family: "Montserrat", Arial, Helvetica, sans-serif;
+    font-weight: 700;
+}
+
 .font-thin {
     font-weight: 200;
     color: #FAF9F9;
@@ -1190,8 +1195,16 @@ hr {
     z-index:1;
 }
 
+.search-icon {
+    position: relative;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-180px);
+    color: #989898;
+}
+
 #search-model-result{
-   background-color:#faf9f9;
+   background-color:#FFF;
 }
 
 #user-results{
@@ -1794,7 +1807,7 @@ input[type="text"].search-textbox {
     display: block;
     width: 400px;
     height: 50px;
-    background-color:#FAF9F9;
+    background-color:#FFF;
 
     margin: auto;
     margin-top: 80px;
@@ -1803,6 +1816,7 @@ input[type="text"].search-textbox {
 
     text-align: center;
     font-size:24px;
+    font-family: "Montserrat", sans-serif;
 }
 
 .explore-user-info{
