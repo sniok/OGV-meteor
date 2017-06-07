@@ -88,8 +88,10 @@ Template.modelPost.helpers({
         picUrl = "/icons/User.png";
       }
       message =
-        `<a href="/profile/${this.postedBy}"><img src="${picUrl}"> ${owner.profile.name}</a>` +
-        ` shared <a href="/profile/${modelOwner._id}">${modelOwner.profile.name}</a>'s model`;
+        `<a href="/profile/${this.postedBy}">` +
+        `<img src="${picUrl}"> ${owner.profile.name}</a>` +
+        ` shared <a href="/profile/${modelOwner._id}">` +
+        `${modelOwner.profile.name}</a>'s model`;
       return message;
     }
   },

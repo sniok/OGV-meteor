@@ -101,7 +101,8 @@ Template.modelMeta.events({
 
 Template.modelMeta.helpers({
   progressValue() {
-    const id = $("#model-id").val(), modelObj = ModelFiles.findOne({ _id: id });
+    const id = $("#model-id").val();
+    const modelObj = ModelFiles.findOne({ _id: id });
     let value = modelObj.conversion;
     value = parseInt(value, 10);
     if (value == null) value = 0;
