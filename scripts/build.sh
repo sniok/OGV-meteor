@@ -11,7 +11,7 @@ echo "# Created folder $OUT"
 
 # Build 
 echo "# Building... "
-meteor build $OUT # --architectrue=os.linux.x86_64
+meteor build $OUT  --architecture=os.linux.x86_64
 echo "# Finished building to $OUT/OGV-meteor.tar.gz"
 
 # Unpack tar
@@ -26,7 +26,7 @@ echo "# Removed OGV-meteor.tar.gz"
 
 # Install deps
 echo "# Installing dependencies..."
-(cd $OUT/bundle/programs/server && npm install)
+#(cd $OUT/bundle/programs/server && npm install)
 echo "# Installed dependencies"
 
 # Create script

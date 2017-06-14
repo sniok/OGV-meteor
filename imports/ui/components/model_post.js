@@ -116,5 +116,21 @@ Template.modelPost.helpers({
       }).fetch();
     }
     return model[0];
+  },
+
+  lovers() {
+    if (this.postId) {
+      id = this.postId;
+    } else {
+      id = this._id;
+    }
+    loversObj = Lovers.findOne({
+      postId: id
+    });
+    if (loversObj) {
+      loversArray = loversObj.lovers;
+      return loversArray.length;
+    }
+    return 0;
   }
 });
