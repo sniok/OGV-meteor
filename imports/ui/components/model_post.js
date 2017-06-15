@@ -21,6 +21,16 @@ Template.modelPost.events({
   },
   "click .commentButton": function(e) {
     $(e.target).parents(".post").find(".comments").slideToggle();
+  },
+  "click .love": function() {
+    const love = {
+      postId: this.postId
+    };
+    Meteor.call("love", love, error => {
+      if (error) {
+        sAlert.error(error.reason);
+      }
+    });
   }
 });
 
@@ -132,5 +142,18 @@ Template.modelPost.helpers({
       return loversArray.length;
     }
     return 0;
+  },
+
+  isLiking() {
+    const loversObj = Lovers.findOne({
+      postId: this.postId
+    });
+    if (loversObj) {
+      const lovers = loversObj.lovers;
+      const user = Meteor.user();
+
+      return lovers.indexOf(user._id) > -1;
+    }
+    return false;
   }
 });

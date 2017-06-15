@@ -1,16 +1,12 @@
-<template name = "modelFeed">
+<template name="modelFeed">
     <div class="feed-wrapper">
-    <div class="right-container">
-    {{> newsfeedSidebar}}
-    </div>
-    <div class="left-container">
-    {{#if posts}}
-	{{#each posts}}
-		{{> modelPost }}
-	{{/each}}
-    {{else}}
-	<h3>You seem to be new here, your newsfeed looks empty</h3>
-    {{/if}}
-    </div>
+        <div class="left-container">
+            {{> newsfeedSidebar}}
+        </div>
+        <div class="right-container">
+            {{#if posts}} {{#each posts}} {{> modelPost }} {{/each}} {{else}}
+            <h3>You seem to be new here, your newsfeed looks empty</h3>
+            {{/if}}
+        </div>
     </div>
 </template>

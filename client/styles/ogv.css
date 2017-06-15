@@ -28,7 +28,7 @@
 }
 
 .button:active {
-  transform: translateY(1px);
+  transform: translateY(0px);
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -101,6 +101,11 @@
   border-left: 1px solid #3fbe4b;
 }
 
+.button-gray {
+  color: #888;
+  border: 1px solid #888;
+}
+
 .button-counter {
   font-weight: 400;
   display: inline;
@@ -109,6 +114,20 @@
   margin-left: 23px;
 }
 
+.button-non-clickable {
+  cursor: default;
+}
+
+.button-non-clickable:hover {
+  transform: none;
+}
+
 .no-shadow {
   box-shadow: none !important;
+}
+
+.button img {
+  margin-top: -2px;
+  width: 16px;
+  margin-right: 5px;
 }

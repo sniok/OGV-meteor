@@ -547,7 +547,7 @@ input:focus {
   color: #555;
   line-height: 1.5;
   margin: 30px auto 30px auto;
-  max-width: 960px;
+  max-width: 980px;
 }
 
 .greeting-text {
@@ -1829,11 +1829,6 @@ hr {
 
 .shared-list a:hover {
   background-color: #f9f9f9;
-}
-
-.newsfeed-info-section {
-  margin-left: 20px;
-  margin-top: 20px;
 }
 
 .newsfeed-info-content {

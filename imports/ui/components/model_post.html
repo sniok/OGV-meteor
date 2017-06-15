@@ -1,6 +1,5 @@
 <template name="modelPost">
 	<div class="post">
-
 		<a href="/models/{{model._id}}">
 			<div class="preview" style="background-image: url('{{model.screenshot}}')">
 				{{model.name}}
@@ -21,11 +20,16 @@
 			{{ model.about }}
 		</div>
 		<div class="actions">
-			<div class="button button-o button-small no-shadow">
-				Likes
-				<div class="button-counter">{{lovers}}</div>
+			{{#if isLiking}}
+			<div class="button button-o button-small button-gray no-shadow love" style="color: red">
+				<img src="icons/love.png" alt="love" width="16">{{lovers}}
 			</div>
-			<div class="button button-o button-small no-shadow">
+			{{else}}
+			<div class="button button-o button-small button-gray no-shadow love">
+				<img src="icons/love.png" alt="love" width="16">{{lovers}}
+			</div>
+			{{/if}}
+			<div class="button button-o button-small button-gray button-non-clickable no-shadow">
 				Views
 				<div class="button-counter">{{model.viewsCount}}</div>
 			</div>
