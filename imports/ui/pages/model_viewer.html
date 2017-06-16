@@ -1,63 +1,60 @@
-<template name = "modelViewer">
-   {{#if embeddedView}}
+<template name="modelViewer">
+	{{#if embeddedView}}
 	<div id="model-container">
 	</div>
-        <div class="post-item love-wrapper lovemeter-embedded">
-	      {{> lovemeter }}
-	 </div>
-   {{else}}
+	<div class="post-item love-wrapper lovemeter-embedded">
+		{{> lovemeter }}
+	</div>
+	{{else}}
 	<div id="overlay-comments">
-	<div class="comments">
-	    {{#each comments}}
-		{{> comment}}
-	    {{/each}}
+		<div class="comments">
+			{{#each comments}} {{> comment}} {{/each}}
+		</div>
+	</div>
 
-	</div>
-	</div>
-	
 	<div id="model-container">
-	<div class="secondary-menu">
-		<div class="sm-item" id="sm-item-download">
-		<a href = "/cfs/files/modelFiles/{{_id}}/{{name}}"><img src="/icons/Download.png" width="28px" height="28px">
+		<div class="secondary-menu">
+			<div class="sm-item" id="sm-item-download">
+				<a href="/cfs/files/modelFiles/{{_id}}/{{name}}"><img src="/icons/Download.png" width="28px" height="28px">
 			<p class="sm-menu-text">Download</p></a>
-		</div>
-		{{#if currentUser}}
-		<div class="sm-item" id="sm-item-love">
-			<img src="/icons/Shape-Heart.png" width="28px" height="28px">
-			<p class="sm-menu-text">Love ({{ lovers }})</p>
-		</div>
+			</div>
+			{{#if currentUser}}
+			<div class="sm-item" id="sm-item-love">
+				<img src="/icons/Shape-Heart.png" width="28px" height="28px">
+				<p class="sm-menu-text">Love ({{ lovers }})</p>
+			</div>
 
-		<div class="sm-item" id="sm-item-comment">
-			<img src="/icons/Message.png" width="28px" height="28px">
-			<p class="sm-menu-text">Comment</p>
-		</div>
-		{{/if}}
+			<div class="sm-item" id="sm-item-comment">
+				<img src="/icons/Message.png" width="28px" height="28px">
+				<p class="sm-menu-text">Comment</p>
+			</div>
+			{{/if}}
 
-		<div data-clipboard-text="{{embedCode}}" class="sm-item" id="sm-item-embed">
-			<img src="/icons/Link.png" width="28px" height="28px">
-			<p class="sm-menu-text">Embed</p>
-		</div>
+			<div data-clipboard-text="{{embedCode}}" class="sm-item" id="sm-item-embed">
+				<img src="/icons/Link.png" width="28px" height="28px">
+				<p class="sm-menu-text">Embed</p>
+			</div>
 
-		<div class="sm-item" id="sm-item-owner">
-		<a href = "/profile/{{ownerId}}"><img src="{{ownerDp}}" width="28px" height="28px">
+			<div class="sm-item" id="sm-item-owner">
+				<a href="/profile/{{ownerId}}"><img src="{{ownerDp}}" width="28px" height="28px">
 			<p class="sm-menu-text">Owner</p></a>
+			</div>
+
+			<div class="keyboard-shortcuts" id="">
+				<div class="keyboard">
+					<div><i class="letter" id="letter-text-t">T</i><span class="letter-text">Top View</span></div>
+					<div><i class="letter" id="letter-text-r">R</i><span class="letter-text">Rear View</span></div>
+					<div><i class="letter" id="letter-text-f">F</i><span class="letter-text">Front View</span></div>
+					<div><i class="letter" id="letter-text-b">B</i><span class="letter-text">Bottom View</span></div>
+					<div><i class="letter" id="letter-text-n">N</i><span class="letter-text">Normal View</span></div>
+				</div>
+			</div>
 		</div>
 
-		<div class="keyboard-shortcuts" id="">
-		    <div class="keyboard">
-		        <div><i class="letter" id="letter-text-t">T</i><span class="letter-text">Top View</span></div>
-		        <div><i class="letter" id="letter-text-r">R</i><span class="letter-text">Rear View</span></div>
-		        <div><i class="letter" id="letter-text-f">F</i><span class="letter-text">Front View</span></div>
-		        <div><i class="letter" id="letter-text-b">B</i><span class="letter-text">Bottom View</span></div>
-		        <div><i class="letter" id="letter-text-n">N</i><span class="letter-text">Normal View</span></div>
-		    </div>
-		</div>		
-	</div>	
+		<div id="modelController">
+			{{>modelEditor}}
+		</div>
 
-	<div id="modelController">
-		{{>modelEditor}}
-	</div>
-	
 	</div>
 	{{/if}}
 </template>
