@@ -1,33 +1,47 @@
 <template name="profilePage">
-    <div class="container profilePageTop">
-        <div class="row-fluid">
-            <div class="space"></div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="row image-row">
-                        <a href="/profile/{{ person._id }}">
-                    <img class="user-image user-image-icon" style="background-image:url(&quot;{{userImg}}&quot;);">
-                </a>
-                    </div>
+    <div class="feed-wrapper">
+        <div class="left-container">
+
+            <div class="newsfeed-info-content">
+                <div style="position: relative">
+                    <a class="newsfeed-profile-link" href="/profile/{{ person._id }}">
+                        <div class="post-item user-image" style="background-image:url(&quot;{{userImg}}&quot;); width: 32px; height: 32px;">
+                        </div>
+                        <p class="newsfeed-userInfo">{{ person.profile.name }}</p>
+                    </a>
+                    <span style="position: absolute; top: 5px; right: 0;">
+                        {{#if urlUser}} {{#if currentFollowsThis}}
+                        <button style="height: 30px" class="button button-tiny button-red" id="unfollowButton" onmouseover="changeText()" onmouseout="changeback()">Following</button>{{else}}
+                        <button style="height: 30px" class="button button-tiny button-blue" id="followButton"> + Follow </button> 
+                        {{/if}} {{/if}}
+                    </span>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <h2>{{ person.profile.name }}</h2>
-                    <strong>Models: {{countModels}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;
-                    <strong>Followers: {{followerCount}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;
-                    <strong>Following: {{followingCount}}</strong><br> {{#if urlUser}} {{#if currentFollowsThis}}
-                    <button class="btn primary-btn btn-default" id="unfollowButton" onmouseover="changeText()" onmouseout="changeback()">Following</button>                    {{else}}
-                    <button class="btn primary-btn btn-default" id="followButton"> + Follow </button> {{/if}} {{/if}}
-                    <br>
-                    <br>
-                    <h4><strong>{{ person.profile.bio }} </strong></h4>
+
+                <div class="info-bio">
+                    <div class="info-bio-title">About</div>
+                    <p class="info-bio-text">
+                        {{ person.profile.bio }}
+                    </p>
                     <strong>Here Since:</strong> <em>{{ person.createdAt }}</em> <br>
+                </div>
+                <div class="info-counter">
+                    <div class="info-counter-title">Followers</div>
+                    <div class="info-conuter-count">{{followerCount}}</div>
+                </div>
+                <div class="info-counter">
+                    <div class="info-counter-title">Following</div>
+                    <div class="info-conuter-count">{{followingCount}}</div>
+                </div>
+                <div class="info-counter">
+                    <div class="info-counter-title">Models</div>
+                    <div class="info-conuter-count">{{countModels}}</div>
                 </div>
             </div>
         </div>
+        <div class="right-container">
+            {{> profileModelFeed}}
+        </div>
     </div>
-
-    {{> profileModelFeed}}
-
     <script>
         function changeText() {
             var display = document.getElementById('unfollowButton');
@@ -43,8 +57,8 @@
 </template>
 
 <template name="profileModelFeed">
-    <div class="profile-feed-wrapper">
-        <hr> {{#if posts}} {{#each posts}} {{> modelPost }} {{/each}} {{else}}
+    <div>
+        {{#if posts}} {{#each posts}} {{> modelPost }} {{/each}} {{else}}
         <h3>{{user.profile.name}} has no uploaded models</h3>
         {{/if}}
     </div>

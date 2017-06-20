@@ -275,6 +275,7 @@ notifications ul {
 
 .right-container {
   float: right;
+  width: 650px;
 }
 
 .left-container {

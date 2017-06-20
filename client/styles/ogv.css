@@ -42,6 +42,12 @@
   padding: 8px 22px;
 }
 
+.button-tiny {
+  font-size: 11px;
+  padding: 0px 12px;
+  box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
 .button-red {
   background-color: #f03b5b;
   color: #fff;
