@@ -316,9 +316,9 @@ textarea {
 }
 
 .help-text {
-  font-size: 14px;
-  font-style: italic;
+  font-size: 12px;
   color: #B6B6B4;
+  font-family: "Montserrat";
 }
 
 .primary-btn {
@@ -2150,4 +2150,48 @@ input[type='color'].color-picker {
   font-size: 15px;
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
+}
+
+#dash-user-form, #dash-admin-form {
+  margin-top: 30px;
+  padding: 20px;
+  max-width: 600px;
+  box-shadow: 0px 4px 35px rgba(0, 0, 0, 0.07);
+}
+
+#dash-admin-form {
+  margin-bottom: 100px;
+}
+
+.form-control {
+  margin-top: 0;
+}
+
+.dashboard-module label {
+  font-family: "Montserrat", sans-serif;
+}
+
+.dashboard-module textarea, .dashboard-module input[type="text"] {
+  margin-top: 5px;
+  margin-bottom: 35px;
+  text-align: left;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid #e3e3e3;
+  box-shadow: none;
+}
+
+.dashboard-module textarea:focus, .dashboard-module input[type="text"]:focus {
+  border-bottom: 1px solid #F03B5B;
+  box-shadow: none;
+}
+
+.dashboard-module input[type="file"] {
+  border: 1px solid #e3e3e3;
+  width: auto;
+  line-height: initial;
+  height: auto;
+  min-height: initial;
+  padding: 10px;
+  box-shadow: none;
 }
