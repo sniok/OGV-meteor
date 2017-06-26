@@ -21,7 +21,8 @@
     "start": "meteor",
     "lint": "eslint .",
     "test": "eslint .",
-    "mocha-test": "meteor test --driver-package dispatch:mocha"
+    "mocha-test": "meteor test --driver-package dispatch:mocha",
+    "build:linux": "./scripts/build_linux.sh"
   },
   "repository": {
     "type": "git",
