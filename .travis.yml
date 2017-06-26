@@ -14,6 +14,5 @@ before_script:
   - meteor npm install
  
 script:
-  - npm run test
   - npm run build:linux
   - scp -r ../OGV-meteor.tar.gz $REMOTE_USER:$REMOTE_PASSWORD@$REMOTE_SERVER:$REMOTE_PATH
