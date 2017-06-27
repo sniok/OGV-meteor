@@ -73,6 +73,11 @@ Template.searchUserResult.helpers({
       sort: {
         createdAt: -1
       }
+    }).map(user => {
+      user.profilePic = user.profile.pic
+        ? ProfilePictures.findOne(user.profile.pic).url()
+        : "/icons/User.png";
+      return user;
     });
   },
 

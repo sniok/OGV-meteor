@@ -37,17 +37,15 @@
       {{#if isLoading}} searching ... {{/if}}
     </div>
 
-    {{#if getUsers}}
-    <h3 class="user-result-heading">Users</h3>
-    {{/if}} {{#each getUsers}}
-    <div class="searchUsers" id="view-model-options" style="padding:2px">
-      <div class="user-profile-pic dp-explore" style="background-image:url('/cfs/files/profilePictures/{{profile.pic}}');"></div>
+    {{#if getUsers}} {{/if}} {{#each getUsers}}
+    <div class="searchUsers">
+      <div class="user-profile-pic dp-explore" style="background-image:url(&quot;{{ profilePic }}&quot;);"></div>
       <div class="explore-user-info">
         <a class="user-result-a-tag" href="profile/{{_id}}" style="display:block;">
           <h4 class="name">{{profile.name}}</h4>
         </a>
         <h5 style="color:black;">{{profile.bio}}</h5>
-        <button class="btn primary-btn btn-default" id="followButton" data-src="{{this._id}}"> + Follow </button>
+        <button class="button button-blue button-small" id="followButton" data-src="{{this._id}}"> + Follow </button>
       </div>
     </div>
     {{/each}}
