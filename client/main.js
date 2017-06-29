@@ -39,6 +39,7 @@ import "../imports/ui/pages/404.html"; // /404
 import "../imports/ui/pages/forgot_password.js"; // /forgot-password
 import "../imports/ui/pages/notverified.html"; // /not-verified
 import "../imports/ui/pages/model_meta.js"; // /description/:id
+import "../imports/ui/pages/processing.js"; // /processing
 
 // Startup
 
@@ -116,6 +117,21 @@ Router.map(function() {
     path: "upload",
     waitOn() {
       return Meteor.subscribe("modelFiles");
+    }
+  });
+  this.route("processing", {
+    path: "/processing/:_id",
+    waitOn() {
+      return Meteor.subscribe("modelFiles");
+    },
+    data() {
+      const model = ModelFiles.findOne({ owner: Meteor.user()._id });
+      if (model == null) {
+        Router.go("/upload");
+        return false;
+      }
+      Session.set("modelId", this.params._id);
+      return ModelFiles.findOne(this.params._id);
     }
   });
 

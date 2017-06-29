@@ -1,4 +1,5 @@
 import "./cfs_uploader.html";
+import "./cfs_uploader.css";
 
 Template.cfsUploader.events({
   "dropped #dropzone": function(event, temp) {
@@ -31,6 +32,8 @@ function uploadFile(event) {
         );
       }
     });
-    Router.go(`/description/${fsFile._id}`);
+
+    Router.go(`/processing/${fsFile._id}`);
+    // Router.go(`/description/${fsFile._id}`);
   });
 }

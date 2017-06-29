@@ -520,14 +520,6 @@ input:focus {
   border: 2px solid #333;
 }
 
-#fileInput {
-  background: #FAF9F9 none repeat scroll 0% 0%;
-  float: right;
-  margin-top: -63px;
-  border: 1px solid #333;
-  padding-bottom: 36px;
-}
-
 .rm-log-out {
   background: #333;
   border: none;

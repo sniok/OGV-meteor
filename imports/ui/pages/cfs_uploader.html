@@ -1,10 +1,27 @@
 <template name="cfsUploader">
 	<div class="container">
-		<h2 class="upload-text"> Upload File </h2>
-		<p class="help-text"> Add .g file that you want to upload </p>
-		<input type="file" class="form-control" id="fileInput" accept=".g" />
-		<div id="dropzone" class="dropzone">
-			<div class="dropzone-text">Drag and Drop your model here to upload</div>
+		<div class="upload-container">
+			<div class="upload-stepper">
+				<div class="step step-active">
+					<div class="step-number">1</div>
+					Upload file
+				</div>
+				<div class="step">
+					<div class="step-number">2</div>
+					Processing
+				</div>
+				<div class="step">
+					<div class="step-number">3</div>
+					Save
+				</div>
+			</div>
+			<div class="upload-content">
+				<div id="dropzone" class="dropzone">
+					<div class="dropzone-text">
+						Drag or <input type="file" id="fileInput" accept=".g" />
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
