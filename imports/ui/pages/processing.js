@@ -17,7 +17,6 @@ Template.processing.events({
         console.log(error);
         sAlert.error(error.reason);
       } else {
-        console.log("succc");
         Router.go(`/description/${_oid}`);
         sAlert.success("Updated thumbnail preview");
       }
@@ -30,7 +29,6 @@ Template.processing.helpers({
     const id = Session.get("modelId");
     const model = ModelFiles.findOne({ _id: id });
 
-    console.log(model, model.conversion == 100);
     return model.conversion < 100;
   },
 
@@ -38,20 +36,24 @@ Template.processing.helpers({
     const id = Session.get("modelId");
     const model = ModelFiles.findOne({ _id: id });
 
-    console.log(model, model.conversion, started, "shouldStart");
-
     if (model.conversion == 100 && !started) {
       started = true;
-      setTimeout(() => generate(), 2000);
+      setTimeout(() => generate(), 200);
     }
     if (model.screenshot && model.screenshot.length > 10) {
       Router.go(`/description/${id}`);
     }
+  },
+
+  thumbnailReady() {
+    if (started) {
+      return true;
+    }
+    return false;
   }
 });
 
 function generate() {
-  console.log("starting drawing");
   const id = Session.get("modelId");
   const model = ModelFiles.findOne({ _id: id });
 
@@ -92,14 +94,6 @@ function generate() {
   directionalLight.position = camera.position;
   scene.add(directionalLight);
 
-  // /** Axes */
-  // const axes = new THREE.AxisHelper(10000);
-  // scene.add(axes);
-
-  // /** Grid */
-  // const grid = new THREE.GridHelper(3000, 100);
-  // scene.add(grid);
-
   controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.addEventListener("change", () => {
     renderer.render(scene, camera);
@@ -111,9 +105,9 @@ function generate() {
   };
 
   /**
-     * Adds the model to the viewer aka loads OBJ files
-     * using OBJ-Loader
-     */
+   * Adds the model to the viewer aka loads OBJ files
+   * using OBJ-Loader
+   */
   const group = new THREE.Object3D();
   const loader = new THREE.OBJLoader(manager);
   const mtlLoader = new THREE.MTLLoader(manager);
@@ -130,15 +124,10 @@ function generate() {
   const mtlList = MTLFiles.find({
     gFile: model._id
   }).map(o => o);
-  console.log("mtl", mtlList);
-  console.log("obj", objList);
-  console.log("obj", objList[0].url());
-  console.log("mtl", mtlList[0].url());
 
   const OBJMaterialArray = [];
   mtlLoader.load(mtlList[0].url(), material => {
     material.preload();
-    console.log(material);
 
     const OBJMaterial = new THREE.MeshPhongMaterial();
     OBJMaterialArray.push(OBJMaterial);
@@ -150,8 +139,6 @@ function generate() {
 
       group.add(object);
       scene.add(group);
-      console.log(object);
-      console.log("added obj");
       renderer.render(scene, camera);
     });
   });

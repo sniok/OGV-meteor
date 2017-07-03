@@ -237,24 +237,39 @@ function init() {
      * Adds material to the model, which hence controls
      * how the model shall look
      */
-  const OBJMaterialArray = [];
-  mtlLoader.load(mtlList[0].url(), material => {
-    material.preload();
-    console.log(material);
-    for (i in objList) {
-      const OBJMaterial = new THREE.MeshPhongMaterial();
-      OBJMaterialArray.push(OBJMaterial);
-      loader.setMaterials(material);
-      loader.load(objList[i].url(), object => {
-        object.position.y = 0.1;
-        object.rotation.z = 90 * Math.PI / 180;
-        object.rotation.x = -90 * Math.PI / 180;
 
-        group.add(object);
-        scene.add(group);
-      });
-    }
-  });
+  const OBJMaterialArray = [];
+  // try {
+  //   mtlLoader.load(mtlList[0].url(), material => {
+  //     material.preload();
+  //     for (i in objList) {
+  //       const OBJMaterial = new THREE.MeshPhongMaterial();
+  //       OBJMaterialArray.push(OBJMaterial);
+  //       loader.setMaterials(material);
+  //       loader.load(objList[i].url(), object => {
+  //         object.position.y = 0.1;
+  //         object.rotation.z = 90 * Math.PI / 180;
+  //         object.rotation.x = -90 * Math.PI / 180;
+  //         console.log("object", object);
+  //         group.add(object);
+  //         scene.add(group);
+  //       });
+  //     }
+  //   });
+  // } catch (e) {
+  for (let i in objList) {
+    const OBJMaterial = new THREE.MeshPhongMaterial();
+    OBJMaterialArray.push(OBJMaterial);
+    loader.load(objList[i].url(), object => {
+      object.position.y = 0.1;
+      object.rotation.z = 90 * Math.PI / 180;
+      object.rotation.x = -90 * Math.PI / 180;
+      console.log("object", object);
+      group.add(object);
+      scene.add(group);
+    });
+  }
+  // }
 
   /**
      * If webgl is there then use it otherwise use canvas

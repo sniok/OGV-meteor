@@ -55,7 +55,7 @@ function convertFile(fileId) {
   modelObj.once(
     "stored",
     Meteor.bindEnvironment(() => {
-      const { objPath, mtlPath, objects } = convertG(filePath, fileId);
+      const { objParts, mtlPath, objects } = convertG(filePath, fileId);
 
       // Save mtl
       mtlFile = new FS.File(mtlPath);
@@ -66,30 +66,34 @@ function convertFile(fileId) {
         }
       });
 
-      // Save obj
-      objFile = new FS.File(objPath);
-      objFile.gFile = fileId;
-      OBJFiles.insert(objFile, err => {
-        if (err) {
-          throw new Meteor.Error(
-            `Error while saving file ID - ${fileId} : ${error}`
-          );
-        }
-        modelObj.update({
-          $set: {
-            conversion: 100
+      objParts.forEach(part => {
+        objFile = new FS.File(part);
+        objFile.gFile = fileId;
+        OBJFiles.insert(objFile, err => {
+          if (err) {
+            throw new Meteor.Error(
+              `Error while saving file ID - ${fileId} : ${error}`
+            );
           }
-        });
-        console.log(`[cfs_uploader] File #${fileId} saved`);
-        // Generate model tree
-        const tree = getModelTree(objects.split(" ").slice(-1, 1), filePath);
-        modelObj.update({
-          $set: {
-            converted: true,
-            tree: JSON.stringify(tree)
-          }
+          modelObj.update({
+            $set: {
+              conversion: 100,
+              converted: true
+            }
+          });
+          console.log(`[cfs_uploader] File #${fileId} part ${part} saved`);
+          // Generate model tree
+          // const tree = getModelTree(objects.split(" ").slice(-1, 1), filePath);
+          // modelObj.update({
+          //   $set: {
+          //     converted: true,
+          //     tree: JSON.stringify(tree)
+          //   }
+          // });
         });
       });
+
+      // Save obj
     })
   );
 }
@@ -107,17 +111,40 @@ export function convertG(filePath, fileId) {
     uploadDirPath = filePath.substring(0, filePath.lastIndexOf("/"));
 
   // Get object's parts by using mged's 'ls' command
-  let objects = execSyncUtf(`${mgedPath} -c ${filePath} tops 2>&1`);
-  objects = objects.split(/[ \n]+/).join(" ");
+  const objects = execSyncUtf(`${mgedPath} -c ${filePath} tops 2>&1`)
+    .trim()
+    .split(/[ \n]+/);
+  const joinedObjects = objects.join(" ");
 
   // Convert .g file to .obj and .mtl
-  const objPath = `${uploadDirPath}/${fileId}.obj`;
   const mtlPath = `${uploadDirPath}/${fileId}.mtl`;
-  execSyncUtf(
-    `${gobjPath} -n 10 -o ${objPath} -t ${mtlPath} ${filePath} ${objects} 2>&1`
-  );
 
-  return { objPath, mtlPath, objects };
+  const objParts = [];
+  try {
+    execSyncUtf(
+      `${gobjPath} -n 10 -o ${objPath} -t ${mtlPath} ${filePath} ${joinedObjects} 2>&1`
+    );
+    objParts.push(`${uploadDirPath}/${fileId}.obj`);
+  } catch (e) {
+    objParts.pop();
+    console.log(`[cfs_uploader] Merging failed. Trying convert each part.`);
+    objects.forEach((part, i) => {
+      console.log(
+        `[cfs_uploader] Converting part ${part} – ${fileId}_part${i}`
+      );
+      try {
+        execSyncUtf(
+          `${gobjPath} -n 10 -o ${uploadDirPath}/${fileId}_part${i}.obj -t ${mtlPath} ${filePath} ${part} 2>&1`
+        );
+        objParts.push(`${uploadDirPath}/${fileId}_part${i}.obj`);
+      } catch (e) {
+        console.log(`[cfs_uploader] Part ${part} failed. Skipping.`);
+        objParts.pop();
+      }
+    });
+  }
+
+  return { objParts, mtlPath, joinedObjects };
 }
 
 /**

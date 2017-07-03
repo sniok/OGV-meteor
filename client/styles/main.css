@@ -2150,7 +2150,7 @@ input[type='color'].color-picker {
   font-family: "Montserrat", sans-serif;
 }
 
-#dash-user-form, #dash-admin-form {
+#dash-user-form, #dash-admin-form, #uploader-form {
   margin-top: 30px;
   padding: 20px;
   max-width: 600px;
@@ -2169,7 +2169,10 @@ input[type='color'].color-picker {
   font-family: "Montserrat", sans-serif;
 }
 
-.dashboard-module textarea, .dashboard-module input[type="text"] {
+.dashboard-module textarea,
+.dashboard-module input[type="text"],
+#desc-filename,
+#desc-about {
   margin-top: 5px;
   margin-bottom: 35px;
   text-align: left;
@@ -2192,4 +2195,8 @@ input[type='color'].color-picker {
   min-height: initial;
   padding: 10px;
   box-shadow: none;
+}
+
+#uploader-container {
+  margin-bottom: 150px;
 }
