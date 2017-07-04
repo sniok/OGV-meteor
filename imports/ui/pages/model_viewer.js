@@ -157,6 +157,17 @@ let camera;
  */
 function init() {
   /**
+   * Check if embedded
+   */
+  const url = Router.current().url,
+    parts = url.split("="),
+    shared = parts.pop();
+  let isEmbedded = false;
+  if (shared === "true") {
+    isEmbedded = true;
+  }
+
+  /**
      * Setting Up the scene:
      * Grabs the model-container div from template into a variable
      * named container, and sets up the scene
@@ -201,13 +212,15 @@ function init() {
   directionalLight.position = camera.position;
   scene.add(directionalLight);
 
-  /** Axes */
-  const axes = new THREE.AxisHelper(10000);
-  scene.add(axes);
+  if (!isEmbedded) {
+    /** Axes */
+    const axes = new THREE.AxisHelper(10000);
+    scene.add(axes);
 
-  /** Grid */
-  const grid = new THREE.GridHelper(3000, 100);
-  scene.add(grid);
+    /** Grid */
+    const grid = new THREE.GridHelper(3000, 100);
+    scene.add(grid);
+  }
 
   /**
      * Loader Managerial tasks
@@ -239,35 +252,43 @@ function init() {
      */
 
   const OBJMaterialArray = [];
-  // try {
-  //   mtlLoader.load(mtlList[0].url(), material => {
-  //     material.preload();
-  //     for (i in objList) {
-  //       const OBJMaterial = new THREE.MeshPhongMaterial();
-  //       OBJMaterialArray.push(OBJMaterial);
-  //       loader.setMaterials(material);
-  //       loader.load(objList[i].url(), object => {
-  //         object.position.y = 0.1;
-  //         object.rotation.z = 90 * Math.PI / 180;
-  //         object.rotation.x = -90 * Math.PI / 180;
-  //         console.log("object", object);
-  //         group.add(object);
-  //         scene.add(group);
-  //       });
-  //     }
-  //   });
-  // } catch (e) {
-  for (let i in objList) {
-    const OBJMaterial = new THREE.MeshPhongMaterial();
-    OBJMaterialArray.push(OBJMaterial);
-    loader.load(objList[i].url(), object => {
-      object.position.y = 0.1;
-      object.rotation.z = 90 * Math.PI / 180;
-      object.rotation.x = -90 * Math.PI / 180;
-      console.log("object", object);
-      group.add(object);
-      scene.add(group);
+  if (objList.length === 1) {
+    mtlLoader.load(mtlList[0].url(), material => {
+      material.preload();
+      for (let i in objList) {
+        const OBJMaterial = new THREE.MeshPhongMaterial();
+        OBJMaterialArray.push(OBJMaterial);
+
+        loader.setMaterials(material);
+        loader.load(objList[i].url(), object => {
+          object.position.y = 0.1;
+          object.rotation.z = 90 * Math.PI / 180;
+          object.rotation.x = -90 * Math.PI / 180;
+          console.log("object", object);
+          group.add(object);
+          scene.add(group);
+        });
+      }
     });
+  } else {
+    for (let i in objList) {
+      const OBJMaterial = new THREE.MeshPhongMaterial();
+      OBJMaterialArray.push(OBJMaterial);
+      loader.load(objList[i].url(), object => {
+        object.traverse(child => {
+          if (child instanceof THREE.Mesh) {
+            child.material = OBJMaterial;
+          }
+        });
+
+        object.position.y = 0.1;
+        object.rotation.z = 90 * Math.PI / 180;
+        object.rotation.x = -90 * Math.PI / 180;
+        console.log("object", object);
+        group.add(object);
+        scene.add(group);
+      });
+    }
   }
   // }
 
@@ -276,8 +297,9 @@ function init() {
      */
   if (Detector.webgl) {
     renderer = new THREE.WebGLRenderer({
-      // antialias: false,
-      // preserveDrawingBuffer: true,
+      alpha: true,
+      antialias: true,
+      preserveDrawingBuffer: true,
       devicePixelRatio: window.devicePixelRatio
     });
   } else {
@@ -289,7 +311,11 @@ function init() {
      * Sets size and color to renderer
      */
   renderer.setSize(target.clientWidth, target.clientHeight);
-  renderer.setClearColor(0x555555, 1);
+  if (isEmbedded) {
+    renderer.setClearColor(0, 0);
+  } else {
+    renderer.setClearColor(0x555555, 1);
+  }
   container.appendChild(renderer.domElement);
 
   /**

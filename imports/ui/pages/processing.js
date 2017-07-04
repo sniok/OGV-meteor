@@ -67,7 +67,7 @@ function generate() {
   const canvas = document.createElement("canvas");
 
   const renderer = new THREE.WebGLRenderer({
-    // antialias: false,
+    antialias: true,
     preserveDrawingBuffer: true,
     devicePixelRatio: window.devicePixelRatio
   });

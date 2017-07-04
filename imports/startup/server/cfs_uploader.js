@@ -122,10 +122,11 @@ export function convertG(filePath, fileId) {
   const objParts = [];
   try {
     execSyncUtf(
-      `${gobjPath} -n 10 -o ${objPath} -t ${mtlPath} ${filePath} ${joinedObjects} 2>&1`
+      `${gobjPath} -n 10 -o ${uploadDirPath}/${fileId}.obj -t ${mtlPath} ${filePath} ${joinedObjects} 2>&1`
     );
     objParts.push(`${uploadDirPath}/${fileId}.obj`);
   } catch (e) {
+    console.log(e);
     objParts.pop();
     console.log(`[cfs_uploader] Merging failed. Trying convert each part.`);
     objects.forEach((part, i) => {
