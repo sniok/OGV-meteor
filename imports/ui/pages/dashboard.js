@@ -106,10 +106,11 @@ Template.dashboard.events({
       primaryBranding = adminDash.find("#dash-primary-branding").val(),
       mailUrl = adminDash.find("#dash-mail-url").val(),
       mgedPath = adminDash.find("#dash-mged-path").val(),
-      gobjPath = adminDash.find("#dash-g-obj-path").val();
+      gobjPath = adminDash.find("#dash-g-obj-path").val(),
+      landingPageModel = adminDash.find("#dash-landingPageModel").val(),
+      settings = OgvSettings.findOne();
 
-    settings = OgvSettings.findOne();
-
+    console.log(landingPageModel);
     OgvSettings.update(
       settings._id,
       {
@@ -117,7 +118,8 @@ Template.dashboard.events({
           siteName: primaryBranding,
           mailUrl,
           mgedPath,
-          gobjPath
+          gobjPath,
+          landingPageModel
         }
       },
       error => {

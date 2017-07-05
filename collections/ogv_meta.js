@@ -38,6 +38,9 @@ OgvSchema = new SimpleSchema({
   },
   settingSwitch: {
     type: Boolean
+  },
+  landingPageModel: {
+    type: String
   }
 });
 

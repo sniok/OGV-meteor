@@ -40,6 +40,7 @@ import "../imports/ui/pages/forgot_password.js"; // /forgot-password
 import "../imports/ui/pages/notverified.html"; // /not-verified
 import "../imports/ui/pages/model_meta.js"; // /description/:id
 import "../imports/ui/pages/processing.js"; // /processing
+import "../imports/ui/pages/simple_view.js"; // /view/:id
 
 // Startup
 
@@ -144,6 +145,23 @@ Router.map(function() {
 
   this.route("modelViewer", {
     path: "/models/:_id/:_share?",
+    waitOn() {
+      return Meteor.subscribe("modelFiles");
+    },
+    data() {
+      return ModelFiles.findOne(this.params._id);
+    },
+    action() {
+      if (this.ready()) this.render();
+    },
+    onRun() {
+      ModelFiles.update(this.params._id, { $inc: { viewsCount: 1 } });
+      this.next();
+    }
+  });
+
+  this.route("simpleView", {
+    path: "/view/:_id",
     waitOn() {
       return Meteor.subscribe("modelFiles");
     },

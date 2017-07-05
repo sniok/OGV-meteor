@@ -28,6 +28,7 @@ if (OgvSettings.find().count() === 0) {
     siteName: "Online Geometry Viewer",
     mailUrl: "http://username:password@example.com",
     gobjPath: "/usr/brlcad/dev-7.24.2/bin/g-obj",
-    mgedPath: "/usr/brlcad/dev-7.24.2/bin/mged"
+    mgedPath: "/usr/brlcad/dev-7.24.2/bin/mged",
+    landingPageModel: ""
   });
 }

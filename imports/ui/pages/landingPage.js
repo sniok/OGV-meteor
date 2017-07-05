@@ -31,5 +31,13 @@ import "./landingPage.css";
 Template.landingPage.helpers({
   isFillingForm() {
     return true;
+  },
+  landingPageModel() {
+    const settings = OgvSettings.findOne();
+    console.log(settings);
+    if (settings) {
+      return settings.landingPageModel;
+    }
+    return false;
   }
 });
