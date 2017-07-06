@@ -7,7 +7,23 @@
       </div>
     </div>
     <div class="col-6">
-      Info
+      <div style="padding-top: 15px;">
+        <span style="font-size: 18px; font-weight: bold; margin-right: 5px">{{model.name}}</span>by
+        <a href="/profile/{{ownerId}}"><img src="{{ownerDp}}" style="margin: 0 5px; width: 36px;border-radius: 50%;height: 36px;">{{owner.profile.name}}</a>
+      </div>
+      <div style="margin-top: 10px">
+        <div class="button button-o button-non-clickable button-small no-shadow">Likes<span class="button-counter">{{lovers}}</span></div>
+        <div class="button button-o button-non-clickable button-small no-shadow">Views<span class="button-counter">{{model.viewsCount}}</span></div>
+      </div>
+      <div style="margin-top: 30px">
+        <div style="font-size: 14px;font-family: 'Montserrat',sans-serif;text-transform: uppercase">Description</div>
+        <p style="font-size: 14px;">
+          {{model.about}}
+        </p>
+      </div>
+      <div style="margin-top: 10px">
+        <a class="button button-green-o" href="{{modelDownloadUrl}}">Download</a>
+      </div>
     </div>
   </div>
 

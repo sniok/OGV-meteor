@@ -17,12 +17,28 @@ Template.simpleView.helpers({
   },
 
   model() {
-    return this.data;
+    model = ModelFiles.findOne(this._id);
+
+    console.log("model", model);
+    return model;
+  },
+
+  modelDownloadUrl() {
+    model = ModelFiles.findOne(this._id);
+    if (model) {
+      console.log("model", model.url({ filename: `${this._id}.g` }));
+      const url = model.url({ filename: `${this._id}.g` });
+      return url;
+    }
   },
 
   ownerId() {
     model = ModelFiles.findOne(this._id);
     return model.owner;
+  },
+
+  owner() {
+    return Meteor.users.findOne(model.owner);
   },
 
   ownerDp() {
