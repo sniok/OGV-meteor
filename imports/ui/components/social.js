@@ -43,7 +43,7 @@ Template.commentSubmit.events({
 Template.commentBody.helpers({
   comments() {
     let commentList = Comments.find({
-      postId: this.postId
+      postId: this.postId || this._id
     });
     if (!commentList) {
       commentList = Comments.find({ postId: this.data._id });

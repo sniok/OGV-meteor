@@ -22,12 +22,13 @@
         </p>
       </div>
       <div style="margin-top: 10px">
-        <a class="button button-green-o" href="{{modelDownloadUrl}}">Download</a>
+        <a class="button button-green-o button-small" href="{{modelDownloadUrl}}">Download</a>
+        <a class="button button-blue-o button-small" href="/models/{{model._id}}">Advanced View</a>
       </div>
     </div>
   </div>
 
-  <div class="row" style="margin-top: 25px !important; max-width: 780px;margin: 0 auto; box-shadow: 0px 11px 30px rgba(0,0,0,0.07);">
-    Comments
+  <div class="row" style="margin-top: 40px !important; max-width: 780px;margin: 0 auto; box-shadow: 0px 11px 30px rgba(0,0,0,0.07);">
+    {{>comments}}
   </div>
 </template>

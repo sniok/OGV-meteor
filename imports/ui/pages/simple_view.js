@@ -56,6 +56,7 @@ Template.simpleView.helpers({
 let model = this.data;
 
 Template.simpleView.rendered = function() {
+  $(".comments").css("display", "block");
   model = this.data;
   objList = getObjFiles(model);
   console.log(`[model_viewer] Loading .obj files ${objList}`);
