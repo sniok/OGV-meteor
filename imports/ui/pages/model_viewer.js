@@ -31,6 +31,7 @@ import "../../utils/OrbitControls.js";
 import "../../utils/Detector.js";
 import Clipboard from "../../utils/clipboard.min.js";
 
+import "./model_viewer.css";
 import "../components/model_editor.js";
 
 Template.modelViewer.events({
@@ -70,7 +71,17 @@ Template.modelViewer.events({
   }
 });
 
+const objfields = ["original.name", "gFile"];
+ObjSearch = new SearchSource("objFiles", objfields);
+
 Template.modelViewer.helpers({
+  object() {
+    return ObjSearch.getData({
+      transform(matchText, regExp) {
+        return matchText.replace(regExp, "$&");
+      }
+    });
+  },
   embedCode() {
     const thisURL = `${Meteor.absoluteUrl()}models/${this._id}/shared=true`;
     embedCode = `<iframe width="500" height="250" src="${thisURL}" frameborder="0"></iframe>`;
