@@ -1,0 +1,8 @@
+# node 
+node_modules
+
+# meteor
+.meteor/local
+
+# vs code
+.vscode

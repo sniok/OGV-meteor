@@ -1,0 +1,19 @@
+#model-left {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  background-color: #FFF;
+  height: calc(100vh - 50px);
+  z-index: 999999;
+}
+
+#model-right {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 250px;
+  background-color: #FFF;
+  height: calc(100vh - 50px);
+  z-index: 999999;
+}
