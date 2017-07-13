@@ -16,4 +16,6 @@
   background-color: #FFF;
   height: calc(100vh - 50px);
   z-index: 999999;
+  padding: 15px;
+  font-family: "Montserrat", sans-serif;
 }

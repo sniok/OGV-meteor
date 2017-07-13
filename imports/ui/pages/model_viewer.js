@@ -34,6 +34,9 @@ import Clipboard from "../../utils/clipboard.min.js";
 import "./model_viewer.css";
 import "../components/model_editor.js";
 
+let grid;
+let axes;
+
 Template.modelViewer.events({
   "click #sm-item-love": function() {
     const love = {
@@ -68,6 +71,16 @@ Template.modelViewer.events({
 
   "click #sm-item-owner": function() {
     ownerId();
+  },
+
+  "click #toggle-grid": function() {
+    grid.visible = !grid.visible;
+    animate();
+  },
+
+  "click #toggle-axes": function() {
+    axes.visible = !axes.visible;
+    animate();
   }
 });
 
@@ -100,7 +113,9 @@ Template.modelViewer.helpers({
   },
 
   model() {
-    return this.data;
+    model = ModelFiles.findOne(this._id);
+    console.log(model);
+    return model;
   },
 
   ownerId() {
@@ -225,11 +240,12 @@ function init() {
 
   if (!isEmbedded) {
     /** Axes */
-    const axes = new THREE.AxisHelper(10000);
+    axes = new THREE.AxisHelper(10000);
     scene.add(axes);
 
     /** Grid */
-    const grid = new THREE.GridHelper(3000, 100);
+    grid = new THREE.GridHelper(3000, 100);
+    console.log(grid);
     scene.add(grid);
   }
 
