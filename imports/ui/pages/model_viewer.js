@@ -36,6 +36,7 @@ import "../components/model_editor.js";
 
 let grid;
 let axes;
+let group;
 
 Template.modelViewer.events({
   "click #sm-item-love": function() {
@@ -81,6 +82,27 @@ Template.modelViewer.events({
   "click #toggle-axes": function() {
     axes.visible = !axes.visible;
     animate();
+  },
+
+  "click .obj-heading": function(e) {
+    test = e;
+    index = e.currentTarget.dataset.src;
+    if (e.target.classList[0] === "eye-img") {
+      eyeImg = e.target;
+      if (eyeImg.attributes.src.value === "/icons/not-eye.png") {
+        group.children[index].traverse(object => {
+          object.visible = true;
+        });
+        eyeImg.src = "/icons/eye.png";
+        animate();
+      } else {
+        group.children[index].traverse(object => {
+          object.visible = false;
+        });
+        eyeImg.src = "/icons/not-eye.png";
+        animate();
+      }
+    }
   }
 });
 
@@ -129,6 +151,14 @@ Template.modelViewer.helpers({
       return ProfilePictures.findOne(imgId).url();
     }
     return "/icons/User.png";
+  },
+
+  displayModelName(name) {
+    const parts = name.split("_");
+    // if(parts[1] == "merged") {
+    //   return ``
+    // }
+    return;
   }
 });
 
@@ -262,7 +292,7 @@ function init() {
      * Adds the model to the viewer aka loads OBJ files
      * using OBJ-Loader
      */
-  const group = new THREE.Object3D();
+  group = new THREE.Object3D();
   const loader = new THREE.OBJLoader(manager);
   const mtlLoader = new THREE.MTLLoader(manager);
 
@@ -279,45 +309,25 @@ function init() {
      */
 
   const OBJMaterialArray = [];
-  if (objList.length === 1) {
-    mtlLoader.load(mtlList[0].url(), material => {
-      material.preload();
-      for (let i in objList) {
-        const OBJMaterial = new THREE.MeshPhongMaterial();
-        OBJMaterialArray.push(OBJMaterial);
 
-        loader.setMaterials(material);
-        loader.load(objList[i].url(), object => {
-          object.position.y = 0.1;
-          object.rotation.z = 90 * Math.PI / 180;
-          object.rotation.x = -90 * Math.PI / 180;
-          console.log("object", object);
-          group.add(object);
-          scene.add(group);
-        });
-      }
-    });
-  } else {
-    for (let i in objList) {
-      const OBJMaterial = new THREE.MeshPhongMaterial();
-      OBJMaterialArray.push(OBJMaterial);
-      loader.load(objList[i].url(), object => {
-        object.traverse(child => {
-          if (child instanceof THREE.Mesh) {
-            child.material = OBJMaterial;
-          }
-        });
+  mtlLoader.load(mtlList[0].url(), material => {
+    material.preload();
 
+    const OBJMaterial = new THREE.MeshPhongMaterial();
+    OBJMaterialArray.push(OBJMaterial);
+    loader.setMaterials(material);
+    objList.forEach(obj => {
+      loader.load(obj.url(), object => {
         object.position.y = 0.1;
         object.rotation.z = 90 * Math.PI / 180;
         object.rotation.x = -90 * Math.PI / 180;
-        console.log("object", object);
+
         group.add(object);
         scene.add(group);
+        renderer.render(scene, camera);
       });
-    }
-  }
-  // }
+    });
+  });
 
   /**
      * If webgl is there then use it otherwise use canvas

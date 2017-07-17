@@ -111,39 +111,70 @@ export function convertG(filePath, fileId) {
     uploadDirPath = filePath.substring(0, filePath.lastIndexOf("/"));
 
   // Get object's parts by using mged's 'ls' command
-  const objects = execSyncUtf(`${mgedPath} -c ${filePath} tops 2>&1`)
+  const objects = execSyncUtf(`${mgedPath} -c ${filePath} ls -a 2>&1`)
     .trim()
     .split(/[ \n]+/);
   const joinedObjects = objects.join(" ");
+
+  // Get tops
+  const tops = execSyncUtf(`${mgedPath} -c ${filePath} tops 2>&1`)
+    .trim()
+    .split(/[ \n]+/);
+  const joinedTops = tops.join(" ");
 
   // Convert .g file to .obj and .mtl
   const mtlPath = `${uploadDirPath}/${fileId}.mtl`;
 
   const objParts = [];
+
+  const objName = filePath.split("/").pop().split("-").pop().split(".")[0];
+  console.log(`[cfs_uploader] Model ${objName}`);
+
+  /**
+   * Texture
+   */
+  console.log(`[cfs_uploader] Try generate mtl`);
   try {
+    execSyncUtf(`${gobjPath} -t ${mtlPath} ${filePath} ${joinedObjects} 2>&1`);
+  } catch (e) {
+    console.log("[cfs_uploader] Mtl generation failed.");
+  }
+
+  /**
+   * Merging model
+   */
+  console.log("[cfs_uploader] Starting converting to merged obj");
+  try {
+    objParts.push(`${uploadDirPath}/${objName}_merged.obj`);
     execSyncUtf(
-      `${gobjPath} -n 10 -o ${uploadDirPath}/${fileId}.obj -t ${mtlPath} ${filePath} ${joinedObjects} 2>&1`
+      `${gobjPath} -n 10 -o ${uploadDirPath}/${objName}_merged.obj -t ${mtlPath}.chunk ${filePath} ${joinedTops} 2>&1`
     );
-    objParts.push(`${uploadDirPath}/${fileId}.obj`);
+    console.log(
+      `[cfs_uploader] Converting ${uploadDirPath}/${objName}_merged.obj`
+    );
   } catch (e) {
     console.log(e);
+    console.log(`[cfs_uploader] Merging failed for model ${objName}`);
     objParts.pop();
-    console.log(`[cfs_uploader] Merging failed. Trying convert each part.`);
-    objects.forEach((part, i) => {
-      console.log(
-        `[cfs_uploader] Converting part ${part} – ${fileId}_part${i}`
-      );
-      try {
-        execSyncUtf(
-          `${gobjPath} -n 10 -o ${uploadDirPath}/${fileId}_part${i}.obj -t ${mtlPath} ${filePath} ${part} 2>&1`
-        );
-        objParts.push(`${uploadDirPath}/${fileId}_part${i}.obj`);
-      } catch (e) {
-        console.log(`[cfs_uploader] Part ${part} failed. Skipping.`);
-        objParts.pop();
-      }
-    });
   }
+
+  /**
+   * By parts
+   */
+  console.log("[cfs_uploader] Starting converting to obj by parts");
+  objects.forEach((part, i) => {
+    const partName = `${objName}_${part}_part.obj`;
+    console.log(`[cfs_uploader] Converting part ${partName}`);
+    try {
+      objParts.push(`${uploadDirPath}/${partName}`);
+      execSyncUtf(
+        `${gobjPath} -n 10 -o ${uploadDirPath}/${partName} -t ${mtlPath}.chunk ${filePath} ${part} 2>&1`
+      );
+    } catch (e) {
+      console.log(`[cfs_uploader] Part ${part} failed. Skipping.`);
+      objParts.pop();
+    }
+  });
 
   return { objParts, mtlPath, joinedObjects };
 }
