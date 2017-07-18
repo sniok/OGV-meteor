@@ -66,7 +66,7 @@ function convertFile(fileId) {
         }
       });
 
-      objParts.forEach(part => {
+      objParts.forEach((part, i) => {
         objFile = new FS.File(part);
         objFile.gFile = fileId;
         OBJFiles.insert(objFile, err => {
@@ -75,9 +75,10 @@ function convertFile(fileId) {
               `Error while saving file ID - ${fileId} : ${error}`
             );
           }
+          console.log(objParts.length, i, i * 100 / objParts.length);
           modelObj.update({
             $set: {
-              conversion: 100,
+              conversion: Math.ceil(i * 100 / (objParts.length - 1)),
               converted: true
             }
           });
