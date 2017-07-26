@@ -128,23 +128,13 @@ function generate() {
   }).map(o => o);
 
   const OBJMaterialArray = [];
-  mtlLoader.load(mtlList[0].url(), material => {
-    material.preload();
+  if (mtlList && mtlList.length > 0) {
+    mtlLoader.load(mtlList[0].url(), material => {
+      material.preload();
 
-    const OBJMaterial = new THREE.MeshPhongMaterial();
-    OBJMaterialArray.push(OBJMaterial);
-    loader.setMaterials(material);
-    if (objList[0].name().indexOf("merged") > -1) {
-      loader.load(objList[0].url(), object => {
-        object.position.y = 0.1;
-        object.rotation.z = 90 * Math.PI / 180;
-        object.rotation.x = -90 * Math.PI / 180;
-
-        group.add(object);
-        scene.add(group);
-        renderer.render(scene, camera);
-      });
-    } else {
+      const OBJMaterial = new THREE.MeshPhongMaterial();
+      OBJMaterialArray.push(OBJMaterial);
+      loader.setMaterials(material);
       objList.forEach(obj => {
         loader.load(obj.url(), object => {
           object.position.y = 0.1;
@@ -156,6 +146,22 @@ function generate() {
           renderer.render(scene, camera);
         });
       });
-    }
-  });
+    });
+  } else {
+    const OBJMaterial = new THREE.MeshPhongMaterial();
+    OBJMaterialArray.push(OBJMaterial);
+
+    objList.forEach(obj => {
+      console.log(obj);
+      loader.load(obj.url(), object => {
+        object.position.y = 0.1;
+        object.rotation.z = 90 * Math.PI / 180;
+        object.rotation.x = -90 * Math.PI / 180;
+
+        group.add(object);
+        scene.add(group);
+        renderer.render(scene, camera);
+      });
+    });
+  }
 }
