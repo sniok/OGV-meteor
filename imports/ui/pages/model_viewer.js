@@ -310,7 +310,6 @@ function init() {
 
   const OBJMaterialArray = [];
 
-  console.log(mtlList, mtlList.length);
   if (mtlList && mtlList.length > 0) {
     mtlLoader.load(mtlList[0].url(), material => {
       material.preload();
@@ -331,7 +330,6 @@ function init() {
       });
     });
   } else {
-    console.log("loading without material");
     const OBJMaterial = new THREE.MeshPhongMaterial();
     OBJMaterialArray.push(OBJMaterial);
 
