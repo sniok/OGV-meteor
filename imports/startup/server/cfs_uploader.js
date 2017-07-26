@@ -55,6 +55,26 @@ function convertFile(fileId) {
   modelObj.once(
     "stored",
     Meteor.bindEnvironment(() => {
+      if (filePath.indexOf(".obj") === filePath.length - 4) {
+        console.log("[cfs_uploader] Got .obj file, saving without converting.");
+        objFile = new FS.File(filePath);
+        objFile.gFile = fileId;
+        OBJFiles.insert(objFile, err => {
+          if (err) {
+            throw new Meteor.Error(
+              `Error while saving file ID - ${fileId} : ${error}`
+            );
+          }
+          modelObj.update({
+            $set: {
+              conversion: 100,
+              converted: true
+            }
+          });
+        });
+        return;
+      }
+
       const { objParts, mtlPath, objects } = convertG(filePath, fileId);
 
       // Save mtl

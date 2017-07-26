@@ -34,6 +34,5 @@ function uploadFile(event) {
     });
 
     Router.go(`/processing/${fsFile._id}`);
-    // Router.go(`/description/${fsFile._id}`);
   });
 }

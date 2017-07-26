@@ -310,13 +310,33 @@ function init() {
 
   const OBJMaterialArray = [];
 
-  mtlLoader.load(mtlList[0].url(), material => {
-    material.preload();
+  console.log(mtlList, mtlList.length);
+  if (mtlList && mtlList.length > 0) {
+    mtlLoader.load(mtlList[0].url(), material => {
+      material.preload();
 
+      const OBJMaterial = new THREE.MeshPhongMaterial();
+      OBJMaterialArray.push(OBJMaterial);
+      loader.setMaterials(material);
+      objList.forEach(obj => {
+        loader.load(obj.url(), object => {
+          object.position.y = 0.1;
+          object.rotation.z = 90 * Math.PI / 180;
+          object.rotation.x = -90 * Math.PI / 180;
+
+          group.add(object);
+          scene.add(group);
+          renderer.render(scene, camera);
+        });
+      });
+    });
+  } else {
+    console.log("loading without material");
     const OBJMaterial = new THREE.MeshPhongMaterial();
     OBJMaterialArray.push(OBJMaterial);
-    loader.setMaterials(material);
+
     objList.forEach(obj => {
+      console.log(obj);
       loader.load(obj.url(), object => {
         object.position.y = 0.1;
         object.rotation.z = 90 * Math.PI / 180;
@@ -327,7 +347,7 @@ function init() {
         renderer.render(scene, camera);
       });
     });
-  });
+  }
 
   /**
      * If webgl is there then use it otherwise use canvas
