@@ -21,7 +21,7 @@
     "test": "eslint .",
     "mocha-test": "meteor test --driver-package dispatch:mocha",
     "build:linux": "./scripts/build_linux.sh",
-    "docs": "jsdoc -r -d docs/jsdoc imports client collections"
+    "docs": "jsdoc -r -d private/docs/jsdoc imports client collections"
   },
   "repository": {
     "type": "git",
