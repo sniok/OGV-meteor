@@ -53,9 +53,10 @@ if (Meteor.users.find().fetch().length === 0) {
 
   const Bio = "greatest 3d modeller on the planet";
   _.each(users, userData => {
+    const password = Meteor.settings.adminPassword;
     const id = Accounts.createUser({
       email: userData.email,
-      password: "ogv123",
+      password: password,
       profile: {
         name: userData.name,
         bio: Bio

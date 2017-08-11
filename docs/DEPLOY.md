@@ -35,5 +35,5 @@ $ npm install
 Go to EXTRACTED_BUNDLE/bundle and Start OGV using this command. Change parameters as you need.
 
 ```sh
-MONGO_URL=mongodb://localhost/meteor ROOT_URL=http://localhost PORT=3000 node main.js
+METEOR_SETTINGS='{"adminPassword": "password"}' MONGO_URL=mongodb://localhost/meteor ROOT_URL=http://localhost PORT=3000 node main.js
 ```
