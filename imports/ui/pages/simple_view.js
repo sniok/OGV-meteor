@@ -254,7 +254,7 @@ function init() {
   controls.addEventListener("change", render);
 
   window.addEventListener("resize", onWindowResize, false);
-  window.addEventListener("keydown", onKeyDown, false);
+  target.addEventListener("keydown", onKeyDown, false);
 }
 
 /**
