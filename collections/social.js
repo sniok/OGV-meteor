@@ -169,7 +169,7 @@ Meteor.methods({
 
     lovers.push(user._id);
 
-    const post = ModelFiles.findOne(loveAttributes.postId);
+    const post = Posts.findOne({ postId: loveAttributes.postId });
     const loversObj = Lovers.findOne({
       postId: loveAttributes.postId
     });
@@ -216,7 +216,7 @@ Meteor.methods({
       ); // update lovers
     }
     modelId = loveAttributes.postId;
-    ownerId = post.owner;
+    ownerId = post.postedBy;
     if (user._id !== ownerId) {
       Notifications.insert({
         user: user._id,
