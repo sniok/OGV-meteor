@@ -2,16 +2,16 @@ import "./model_post.html";
 import "./model_post.css";
 
 Template.modelPost.events({
-  "click .shareButton": function() {
-    sharedBy = Meteor.userId();
-    sharedModel = $(".shareButton")[0].dataset.src;
-    modelOwner = ModelFiles.findOne(sharedModel).owner;
-    sharedObject = {
+  "click .shareButton": function(event) {
+    const sharedBy = Meteor.userId();
+    const sharedModel = event.target.dataset.src;
+    const modelOwner = Posts.findOne({ postId: sharedModel }).postedBy;
+    const sharedObject = {
       owner: modelOwner,
       sharedBy,
       model: sharedModel
     };
-    Meteor.call("share", sharedObject, () => {
+    Meteor.call("share", sharedObject, error => {
       if (error) {
         sAlert.error(error.reason);
       } else {
@@ -83,12 +83,9 @@ Template.modelPost.helpers({
       }).fetch()[0];
       owner = Meteor.users
         .find({
-          _id: this.postedBy
+          _id: sharedModel.ownerId
         })
         .fetch()[0];
-      model = ModelFiles.find({
-        _id: sharedModel.model
-      }).fetch()[0];
       modelOwner = Meteor.users.findOne(sharedModel.sharedby);
       picId = modelOwner.profile.pic;
       if (picId) {
@@ -98,10 +95,10 @@ Template.modelPost.helpers({
         picUrl = "/icons/User.png";
       }
       message =
-        `<a href="/profile/${this.postedBy}">` +
-        `<img src="${picUrl}"> ${owner.profile.name}</a>` +
-        ` shared <a href="/profile/${modelOwner._id}">` +
-        `${modelOwner.profile.name}</a>'s model`;
+        `<a href="/profile/${modelOwner._id}">` +
+        `<img src="${picUrl}"> ${modelOwner.profile.name}</a>` +
+        ` shared <a href="/profile/${this.postedBy}">` +
+        `${owner.profile.name}</a>'s model`;
       return message;
     }
   },
@@ -116,9 +113,9 @@ Template.modelPost.helpers({
       sharedModel = SharedModels.find({
         _id: this.postId
       }).fetch()[0];
-      model = ModelFiles.find({
-        _id: sharedModel.model
-      }).fetch();
+
+      model = ModelFiles.findOne(sharedModel.model);
+      model = [model];
     } else if (this.converted) {
       model = ModelFiles.find({
         _id: this._id,

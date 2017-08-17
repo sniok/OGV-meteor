@@ -93,12 +93,15 @@ Meteor.methods({
     const sharedBy = shareAttributes.sharedBy;
     const time = new Date();
 
+    const realPost = ModelFiles.findOne(shareAttributes.model);
+    console.log(realPost);
     id = SharedModels.insert({
       ownerId: owner,
       sharedby: sharedBy,
       model: post,
       timeShared: time
     });
+
     Posts.insert({
       postType: "shared",
       postedAt: time,
