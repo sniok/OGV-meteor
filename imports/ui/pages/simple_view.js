@@ -3,6 +3,13 @@ import "../../utils/OBJLoader.js";
 import "../../utils/MTLLoader.js";
 import "../../utils/OrbitControls.js";
 import "../../utils/Detector.js";
+import Clipboard from "../../utils/clipboard.min.js";
+
+Template.simpleView.events({
+  "click #sm-item-embed": function() {
+    sAlert.success("Embed code has been copied to clipboard");
+  }
+});
 
 Template.simpleView.helpers({
   lovers() {
@@ -47,6 +54,12 @@ Template.simpleView.helpers({
       return ProfilePictures.findOne(imgId).url();
     }
     return "/icons/User.png";
+  },
+
+  embedCode() {
+    const thisURL = `${Meteor.absoluteUrl()}models/${this._id}/shared=true`;
+    embedCode = `<iframe width="500" height="250" src="${thisURL}" frameborder="0"></iframe>`;
+    return embedCode;
   }
 });
 
@@ -59,6 +72,8 @@ Template.simpleView.rendered = function() {
   $(".comments").css("display", "block");
   model = this.data;
   objList = getObjFiles(model);
+
+  const clipboard = new Clipboard("#sm-item-embed");
 
   init();
   render();
