@@ -28,7 +28,9 @@ Template.processing.helpers({
   converting() {
     const id = Session.get("modelId");
     const model = ModelFiles.findOne({ _id: id });
-
+    if (model.conversion < 100) {
+      started = false;
+    }
     return model.conversion < 100;
   },
 
@@ -36,9 +38,9 @@ Template.processing.helpers({
     const id = Session.get("modelId");
     const model = ModelFiles.findOne({ _id: id });
 
-    if (model.conversion == 100 && !started) {
+    if (model.conversion && model.conversion == 100 && !started) {
       started = true;
-      setTimeout(() => generate(), 200);
+      setTimeout(() => generate(), 1000);
     }
     if (model.screenshot && model.screenshot.length > 10) {
       Router.go(`/description/${id}`);
@@ -126,20 +128,40 @@ function generate() {
   }).map(o => o);
 
   const OBJMaterialArray = [];
-  mtlLoader.load(mtlList[0].url(), material => {
-    material.preload();
+  if (mtlList && mtlList.length > 0) {
+    mtlLoader.load(mtlList[0].url(), material => {
+      material.preload();
 
+      const OBJMaterial = new THREE.MeshPhongMaterial();
+      OBJMaterialArray.push(OBJMaterial);
+      loader.setMaterials(material);
+      objList.forEach(obj => {
+        loader.load(obj.url(), object => {
+          object.position.y = 0.1;
+          object.rotation.z = 90 * Math.PI / 180;
+          object.rotation.x = -90 * Math.PI / 180;
+
+          group.add(object);
+          scene.add(group);
+          renderer.render(scene, camera);
+        });
+      });
+    });
+  } else {
     const OBJMaterial = new THREE.MeshPhongMaterial();
     OBJMaterialArray.push(OBJMaterial);
-    loader.setMaterials(material);
-    loader.load(objList[0].url(), object => {
-      object.position.y = 0.1;
-      object.rotation.z = 90 * Math.PI / 180;
-      object.rotation.x = -90 * Math.PI / 180;
 
-      group.add(object);
-      scene.add(group);
-      renderer.render(scene, camera);
+    objList.forEach(obj => {
+      console.log(obj);
+      loader.load(obj.url(), object => {
+        object.position.y = 0.1;
+        object.rotation.z = 90 * Math.PI / 180;
+        object.rotation.x = -90 * Math.PI / 180;
+
+        group.add(object);
+        scene.add(group);
+        renderer.render(scene, camera);
+      });
     });
-  });
+  }
 }

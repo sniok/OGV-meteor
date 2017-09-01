@@ -3,6 +3,13 @@ import "../../utils/OBJLoader.js";
 import "../../utils/MTLLoader.js";
 import "../../utils/OrbitControls.js";
 import "../../utils/Detector.js";
+import Clipboard from "../../utils/clipboard.min.js";
+
+Template.simpleView.events({
+  "click #sm-item-embed": function() {
+    sAlert.success("Embed code has been copied to clipboard");
+  }
+});
 
 Template.simpleView.helpers({
   lovers() {
@@ -47,6 +54,12 @@ Template.simpleView.helpers({
       return ProfilePictures.findOne(imgId).url();
     }
     return "/icons/User.png";
+  },
+
+  embedCode() {
+    const thisURL = `${Meteor.absoluteUrl()}models/${this._id}/shared=true`;
+    embedCode = `<iframe width="500" height="250" src="${thisURL}" frameborder="0"></iframe>`;
+    return embedCode;
   }
 });
 
@@ -59,7 +72,8 @@ Template.simpleView.rendered = function() {
   $(".comments").css("display", "block");
   model = this.data;
   objList = getObjFiles(model);
-  console.log(`[model_viewer] Loading .obj files ${objList}`);
+
+  const clipboard = new Clipboard("#sm-item-embed");
 
   init();
   render();
@@ -183,47 +197,44 @@ function init() {
      * Adds material to the model, which hence controls
      * how the model shall look
      */
-
   const OBJMaterialArray = [];
-  if (objList.length === 1) {
+
+  if (mtlList && mtlList.length > 0) {
     mtlLoader.load(mtlList[0].url(), material => {
       material.preload();
-      for (let i in objList) {
-        const OBJMaterial = new THREE.MeshPhongMaterial();
-        OBJMaterialArray.push(OBJMaterial);
 
-        loader.setMaterials(material);
-        loader.load(objList[i].url(), object => {
+      const OBJMaterial = new THREE.MeshPhongMaterial();
+      OBJMaterialArray.push(OBJMaterial);
+      loader.setMaterials(material);
+      objList.forEach(obj => {
+        loader.load(obj.url(), object => {
           object.position.y = 0.1;
           object.rotation.z = 90 * Math.PI / 180;
           object.rotation.x = -90 * Math.PI / 180;
-          console.log("object", object);
+
           group.add(object);
           scene.add(group);
+          renderer.render(scene, camera);
         });
-      }
+      });
     });
   } else {
-    for (let i in objList) {
-      const OBJMaterial = new THREE.MeshPhongMaterial();
-      OBJMaterialArray.push(OBJMaterial);
-      loader.load(objList[i].url(), object => {
-        object.traverse(child => {
-          if (child instanceof THREE.Mesh) {
-            child.material = OBJMaterial;
-          }
-        });
+    const OBJMaterial = new THREE.MeshPhongMaterial();
+    OBJMaterialArray.push(OBJMaterial);
 
+    objList.forEach(obj => {
+      console.log(obj);
+      loader.load(obj.url(), object => {
         object.position.y = 0.1;
         object.rotation.z = 90 * Math.PI / 180;
         object.rotation.x = -90 * Math.PI / 180;
-        console.log("object", object);
+
         group.add(object);
         scene.add(group);
+        renderer.render(scene, camera);
       });
-    }
+    });
   }
-  // }
 
   /**
      * If webgl is there then use it otherwise use canvas
@@ -258,7 +269,7 @@ function init() {
   controls.addEventListener("change", render);
 
   window.addEventListener("resize", onWindowResize, false);
-  window.addEventListener("keydown", onKeyDown, false);
+  target.addEventListener("keydown", onKeyDown, false);
 }
 
 /**

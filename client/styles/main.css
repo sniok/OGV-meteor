@@ -2056,7 +2056,7 @@ input[type='color'].color-picker {
 }
 
 .obj-heading {
-  border-bottom: 3px solid #bababa;
+  border-bottom: 1px solid #bababa;
   cursor: pointer;
 }
 

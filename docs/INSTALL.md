@@ -12,12 +12,10 @@ git clone https://github.com/BRL-CAD/OGV-meteor
 
 Run meteor.
 ```bash
-meteor
+npm run start
 ```
 
 ## Configure
-Login to OGV using admin accout.  
-Login - admin@example.com  
-Password - ogv123  
+Enter details for admin account at config.json (There is example in config.example.json)
 
 Then go to the setting and select path to BRL-CAD

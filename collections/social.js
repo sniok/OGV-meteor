@@ -93,12 +93,15 @@ Meteor.methods({
     const sharedBy = shareAttributes.sharedBy;
     const time = new Date();
 
+    const realPost = ModelFiles.findOne(shareAttributes.model);
+    console.log(realPost);
     id = SharedModels.insert({
       ownerId: owner,
       sharedby: sharedBy,
       model: post,
       timeShared: time
     });
+
     Posts.insert({
       postType: "shared",
       postedAt: time,
@@ -169,7 +172,7 @@ Meteor.methods({
 
     lovers.push(user._id);
 
-    const post = ModelFiles.findOne(loveAttributes.postId);
+    const post = Posts.findOne({ postId: loveAttributes.postId });
     const loversObj = Lovers.findOne({
       postId: loveAttributes.postId
     });
@@ -216,7 +219,7 @@ Meteor.methods({
       ); // update lovers
     }
     modelId = loveAttributes.postId;
-    ownerId = post.owner;
+    ownerId = post.postedBy;
     if (user._id !== ownerId) {
       Notifications.insert({
         user: user._id,
