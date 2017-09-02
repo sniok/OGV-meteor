@@ -72,7 +72,6 @@ Template.dashboard.events({
 
     if (e.target[2].files[0]) {
       const fsFile = new FS.File(e.target[2].files[0]);
-      console.log(fsFile);
       fsFile.user = currentUser._id;
 
       const prevProfilePicture = ProfilePictures.findOne({

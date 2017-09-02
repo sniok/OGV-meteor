@@ -25,15 +25,12 @@ Template.simpleView.helpers({
 
   model() {
     model = ModelFiles.findOne(this._id);
-
-    console.log("model", model);
     return model;
   },
 
   modelDownloadUrl() {
     model = ModelFiles.findOne(this._id);
     if (model) {
-      console.log("model", model.url({ filename: `${this._id}.g` }));
       const url = model.url({ filename: `${this._id}.g` });
       return url;
     }
@@ -223,7 +220,6 @@ function init() {
     OBJMaterialArray.push(OBJMaterial);
 
     objList.forEach(obj => {
-      console.log(obj);
       loader.load(obj.url(), object => {
         object.position.y = 0.1;
         object.rotation.z = 90 * Math.PI / 180;

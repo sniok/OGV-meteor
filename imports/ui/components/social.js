@@ -54,9 +54,7 @@ Template.commentBody.helpers({
 
 Template.comments.events({
   "click .comments-header": function(e) {
-    console.log(e);
     $header = $(e.currentTarget);
-    console.log($header);
     $content = $header.next();
     $content.slideToggle(500, () => {
       $header.text(

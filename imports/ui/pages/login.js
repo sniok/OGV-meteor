@@ -49,7 +49,6 @@ Template.logIn.events({
       Meteor.loginWithPassword(email, password, err => {
         if (err) {
           sAlert.error(err.reason);
-          console.log(err);
         } else {
           sAlert.info("Welcome back");
           Router.go("/newsfeed");

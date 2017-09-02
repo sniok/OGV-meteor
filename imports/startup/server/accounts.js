@@ -91,8 +91,6 @@ Accounts.onCreateUser((options, user) => {
   if (options.profile) {
     options.profile.following = followingArray;
     user.profile = options.profile;
-  } else {
-    console.log(options);
   }
 
   return user;

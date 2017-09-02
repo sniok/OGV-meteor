@@ -34,7 +34,6 @@ Template.landingPage.helpers({
   },
   landingPageModel() {
     const settings = OgvSettings.findOne();
-    console.log(settings);
     if (settings) {
       return settings.landingPageModel;
     }

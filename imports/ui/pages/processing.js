@@ -7,7 +7,6 @@ Template.processing.events({
   "click #takePhoto": function() {
     const _oid = Session.get("modelId");
 
-    console.log("started extracting data");
     const imageData = document
       .querySelector("#previewc")
       .toDataURL("image/png");
@@ -152,7 +151,6 @@ function generate() {
     OBJMaterialArray.push(OBJMaterial);
 
     objList.forEach(obj => {
-      console.log(obj);
       loader.load(obj.url(), object => {
         object.position.y = 0.1;
         object.rotation.z = 90 * Math.PI / 180;

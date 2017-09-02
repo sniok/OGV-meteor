@@ -8,7 +8,6 @@ Template.newMenu.helpers({
     return currentRoute && template === currentRoute ? "active" : "";
   },
   toggle() {
-    console.log("i runned");
   }
 });
 
