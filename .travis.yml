@@ -14,5 +14,13 @@ before_script:
   - meteor npm install
  
 script:
-  - npm run build:linux
-  - rsync -r ../OGV-meteor.tar.gz $REMOTE_USER:$REMOTE_PASSWORD@$REMOTE_SERVER:$REMOTE_PATH
+  - npm run build:travis
+
+deploy:
+  provider: releases
+  user: GITHUB_LOGIN
+  password: GITHUB_PASSWORD
+  file: "OGV-meteor.tar.gz"
+  skip_cleanup: true
+  on:
+    tags: true
