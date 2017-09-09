@@ -6,10 +6,6 @@ before_install:
   - curl https://install.meteor.com | /bin/sh
   - export PATH="$HOME/.meteor:$PATH"
  
-branches:
-  only:
-    - eslint
- 
 before_script:
   - meteor npm install
  
@@ -23,5 +19,4 @@ deploy:
   file: "../OGV-meteor.tar.gz"
   skip_cleanup: true
   on:
-    branch: eslint
     tags: true
