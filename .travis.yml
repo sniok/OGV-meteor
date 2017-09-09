@@ -23,4 +23,5 @@ deploy:
   file: "../OGV-meteor.tar.gz"
   skip_cleanup: true
   on:
+    branch: esling
     tags: true
