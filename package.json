@@ -1,6 +1,6 @@
 {
   "name": "ogv",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Online Geometry Viewer",
   "devDependencies": {
     "babel-eslint": "^6.1.2",
