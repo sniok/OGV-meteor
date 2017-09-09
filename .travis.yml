@@ -20,7 +20,7 @@ deploy:
   provider: releases
   user: GITHUB_LOGIN
   password: GITHUB_PASSWORD
-  file: "OGV-meteor.tar.gz"
+  file: "../OGV-meteor.tar.gz"
   skip_cleanup: true
   on:
     tags: true

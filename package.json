@@ -21,7 +21,7 @@
     "test": "eslint .",
     "mocha-test": "meteor test --driver-package dispatch:mocha",
     "build:linux": "./scripts/build_linux.sh",
-    "build:travis": "meteor build $TRAVIS_BUILD_DIR --architecture=os.linux.x86_64",
+    "build:travis": "meteor build $TRAVIS_BUILD_DIR/../ --architecture=os.linux.x86_64",
     "docs": "jsdoc -r -d private/docs/jsdoc imports client collections"
   },
   "repository": {
