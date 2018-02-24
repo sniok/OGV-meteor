@@ -37,10 +37,10 @@ Meteor.methods({
 function convertFile(fileId) {
   check(fileId, String);
   /**
-     * child_process
-     * is required for executing shell commands
-     * from within node
-     */
+   * child_process
+   * is required for executing shell commands
+   * from within node
+   */
 
   const convertPercentage = 0,
     modelObj = ModelFiles.findOne(fileId),
@@ -78,13 +78,16 @@ function convertFile(fileId) {
       const { objParts, mtlPath, objects } = convertG(filePath, fileId);
 
       // Save mtl
-      mtlFile = new FS.File(mtlPath);
-      mtlFile.gFile = fileId;
-      MTLFiles.insert(mtlFile, err => {
-        if (err) {
-          throw new Meteor.Error(err);
-        }
-      });
+      if (mtlPath) {
+        console.log("TRYING TO SAVE");
+        mtlFile = new FS.File(mtlPath);
+        mtlFile.gFile = fileId;
+        MTLFiles.insert(mtlFile, err => {
+          if (err) {
+            throw new Meteor.Error(err);
+          }
+        });
+      }
 
       objParts.forEach((part, i) => {
         objFile = new FS.File(part);
@@ -129,7 +132,11 @@ export function convertG(filePath, fileId) {
     settings = OgvSettings.findOne(),
     mgedPath = settings.mgedPath,
     gobjPath = settings.gobjPath,
-    uploadDirPath = filePath.substring(0, filePath.lastIndexOf("/"));
+    uploadDirPath = filePath.substring(0, filePath.lastIndexOf("/")),
+    generateTextures = Meteor.settings.generateTextures;
+
+  // Mtl parameter helper
+  const mtlParameter = path => (generateTextures ? `-t ${path}` : "");
 
   // Get object's parts by using mged's 'ls' command
   const objects = execSyncUtf(`${mgedPath} -c ${filePath} ls -a 2>&1`)
@@ -148,17 +155,26 @@ export function convertG(filePath, fileId) {
 
   const objParts = [];
 
-  const objName = filePath.split("/").pop().split("-").pop().split(".")[0];
+  const objName = filePath
+    .split("/")
+    .pop()
+    .split("-")
+    .pop()
+    .split(".")[0];
   console.log(`[cfs_uploader] Model ${objName}`);
 
   /**
    * Texture
    */
-  console.log(`[cfs_uploader] Try generate mtl`);
-  try {
-    execSyncUtf(`${gobjPath} -t ${mtlPath} ${filePath} ${joinedObjects} 2>&1`);
-  } catch (e) {
-    console.log("[cfs_uploader] Mtl generation failed.");
+  if (generateTextures) {
+    console.log(`[cfs_uploader] Try generate mtl`);
+    try {
+      execSyncUtf(
+        `${gobjPath} ${mtlParameter(mtlPath)} ${filePath} ${joinedObjects} 2>&1`
+      );
+    } catch (e) {
+      console.log("[cfs_uploader] Mtl generation failed.");
+    }
   }
 
   /**
@@ -168,7 +184,9 @@ export function convertG(filePath, fileId) {
   try {
     objParts.push(`${uploadDirPath}/${objName}_merged.obj`);
     execSyncUtf(
-      `${gobjPath} -n 10 -o ${uploadDirPath}/${objName}_merged.obj -t ${mtlPath}.chunk ${filePath} ${joinedTops} 2>&1`
+      `${gobjPath} -n 10 -o ${uploadDirPath}/${objName}_merged.obj ${mtlParameter(
+        mtlPath + ".chunk"
+      )} ${filePath} ${joinedTops} 2>&1`
     );
     console.log(
       `[cfs_uploader] Converting ${uploadDirPath}/${objName}_merged.obj`
@@ -189,7 +207,9 @@ export function convertG(filePath, fileId) {
     try {
       objParts.push(`${uploadDirPath}/${partName}`);
       execSyncUtf(
-        `${gobjPath} -n 10 -o ${uploadDirPath}/${partName} -t ${mtlPath}.chunk ${filePath} ${part} 2>&1`
+        `${gobjPath} -n 10 -o ${uploadDirPath}/${partName} ${mtlParameter(
+          mtlPath + ".chunk"
+        )} ${filePath} ${part} 2>&1`
       );
     } catch (e) {
       console.log(`[cfs_uploader] Part ${part} failed. Skipping.`);
@@ -197,7 +217,11 @@ export function convertG(filePath, fileId) {
     }
   });
 
-  return { objParts, mtlPath, joinedObjects };
+  return {
+    objParts,
+    mtlPath: generateTextures ? mtlPath : undefined,
+    joinedObjects
+  };
 }
 
 /**
